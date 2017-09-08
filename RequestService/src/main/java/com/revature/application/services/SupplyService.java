@@ -20,4 +20,21 @@ public class SupplyService {
 	public List<Supply> findAll(){
 		return supplyRepository.findAll();
 	}
+
+	public List<Supply> findByUnitId(int unitId) {
+		return supplyRepository.findByUnitId(unitId);
+	}
+
+	public Object save(Supply supply) {
+		
+		return supplyRepository.saveAndFlush(supply).getSuppliesId();
+	}
+
+	public Supply findById(int supplyId) {
+		return supplyRepository.findBySupplyId(supplyId);
+	}
+
+	public Object update(Supply supply) {
+		return supplyRepository.save(supply).getSuppliesId();
+	}
 }

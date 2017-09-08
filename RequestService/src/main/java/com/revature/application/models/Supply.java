@@ -12,41 +12,44 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name="SUPPLIES")
+@Table(name="SUPPLY")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "suppliesId")
 public class Supply {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int suppliesId;
+	private int supplyId;
+	
 	private String name;
 	private Date submitDate;
 	private boolean resolved;
 	private Date resolveDate;
-	private int apartmentId;
+	private int unitId;
+	private int submittedBy;
 	
 	
 	public Supply() {}
 
 
-	public Supply(int suppliesId, String name, Date submitDate, boolean resolved, Date resolveDate, int apartmentId) {
+	public Supply(int suppliesId, String name, Date submitDate, boolean resolved, Date resolveDate, int unitId, int submittedBy) {
 		super();
-		this.suppliesId = suppliesId;
+		this.supplyId = suppliesId;
 		this.name = name;
 		this.submitDate = submitDate;
 		this.resolved = resolved;
 		this.resolveDate = resolveDate;
-		this.apartmentId = apartmentId;
+		this.unitId = unitId;
+		this.submittedBy = submittedBy;
 	}
 
 
 	public int getSuppliesId() {
-		return suppliesId;
+		return supplyId;
 	}
 
 
 	public void setSuppliesId(int suppliesId) {
-		this.suppliesId = suppliesId;
+		this.supplyId = suppliesId;
 	}
 
 
@@ -90,20 +93,32 @@ public class Supply {
 	}
 
 
-	public int getApartmentId() {
-		return apartmentId;
+	public int getUnitId() {
+		return unitId;
 	}
 
 
-	public void setApartmentId(int apartmentId) {
-		this.apartmentId = apartmentId;
+	public void setUnitId(int unitId) {
+		this.unitId = unitId;
+	}
+	
+	
+
+
+	public int getSubmittedBy() {
+		return submittedBy;
+	}
+
+
+	public void setSubmittedBy(int submittedBy) {
+		this.submittedBy = submittedBy;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Supplies [suppliesId=" + suppliesId + ", name=" + name + ", submitDate=" + submitDate + ", resolved="
-				+ resolved + ", resolveDate=" + resolveDate + ", apartmentId=" + apartmentId + "]";
+		return "Supplies [suppliesId=" + supplyId + ", name=" + name + ", submitDate=" + submitDate + ", resolved="
+				+ resolved + ", resolveDate=" + resolveDate + ", unitId=" + unitId + ", submittedBy= " + submittedBy +"]";
 	};
 	
 	

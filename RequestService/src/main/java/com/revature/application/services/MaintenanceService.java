@@ -18,8 +18,23 @@ public class MaintenanceService
 	@Autowired
 	MaintenanceRepository maintenanceRepository;
 	
-	
 	public List<Maintenance> findAll(){
 		return maintenanceRepository.findAll();
+	}
+	
+	public List<Maintenance> findByUnitId(int unitId){
+		return maintenanceRepository.findByUnitId(unitId);
+	}
+	
+	public Maintenance findById(int maintenanceId){
+		return maintenanceRepository.findByMaintenanceId(maintenanceId);
+	}
+	
+	public int save(Maintenance maintenance){
+		return maintenanceRepository.saveAndFlush(maintenance).getMaintenanceId();
+	}
+	
+	public int update(Maintenance maintenance){
+		return maintenanceRepository.save(maintenance).getMaintenanceId();
 	}
 }

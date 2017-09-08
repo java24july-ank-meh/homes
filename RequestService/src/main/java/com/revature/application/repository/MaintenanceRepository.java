@@ -10,5 +10,7 @@ import com.revature.application.models.Maintenance;
 
 public interface MaintenanceRepository extends JpaRepository<Maintenance, Integer>
 {
-
+	public List<Maintenance> findByUnitId(int unitId);
+	
+	public Maintenance findByMaintenanceId(int maintenanceId);
 }

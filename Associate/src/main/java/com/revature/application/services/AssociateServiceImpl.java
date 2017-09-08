@@ -31,7 +31,7 @@ public class AssociateServiceImpl implements AssociateService {
 	}
 
 	@Override
-	public Associate findByUnitId(Long id) {
+	public List<Associate> findByUnitId(Long id) {
 		return associateRepository.findByUnitId(id);
 	}
 

@@ -29,13 +29,13 @@ public class Maintenance
 	private Date submitDate;
 	private Date resolveDate;
 	private boolean isResolved;
-	private int apartmentId;
+	private int unitId;
 	private int submittedBy;
 	
 	public Maintenance() {};
 
 	public Maintenance(int maintenanceId, String type, String location, String description, Date submitDate,
-			Date resolveDate, boolean isResolved, int apartmentId, int submittedBy)
+			Date resolveDate, boolean isResolved, int unitId, int submittedBy)
 	{
 		super();
 		this.maintenanceId = maintenanceId;
@@ -45,7 +45,7 @@ public class Maintenance
 		this.submitDate = (Date) new java.util.Date();
 		this.resolveDate = resolveDate;
 		this.isResolved = isResolved;
-		this.apartmentId = apartmentId;
+		this.unitId = unitId;
 		this.submittedBy = submittedBy;
 	}
 
@@ -119,14 +119,14 @@ public class Maintenance
 		this.resolveDate = resolveDate;
 	}
 
-	public int getApartmentId()
+	public int getUnitId()
 	{
-		return this.apartmentId;
+		return this.unitId;
 	}
 
-	public void setApartmentId(int apartmentId)
+	public void setUnitId(int unitId)
 	{
-		this.apartmentId = apartmentId;
+		this.unitId = unitId;
 	}
 
 	public int getSubmittedBy()
@@ -144,7 +144,7 @@ public class Maintenance
 	{
 		return "Maintenance [maintenanceId=" + maintenanceId + ", type=" + type + ", location=" + location
 				+ ", description=" + description + ", submitDate=" + submitDate + ", resolveDate=" + resolveDate
-				+ ", isResolved=" + isResolved + ", apartmentId=" + apartmentId + ", submittedBy=" + submittedBy + "]";
+				+ ", isResolved=" + isResolved + ", unitId=" + unitId + ", submittedBy=" + submittedBy + "]";
 	}
 	
 }

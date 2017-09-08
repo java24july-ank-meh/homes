@@ -15,18 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.models.Maintenance;
 import com.revature.application.services.MaintenanceService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class MaintenanceController
 {
 	@Autowired
 	MaintenanceService maintenanceService;
 
+	@ApiOperation(value = "View all maintenance requests.")
 	@GetMapping("maintenance")
 	public ResponseEntity<Object> displayAllMaintenanceRequest()
 	{
 		return ResponseEntity.ok(maintenanceService.findAll());
 	}
 
+//	@ApiOperation(value = "View all maintenance requests for a single Unit.", response = Iterable.class)
 	@GetMapping("units/{unitId}/maintenance")
 	public ResponseEntity<Object> displayAllFromUnit(@PathVariable("unitId") int unitId)
 	{
@@ -39,12 +43,14 @@ public class MaintenanceController
 		return ResponseEntity.ok(maintenanceRequests);
 	}
 	
+//	@ApiOperation(value = "Create Maintenance request for Unit.", response = Iterable.class)
 	@RequestMapping(value="units/{unitId}/maintenance", method=RequestMethod.POST)
 	public ResponseEntity<Object> createMaintanenceRequest(@PathVariable("unitId") int unitId, @RequestBody Maintenance maintenance)
 	{
 		return ResponseEntity.status(HttpStatus.SC_CREATED).body(maintenanceService.save(maintenance));
 	}
 	
+//	@ApiOperation(value = "View Maintenance Request By Maintenance Id.", response = Iterable.class)
 	@RequestMapping(value="maintenance/{maintenanceId}")
 	public ResponseEntity<Object> displayMaintenance(@PathVariable("maintenanceId") int maintenanceId)
 	{
@@ -56,6 +62,7 @@ public class MaintenanceController
 		return ResponseEntity.ok(maintenance);
 	}
 	
+//	@ApiOperation(value = "Complete Maintenance Request", response = Iterable.class)
 	@RequestMapping(value="maintenance/{maintenanceId}/complete", method=RequestMethod.POST)
 	public ResponseEntity<Object> completeMaintenance(@PathVariable("maintenanceId") int maintenanceId)
 	{

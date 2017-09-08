@@ -1,5 +1,6 @@
 package com.revature.application.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Associate {
 	private Long officeId;
 	private String phone;
 	private String about;
+	@Column(unique = true)
 	private String email;
 	private String gender;
 	private Long unitId;

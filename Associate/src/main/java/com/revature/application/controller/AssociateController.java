@@ -43,9 +43,13 @@ public class AssociateController {
 		//return ResponseEntity.ok(associateService.findByUnitId(id));
 		List<Associate> people = associateService.findByUnitId(id);
 		
+		System.out.println(people);
+		
 		if(people == null) {
 			//if the unit does not exist in the database, null is returned
-			return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+			//TODO: uncomment the above code later when it is possible to get null
+			return new ResponseEntity<Object>(null, HttpStatus.I_AM_A_TEAPOT);
 		}
 		
 		if(people.size() == 0) {

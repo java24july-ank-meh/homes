@@ -3,7 +3,10 @@ package com.revature.application.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +16,19 @@ import com.revature.application.repository.AssociateRepository;
 @Service
 public class AssociateServiceImpl implements AssociateService {
 	
+	@Autowired
+    private KafkaTemplate<String, String> template;
+	//use this to send message to the kafka server
+	//ex: template.send("myTopic", "foo1");
+	
 	private AssociateRepository associateRepository;
+	
+	//this method will listen for a topic
+	@KafkaListener(topics = "myTopic")
+    public void listen(ConsumerRecord<?, ?> cr) throws Exception {
+        System.out.println("################# LISTENING TO MESSAGE ###################");
+        System.out.println(cr.toString());
+    }
 	
 	@Autowired
 	public void setAssociateRepository(AssociateRepository associateRepository) {

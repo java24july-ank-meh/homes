@@ -10,7 +10,7 @@ public interface AssociateService {
 	
 	public Associate findByAssociateId(Long id);
 	
-	public Associate findByUnitId(Long id);
+	public List<Associate> findByUnitId(Long id); //because a unit can have more than one person in it
 	
 	public Associate findByEmail(String email);
 	

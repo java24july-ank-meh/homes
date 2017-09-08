@@ -1,6 +1,10 @@
 package com.revature.application.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,17 +40,48 @@ public class AssociateController {
 
 	@GetMapping("Associates/{id}/unit")
 	public ResponseEntity<Object> findByUnitId(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(associateService.findByUnitId(id));
+		//return ResponseEntity.ok(associateService.findByUnitId(id));
+		List<Associate> people = associateService.findByUnitId(id);
+		
+		if(people == null) {
+			//if the unit does not exist in the database, null is returned
+			return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+		}
+		
+		if(people.size() == 0) {
+			//because there is no one in this unit
+			return new ResponseEntity<Object>(people, HttpStatus.NO_CONTENT);
+		}
+		
+		return ResponseEntity.ok(people);
 	}
 
+	/**
+	 * Gets you an associate from the database
+	 * @param associate the associate you want
+	 * @return the actual associate from the database
+	 */
 	@PostMapping("Associates/createOrUpdate")
 	public ResponseEntity<Object> createAssociate(Associate associate) {
-
-		return ResponseEntity.ok(associateService.saveOrUpdate(associate));
+		/* possible responses: 
+		 * OK - update worked
+		 *X CREATED - the associate was created (can't be known at this time as there is no way to distinguish between
+		 * a save or an update)
+		 * CONFLICT - if they tried to create an associate with information that already exists, like with an email
+		 * already used for another account
+		 * (known if an exception is thrown)*/
+		try {
+			Associate a = associateService.saveOrUpdate(associate);
+			return ResponseEntity.ok(a);
+		} catch (DataAccessException e){
+			//TODO: Test to make sure this works properly.
+			e.printStackTrace(); //for testing purposes. Comment out later.
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
 	}
 
 	@GetMapping("Associates/{email:.+}/email")
-	public Associate findByEmail(String email) {
+	public Associate findByEmail(@PathVariable("email") String email) {
 		return associateService.findByEmail(email);
 	}
 

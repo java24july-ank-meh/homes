@@ -51,7 +51,7 @@ public class MaintenanceController
 	}
 	
 //	@ApiOperation(value = "View Maintenance Request By Maintenance Id.", response = Iterable.class)
-	@RequestMapping(value="maintenance/{maintenanceId}")
+	@GetMapping(value="maintenance/{maintenanceId}")
 	public ResponseEntity<Object> displayMaintenance(@PathVariable("maintenanceId") int maintenanceId)
 	{
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);

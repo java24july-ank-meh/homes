@@ -1,4 +1,4 @@
-package com.revature.apartment.model;
+package com.revature.application.model;
 
 import java.util.List;
 

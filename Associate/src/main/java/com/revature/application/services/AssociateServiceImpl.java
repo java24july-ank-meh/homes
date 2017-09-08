@@ -16,7 +16,13 @@ import com.revature.application.repository.AssociateRepository;
 
 @Service
 public class AssociateServiceImpl implements AssociateService {
-
+	private AssociateRepository associateRepository;
+    
+	@Autowired
+	public void setAssociateRepository(AssociateRepository associateRepository) {
+		this.associateRepository = associateRepository;
+	}
+	
 	private final CountDownLatch latch = new CountDownLatch(3);
 	
 	 @Autowired
@@ -34,11 +40,7 @@ public class AssociateServiceImpl implements AssociateService {
         System.out.println(cr.toString());
         latch.countDown();
     }
-	
-	@Autowired
-	public void setAssociateRepository(AssociateRepository associateRepository) {
-		this.associateRepository = associateRepository;
-	}
+    
 
 	@Override
 	public List<Associate> listAll() {

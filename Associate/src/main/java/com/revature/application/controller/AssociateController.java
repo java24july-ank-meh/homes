@@ -12,47 +12,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.model.Associate;
 import com.revature.application.repository.AssociateRepository;
+import com.revature.application.services.AssociateService;
 
 @RestController
 public class AssociateController {
 
+	private AssociateService associateService;
+	
 	@Autowired
-	AssociateRepository associateRepository;
+	public void setAssociateService(AssociateService associateService) {
+		this.associateService = associateService;
+	}
 
 	@GetMapping("Associates")
 	public ResponseEntity<Object> findAll() {
-		return ResponseEntity.ok(associateRepository.findAll());
+		return ResponseEntity.ok(associateService.listAll());
 	}
 
 	@GetMapping("Associates/{id}")
-	public Associate findByContactId(@PathVariable("id") int id) {
-		return associateRepository.findByAssociateId(id);
+	public Associate findByContactId(@PathVariable("id") Long id) {
+		return associateService.findByAssociateId(id);
 	}
 
 	@GetMapping("Associates/{id}/unit")
-	public ResponseEntity<Object> findByUnitId(@PathVariable("id") int id) {
-		return ResponseEntity.ok(associateRepository.findByUnitId(id));
+	public ResponseEntity<Object> findByUnitId(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(associateService.findByUnitId(id));
 	}
 
-	@PostMapping("Associates/create")
+	@PostMapping("Associates/createOrUpdate")
 	public ResponseEntity<Object> createAssociate(Associate associate) {
 
-		return ResponseEntity.ok(associateRepository.saveAndFlush(associate));
-	}
-
-	@PutMapping("Associates/update")
-	public ResponseEntity<Object> updateResident(Associate associate) {
-		return ResponseEntity.ok(associateRepository.saveAndFlush(associate));
+		return ResponseEntity.ok(associateService.saveOrUpdate(associate));
 	}
 
 	@GetMapping("Associates/{email:.+}/email")
 	public Associate findByEmail(String email) {
-		return associateRepository.findByEmail(email);
+		return associateService.findByEmail(email);
 	}
 
 	@DeleteMapping("Associates/{id}")
-	public ResponseEntity<Object> removeResidentFromApartment(@PathVariable("id") int id) {
-		associateRepository.deleteByAssociateId(id);
+	public ResponseEntity<Object> removeResidentFromApartment(@PathVariable("id") Long id) {
+		associateService.delete(id);
 		return ResponseEntity.ok().build();
 
 	}

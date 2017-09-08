@@ -21,29 +21,28 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Associate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int associateId;
+	private Long associateId;
 	private String firstName;
 	private String lastName;
 	private String slackId;
 	private String role;
-	private int officeId;
+	private Long officeId;
 	private String phone;
 	private String about;
 	private String email;
 	private String gender;
-	private int unitId;
+	private Long unitId;
 	
 	
 
 	public Associate() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	
 
-	public Associate(int associateId, String firstName, String lastName, String slackId, String role, int officeId,
-			String phone, String about, String email, String gender, int unitId) {
+	public Associate(Long associateId, String firstName, String lastName, String slackId, String role, Long officeId,
+			String phone, String about, String email, String gender, Long unitId) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
@@ -71,11 +70,11 @@ public class Associate {
 
 
 
-	public int getAssociateId() {
+	public Long getAssociateId() {
 		return associateId;
 	}
 
-	public void setAssociateId(int associateId) {
+	public void setAssociateId(Long associateId) {
 		this.associateId = associateId;
 	}
 
@@ -111,11 +110,11 @@ public class Associate {
 		this.role = role;
 	}
 
-	public int getOfficeId() {
+	public Long getOfficeId() {
 		return officeId;
 	}
 
-	public void setOfficeId(int officeId) {
+	public void setOfficeId(Long officeId) {
 		this.officeId = officeId;
 	}
 
@@ -143,11 +142,11 @@ public class Associate {
 		this.email = email;
 	}
 
-	public int getUnitId() {
+	public Long getUnitId() {
 		return unitId;
 	}
 
-	public void setUnitId(int unitId) {
+	public void setUnitId(Long unitId) {
 		this.unitId = unitId;
 	}
 

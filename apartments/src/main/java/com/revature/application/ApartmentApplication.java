@@ -15,12 +15,12 @@ import com.revature.application.service.OfficeService;
 
 @RestController
 @SpringBootApplication
-public class SpringBootDataApplication {
+public class ApartmentApplication {
 	@Autowired
 	OfficeService os;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootDataApplication.class, args);
+		SpringApplication.run(ApartmentApplication.class, args);
 	}
 	
 	@RequestMapping(value="/")

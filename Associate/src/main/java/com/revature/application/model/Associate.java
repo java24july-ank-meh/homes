@@ -30,6 +30,7 @@ public class Associate {
 	private String phone;
 	private String about;
 	private String email;
+	private String gender;
 	private int unitId;
 	
 	
@@ -39,8 +40,10 @@ public class Associate {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public Associate(int associateId, String firstName, String lastName, String slackId, String role, int officeId,
-			String phone, String about, String email, int unitId) {
+			String phone, String about, String email, String gender, int unitId) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
@@ -51,8 +54,22 @@ public class Associate {
 		this.phone = phone;
 		this.about = about;
 		this.email = email;
+		this.gender = gender;
 		this.unitId = unitId;
 	}
+
+	
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
 
 	public int getAssociateId() {
 		return associateId;
@@ -134,11 +151,15 @@ public class Associate {
 		this.unitId = unitId;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
-				+ about + ", email=" + email + ", unitId=" + unitId + "]";
+				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + "]";
 	}
+
+	
 
 }

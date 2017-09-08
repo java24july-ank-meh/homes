@@ -28,7 +28,7 @@ public class MaintenanceController
 	}
 
 	@GetMapping("units/{unitId}/maintenance")
-	public ResponseEntity<Object> displayAllFromApartment(@PathVariable("unitId") int unitId)
+	public ResponseEntity<Object> displayAllFromUnit(@PathVariable("unitId") int unitId)
 	{
 		
 		List<Maintenance>maintenanceRequests = maintenanceService.findByUnitId(unitId);

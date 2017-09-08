@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.models.Supply;
 import com.revature.application.services.SupplyService;
 
-@RestController
+import io.swagger.annotations.ApiOperation;
 
+@RestController
 public class SupplyController {
 
 	@Autowired
@@ -27,7 +28,7 @@ public class SupplyController {
 		return ResponseEntity.ok(supplyService.findAll());
 	}
 	
-	@RequestMapping("units/{unitId}/supply")
+	@GetMapping("units/{unitId}/supply")
 	public ResponseEntity<Object> displayAllFromUnit(@PathVariable("unitId") int unitId){
 		
 		List<Supply> supplyRequests = supplyService.findByUnitId(unitId);
@@ -38,13 +39,13 @@ public class SupplyController {
 		
 		return ResponseEntity.ok(supplyRequests);
 	}
-	
+	@ApiOperation(value = "Create Supply requests.")
 	@RequestMapping(value = "units/{unitId}/supply", method=RequestMethod.POST)
-	public ResponseEntity<Object> createMaintenanceRequest(@PathVariable("unitId") int unitId, @RequestBody Supply supply){
+	public ResponseEntity<Object> createSupplyRequest(@PathVariable("unitId") int unitId, @RequestBody Supply supply){
 		return ResponseEntity.status(HttpStatus.SC_CREATED).body(supplyService.save(supply));
 	}
 	
-	@RequestMapping(value ="supply/{supplyId}")
+	@GetMapping(value ="supply/{supplyId}")
 	public ResponseEntity<Object> displaySupply(@PathVariable("supplyId") int supplyId){
 		Supply supply = supplyService.findById(supplyId);
 		

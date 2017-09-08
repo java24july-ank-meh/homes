@@ -81,7 +81,7 @@ public class AssociateController {
 	}
 
 	@GetMapping("Associates/{email:.+}/email")
-	public Associate findByEmail(String email) {
+	public Associate findByEmail(@PathVariable("email") String email) {
 		return associateService.findByEmail(email);
 	}
 

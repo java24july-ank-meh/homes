@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: Contact
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Vince Commero
+Built-By: Christian
 Implementation-Vendor-Id: com.revature
-Build-Jdk: 1.8.0_144
+Build-Jdk: 1.8.0_141
 Implementation-URL: http://projects.spring.io/spring-boot/Contact/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.

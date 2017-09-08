@@ -32,6 +32,8 @@ public class AssociateServiceImpl implements AssociateService {
 
 	@Override
 	public List<Associate> findByUnitId(Long id) {
+		//TODO: possibly change this to actually look by Unit ID as it currently... well does not do that.
+		//TODO: Get Unit model from the Unit team to get it implemented in our service to make this method actually work
 		return associateRepository.findByUnitId(id);
 	}
 

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.InboundChannelAdapter;
 
 @SpringBootApplication
-@EnableBinding(Source.class)
+//@EnableBinding(Source.class)
 public class AssociateApplication {
 
 	public static void main(String[] args) {

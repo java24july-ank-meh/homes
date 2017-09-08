@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.apartment.model.Complex;
-import com.revature.apartment.repository.ComplexRepository;
+import com.revature.application.model.Complex;
+import com.revature.application.repository.ComplexRepository;
 
 
 @Service

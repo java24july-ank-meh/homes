@@ -2,6 +2,7 @@ package com.revature.application.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +16,31 @@ import com.revature.application.repository.AssociateRepository;
 
 @Service
 public class AssociateServiceImpl implements AssociateService {
-	
-	@Autowired
-    private KafkaTemplate<String, String> template;
-	//use this to send message to the kafka server
-	//ex: template.send("myTopic", "foo1");
-	
 	private AssociateRepository associateRepository;
-	
-	//this method will listen for a topic
-	@KafkaListener(topics = "myTopic")
-    public void listen(ConsumerRecord<?, ?> cr) throws Exception {
-        System.out.println("################# LISTENING TO MESSAGE ###################");
-        System.out.println(cr.toString());
-    }
-	
+    
 	@Autowired
 	public void setAssociateRepository(AssociateRepository associateRepository) {
 		this.associateRepository = associateRepository;
 	}
+	
+	private final CountDownLatch latch = new CountDownLatch(3);
+	
+	 @Autowired
+	 private KafkaTemplate<String, String> template;
+	 /*example use
+	 this.template.send("myTopic", "foo1");
+     this.template.send("myTopic", "foo2");
+     this.template.send("myTopic", "foo3");
+     latch.await(60, TimeUnit.SECONDS);
+     System.out.println("Messages Sent");*/
+
+    @KafkaListener(topics = "myTopic")
+    public void listen(ConsumerRecord<?, ?> cr) throws Exception {
+        System.out.println("################# LISTENING TO MESSAGE ###################");
+        System.out.println(cr.toString());
+        latch.countDown();
+    }
+    
 
 	@Override
 	public List<Associate> listAll() {

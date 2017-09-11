@@ -41,8 +41,12 @@ public class SupplyController {
 	}
 	@ApiOperation(value = "Create Supply requests.")
 	@RequestMapping(value = "units/{unitId}/supply", method=RequestMethod.POST)
-	public ResponseEntity<Object> createSupplyRequest(@PathVariable("unitId") int unitId, @RequestBody Supply supply){
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body(supplyService.save(supply));
+	public ResponseEntity<Object> createSupplyRequest(@PathVariable("unitId") int unitId, @RequestBody List<Supply> supplies){
+		
+		for(Supply supply: supplies)
+			supplyService.save(supply);
+		
+		return ResponseEntity.status(HttpStatus.SC_CREATED).body("created");
 	}
 	
 	@GetMapping(value ="supply/{supplyId}")

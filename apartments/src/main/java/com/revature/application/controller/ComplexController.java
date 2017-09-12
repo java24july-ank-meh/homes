@@ -10,7 +10,7 @@ import com.revature.application.service.OfficeService;
 
 @RestController
 @RequestMapping("office")
-public class OfficeController {
+public class ComplexController {
 	@Autowired
 	OfficeService os;
 	

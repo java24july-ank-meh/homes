@@ -23,4 +23,12 @@ public class OfficeService {
 	public Office findOne(int id) {
 		return or.findOne(id);
 	}
+	
+	public Office addOne(Office office) {
+		return or.saveAndFlush(office);
+	}
+	
+	public void delete(int id) {
+		or.delete(id);
+	}
 }

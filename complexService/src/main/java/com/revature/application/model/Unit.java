@@ -2,6 +2,7 @@ package com.revature.application.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,11 +23,11 @@ public class Unit {
 	private int capacity;
 	private String gender;
 
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "complexId") //private Complex complex;
-	 */
+	
+	  @ManyToOne(fetch = FetchType.EAGER)
+	  @JoinColumn(name = "complexId") 
+	  private Complex complex; //private Complex complex;
+	 
 	public Unit() {
 	}
 

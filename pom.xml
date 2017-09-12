@@ -10,7 +10,7 @@
     <modules>
     	<module>zuul</module>
     	
-    	<module>Contact</module>
+    	<module>Associate</module>
     	<module>Complex</module>
     	<module>RequestService</module>	
     	<module>SlackMicroservice</module>

@@ -36,7 +36,7 @@ import com.revature.application.slackapi.Slack;
 @RequestMapping("/Complex")
 public class ComplexController {
 	@Autowired
-	ApartmentComplexService apartmentComplexService;
+	ComplexService apartmentComplexService;
 	
 	@Autowired
 	Slack slack;

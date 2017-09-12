@@ -28,13 +28,13 @@ public class AssociateServiceImpl implements AssociateService {
 	 @Autowired
 	 private KafkaTemplate<String, String> template;
 	 /*example use
-	 this.template.send("myTopic", "foo1");
-     this.template.send("myTopic", "foo2");
-     this.template.send("myTopic", "foo3");
+	 this.template.send("Associate", "foo1");
+     this.template.send("Associate", "foo2");
+     this.template.send("Associate", "foo3");
      latch.await(60, TimeUnit.SECONDS);
      System.out.println("Messages Sent");*/
 
-    @KafkaListener(topics = "myTopic")
+    @KafkaListener(topics = "Unit")
     public void listen(ConsumerRecord<?, ?> cr) throws Exception {
         System.out.println("################# LISTENING TO MESSAGE ###################");
         System.out.println(cr.toString());
@@ -72,7 +72,10 @@ public class AssociateServiceImpl implements AssociateService {
 
 	@Override
 	public Associate saveOrUpdate(Associate associate) {
+		/*if(findByAssociateId(associate.getAssociateId()).getUnitId() == associate.getUnitId())
+			template.send("Associate", "Update,"+associate.getAssociateId()+","+associate.getUnitId());*/
 		return associateRepository.save(associate);
+		
 	}
 
 }

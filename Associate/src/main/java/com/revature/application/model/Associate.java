@@ -28,17 +28,17 @@ public class Associate {
 	private String email;
 	private String gender;
 	private Long unitId;
-	private boolean withCar;
+	private int hasCar = 0; //fake boolean
 	private LocalDateTime moveInDate;
-	private boolean housingAgreed;
+	private int housingAgreed = 0; //fake boolean
 
 	public Associate() {
 		super();
 	}
 
 	public Associate(Long associateId, String firstName, String lastName, String slackId, String role, Long officeId,
-			String phone, String about, String email, String gender, Long unitId, boolean withCar,
-			LocalDateTime moveInDate, boolean housingAgreed) {
+			String phone, String about, String email, String gender, Long unitId, int hasCar, LocalDateTime moveInDate,
+			int housingAgreed) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
@@ -51,7 +51,7 @@ public class Associate {
 		this.email = email;
 		this.gender = gender;
 		this.unitId = unitId;
-		this.withCar = withCar;
+		this.hasCar = hasCar;
 		this.moveInDate = moveInDate;
 		this.housingAgreed = housingAgreed;
 	}
@@ -144,12 +144,12 @@ public class Associate {
 		this.unitId = unitId;
 	}
 
-	public boolean isWithCar() {
-		return withCar;
+	public int getHasCar() {
+		return hasCar;
 	}
 
-	public void setWithCar(boolean withCar) {
-		this.withCar = withCar;
+	public void setHasCar(int hasCar) {
+		this.hasCar = hasCar;
 	}
 
 	public LocalDateTime getMoveInDate() {
@@ -160,11 +160,11 @@ public class Associate {
 		this.moveInDate = moveInDate;
 	}
 
-	public boolean isHousingAgreed() {
+	public int getHousingAgreed() {
 		return housingAgreed;
 	}
 
-	public void setHousingAgreed(boolean housingAgreed) {
+	public void setHousingAgreed(int housingAgreed) {
 		this.housingAgreed = housingAgreed;
 	}
 
@@ -172,9 +172,11 @@ public class Associate {
 	public String toString() {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
-				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", withCar=" + withCar
+				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", hasCar=" + hasCar
 				+ ", moveInDate=" + moveInDate + ", housingAgreed=" + housingAgreed + "]";
 	}
+
+	
 	
 	
 }

@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,65 +30,68 @@ import com.wordnik.swagger.annotations.Api;
 @RequestMapping("unit")
 public class UnitController {
 	
-	static Map<String, String> slackProps;
-	
-	/*The following static block loads all properties necessary for accessing the slack 
-	 *api (mostly, the client token). */
-	static {
-		slackProps = new HashMap<>();
-		InputStream file = null;
-		Properties props = new Properties();
-		
-		try {
-			file = new FileInputStream("src/main/java/slack.properties");
-			props.load(file);
-			Set<String> propNames = props.stringPropertyNames();
-			for(String name : propNames) {
-				slackProps.put(name, props.getProperty(name));
-			}
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	/*restTemplate bean handles all http requests to slack API. A single RestTemplate
 	 * object can be used for multiple requests.
 	 */
 	@Autowired
 	RestTemplate restTemplate;
+	@Autowired
+	Helper helper;
 	
 	@HystrixCommand(fallbackMethod="createFallback")
 	@PostMapping("create/{complex}/{unit}")
-	public ResponseEntity<Object> createUnit(@PathVariable("complex") String complex, 
+	public String createUnit(@PathVariable("complex") String complex, 
 			@PathVariable("unit") String unit) {
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name. This should 
 		 *probably be changed to send these parameters in an HTTP POST body instead of 
 		 *sending them as URL parameters.*/
-		String url = "https://slack.com/api/channels.create?token="+
-				slackProps.get("client_token") + "&name=" + complex + unit;
+		String channelName = complex + unit;
+		String url = null;
+		String channelId = null;
 		
-		String responseString = restTemplate.getForObject(url, String.class);
+		if(helper.channelNameIsUnique(channelName)) {
+			url = "https://slack.com/api/channels.create?token="+
+					Helper.slackProps.get("client_token") + "&name=" + channelName;
+		}
+		else {
+			channelId = helper.getChannelId(channelName);
+			url = "https://slack.com/api/channels.unarchive?token="+
+					Helper.slackProps.get("client_token") + "&channel=" + channelId;
+		}
 		
-		List<String> response = new ArrayList<>();
-		response.add(responseString);
+		String response = restTemplate.getForObject(url, String.class);
+		channelId = helper.getChannelId(channelName);
+		System.out.println("new channel id: " + channelId);
 		
-		return ResponseEntity.ok(response);
+		return response;
 	}
 	
-	@PostMapping("update/{unit}")
-	public String updateUnit(@PathVariable("unit") String unit) {
-		return null;
+	@PostMapping("update/{complex}/{unit}/{new-name}")
+	public String updateUnit(@PathVariable("complex") String complex, 
+			@PathVariable("unit") String unit, @PathVariable("new-name") String newName) {
+		String channelName = complex + unit;
+		String channelId = helper.getChannelId(channelName);
+		String url = "https://slack.com/api/channels.rename?token=" + 
+			Helper.slackProps.get("client_token") + "&channel=" + channelId + 
+			"&name=" + newName;
+		
+		String response = restTemplate.getForObject(url, String.class);
+		return response;
 	}
 	
-	@PostMapping("delete/{unit}")
-	public String deleteUnit(@PathVariable("unit") String unit) {
-		return null;
+	@PostMapping("delete/{complex}/{unit}")
+	public String deleteUnit(@PathVariable("complex") String complex, 
+			@PathVariable("unit") String unit) {
+		
+		String channelName = complex + unit;
+		String channelId = helper.getChannelId(channelName);
+		String url = "https://slack.com/api/channels.archive?token="+
+				Helper.slackProps.get("client_token") + "&channel=" + channelId;
+		
+		String response = restTemplate.getForObject(url, String.class);
+		return response;
 	}
 	
 	public void createFallback() {

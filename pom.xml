@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        
+        <module>zuul</module>
+        <module>eureka</module>
     </modules>
 </project>

@@ -101,16 +101,4 @@ public class Helper {
 		return null;
 		
 	}
-	/* Returns a slack channel name for a given apartment complex
-	 * (keeping in mind that all slack channel names must be less than 21 characters)
-	 * orrrrr... just have manager choose a unique abbreviation (<10 chars)????
-	 */
-	public static String complexChannelName(String complex) {
-		return null; 
-	}
-	
-	// Returns a slack channel name for a given apartment unit
-	public static String unitChannelName(String complex, String unit) {
-		return null;
-	}
 }

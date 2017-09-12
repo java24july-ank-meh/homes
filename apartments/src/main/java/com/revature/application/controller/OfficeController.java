@@ -21,13 +21,12 @@ public class OfficeController {
 	
 	@GetMapping("{id}")
 	public Office findOne(@PathVariable("id") int id) {
-		System.out.println(os.findOne(id));
-		return os.findOne(id);
+		return os.find(id);
 	}
 	
 	@PostMapping()
 	public Office add() {
-		//return os.addOne(new Office(0,street,city,state,zip,phone,website));
-		return os.addOne(new Office(0,"street","city","state","zip","phone","website"));
+		//return os.save(new Office(0,street,city,state,zip,phone,website));
+		return os.save(new Office(0,"street","city","state","zip","phone","website"));
 	}
 }

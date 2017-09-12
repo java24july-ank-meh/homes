@@ -5,29 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.revature.application.model.Complex;
 import com.revature.application.model.Office;
+import com.revature.application.service.ComplexService;
 import com.revature.application.service.OfficeService;
 
 @RestController
-@RequestMapping("office")
+@RequestMapping("complex")
 public class ComplexController {
 	@Autowired
-	OfficeService os;
+	ComplexService cs;
 	
 	@GetMapping
-	public List<Office> findAll() {
-		return os.findAll();
+	public List<Complex> findAll() {
+		return cs.findAll();
 	}
 	
 	@GetMapping("{id}")
-	public Office findOne(@PathVariable("id") int id) {
-		System.out.println(os.findOne(id));
-		return os.findOne(id);
+	public Complex findOne(@PathVariable("id") int id) {
+		return cs.findByComplexId(id);
 	}
 	
 	@PostMapping()
-	public Office add() {
-		//return os.addOne(new Office(0,street,city,state,zip,phone,website));
-		return os.addOne(new Office(0,"street","city","state","zip","phone","website"));
+	public int add() {
+		return cs.save(new Complex(0,"website","email","phone","name","abbreviation","street","city","state","zip","parking",null));
 	}
 }

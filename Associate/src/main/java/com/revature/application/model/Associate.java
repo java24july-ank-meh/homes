@@ -1,5 +1,9 @@
 package com.revature.application.model;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,39 +28,32 @@ public class Associate {
 	private String email;
 	private String gender;
 	private Long unitId;
-	private boolean car;
+	private boolean withCar;
+	private LocalDateTime moveInDate;
+	private boolean housingAgreed;
 
 	public Associate() {
 		super();
 	}
 
-	public Associate(Long associateId, String firstName, String lastName, String role, Long officeId, String email,
-			String gender, boolean car) {
+	public Associate(Long associateId, String firstName, String lastName, String slackId, String role, Long officeId,
+			String phone, String about, String email, String gender, Long unitId, boolean withCar,
+			LocalDateTime moveInDate, boolean housingAgreed) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.slackId = slackId;
 		this.role = role;
 		this.officeId = officeId;
+		this.phone = phone;
+		this.about = about;
 		this.email = email;
 		this.gender = gender;
-		this.car = car;
-	}
-
-	public boolean isCar() {
-		return car;
-	}
-
-	public void setCar(boolean car) {
-		this.car = car;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
+		this.unitId = unitId;
+		this.withCar = withCar;
+		this.moveInDate = moveInDate;
+		this.housingAgreed = housingAgreed;
 	}
 
 	public Long getAssociateId() {
@@ -131,6 +128,14 @@ public class Associate {
 		this.email = email;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public Long getUnitId() {
 		return unitId;
 	}
@@ -139,15 +144,37 @@ public class Associate {
 		this.unitId = unitId;
 	}
 
+	public boolean isWithCar() {
+		return withCar;
+	}
+
+	public void setWithCar(boolean withCar) {
+		this.withCar = withCar;
+	}
+
+	public LocalDateTime getMoveInDate() {
+		return moveInDate;
+	}
+
+	public void setMoveInDate(LocalDateTime moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+	public boolean isHousingAgreed() {
+		return housingAgreed;
+	}
+
+	public void setHousingAgreed(boolean housingAgreed) {
+		this.housingAgreed = housingAgreed;
+	}
+
 	@Override
 	public String toString() {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
-				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", car=" + car + "]";
+				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", withCar=" + withCar
+				+ ", moveInDate=" + moveInDate + ", housingAgreed=" + housingAgreed + "]";
 	}
-
 	
-
 	
-
 }

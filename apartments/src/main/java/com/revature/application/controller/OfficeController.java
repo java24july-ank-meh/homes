@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import com.revature.application.model.Office;
 import com.revature.application.service.OfficeService;
 
+import io.swagger.annotations.Api;
+
+@Api(value="office")
 @RestController
 @RequestMapping("office")
 public class OfficeController {

@@ -60,6 +60,24 @@ public class Complex {
 
 		/* this.units = units; */
 	}
+	public Complex( String website, String email, String phone, String name, String abbreviation,
+			String street, String city, String state, String zip, String parking,
+			Office office /* , List<Unit> units */) {
+		super();
+		this.website = website;
+		this.email = email;
+		this.phone = phone;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.parking = parking;
+		this.office = office;
+
+		/* this.units = units; */
+	}
 
 	public Complex() {
 	}

@@ -21,7 +21,7 @@ public class ComplexService {
 	}
 	
 	public Complex findByComplexId(int id) {
-		return ComplexRepository.findBycomplexId(id);
+		return ComplexRepository.findOne(id);
 	}
 	
 	public int save(Complex complex){

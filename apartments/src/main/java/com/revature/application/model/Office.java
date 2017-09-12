@@ -5,10 +5,13 @@ import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Office {
@@ -22,8 +25,9 @@ public class Office {
 	private String phone;
 	private String website;
 	
-	//@OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
-	//Set<Complex> complexes;
+	@OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	Set<Complex> complexes;
 	
 	public Office() {
 	}
@@ -94,5 +98,18 @@ public class Office {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
+
+	public Set<Complex> getComplexes() {
+		return complexes;
+	}
+
+	public void setComplexes(Set<Complex> complexes) {
+		this.complexes = complexes;
+	}
+
+	@Override
+	public String toString() {
+		return "Office [officeId=" + officeId + ", street=" + street + ", city=" + city + ", state=" + state + ", zip="
+				+ zip + ", phone=" + phone + ", website=" + website;
+	}
 }

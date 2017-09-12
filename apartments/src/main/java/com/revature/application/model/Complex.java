@@ -2,171 +2,177 @@ package com.revature.application.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //import com.revature.apartment.model.Unit;
 
+@Entity
+@Table(name = "COMPLEX")
+public class Complex {
 
-	@Entity
-	@Table(name="COMPLEX")
-	public class Complex {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int complexId;
+	private String website;
+	private String email;
+	private String phone;
+	private String name;
 
-		@Id
-		@GeneratedValue(strategy=GenerationType.AUTO)
-		private int complexId;
-		private String website;
-		private String email;
-		private String phone;
-		private String name;
-		private String street;
-		private String city;
-		private String state;
-		private String zip;
-		private String parking;
-		
-//		@ManyToOne(fetch = FetchType.EAGER)
-//		@JoinColumn(name = "OFFICE_ID")
-//		@JsonIdentityInfo(scope=Complex.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "officeId")
-//		@JsonIdentityReference(alwaysAsId = true)
-//		private Office office;
-//
-//		@OneToMany(mappedBy="complex", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-//		private List<Unit> units;
-		
-		public Complex(int complexId, String website, String email, String phone, String name, String street,
-				String city, String state, String zip, String parking/*, Office office, List<Unit> units*/) {
-			super();
-			this.complexId = complexId;
-			this.website = website;
-			this.email = email;
-			this.phone = phone;
-			this.name = name;
-			this.street = street;
-			this.city = city;
-			this.state = state;
-			this.zip = zip;
-			this.parking = parking;
-			/*this.office = office;
-			this.units = units;*/
-		}
-		
-		public Complex() {}
+	@Column(unique = true)
+	@Size(max = 12)
+	private String abbreviation; // abbreviation of the name unique and under 12 chars
 
-		@Override
-		public String toString() {
-			return "Complex [complexId=" + complexId + ", website=" + website + ", email=" + email + ", phone=" + phone
-					+ ", name=" + name + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip
-					+ ", parking=" + parking + "]";
-		}
+	private String street;
+	private String city;
+	private String state;
+	private String zip;
+	private String parking;
 
-		public int getComplexId() {
-			return complexId;
-		}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "OFFICE_ID")
+	private Office office;
 
-		public void setComplexId(int complexId) {
-			this.complexId = complexId;
-		}
+	// @OneToMany(mappedBy="complex", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	// @JsonIgnore
+	// private List<Unit> units;
 
-		public String getWebsite() {
-			return website;
-		}
+	public Complex(int complexId, String website, String email, String phone, String name, String abbreviation,
+			String street, String city, String state, String zip, String parking,
+			Office office /* , List<Unit> units */) {
+		super();
+		this.complexId = complexId;
+		this.website = website;
+		this.email = email;
+		this.phone = phone;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.parking = parking;
+		this.office = office;
 
-		public void setWebsite(String website) {
-			this.website = website;
-		}
+		/* this.units = units; */
+	}
 
-		public String getEmail() {
-			return email;
-		}
+	public Complex() {
+	}
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
+	@Override
+	public String toString() {
+		return "Complex [complexId=" + complexId + ", website=" + website + ", email=" + email + ", phone=" + phone
+				+ ", name=" + name + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip
+				+ ", parking=" + parking + "]";
+	}
 
-		public String getPhone() {
-			return phone;
-		}
+	public int getComplexId() {
+		return complexId;
+	}
 
-		public void setPhone(String phone) {
-			this.phone = phone;
-		}
+	public void setComplexId(int complexId) {
+		this.complexId = complexId;
+	}
 
-		public String getName() {
-			return name;
-		}
+	public String getWebsite() {
+		return website;
+	}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public void setWebsite(String website) {
+		this.website = website;
+	}
 
-		public String getStreet() {
-			return street;
-		}
+	public String getEmail() {
+		return email;
+	}
 
-		public void setStreet(String street) {
-			this.street = street;
-		}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-		public String getCity() {
-			return city;
-		}
+	public String getPhone() {
+		return phone;
+	}
 
-		public void setCity(String city) {
-			this.city = city;
-		}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-		public String getState() {
-			return state;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public void setState(String state) {
-			this.state = state;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public String getZip() {
-			return zip;
-		}
+	public String getStreet() {
+		return street;
+	}
 
-		public void setZip(String zip) {
-			this.zip = zip;
-		}
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
-		public String getParking() {
-			return parking;
-		}
+	public String getCity() {
+		return city;
+	}
 
-		public void setParking(String parking) {
-			this.parking = parking;
-		}
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-//		public Office getOffice() {
-//			return office;
-//		}
-//
-//		public void setOffice(Office office) {
-//			this.office = office;
-//		}
-//
-//		public List<Unit> getUnits() {
-//			return units;
-//		}
-//
-//		public void setUnits(List<Unit> units) {
-//			this.units = units;
-//		}
+	public String getState() {
+		return state;
+	}
 
-		
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getParking() {
+		return parking;
+	}
+
+	public void setParking(String parking) {
+		this.parking = parking;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
+	}
+
+	public Office getOffice() {
+		return office;
+	}
+
+	public void setOffice(Office office) {
+		this.office = office;
+	}
+	//
+	// public List<Unit> getUnits() {
+	// return units;
+	// }
+	//
+	// public void setUnits(List<Unit> units) {
+	// this.units = units;
+	// }
 
 }

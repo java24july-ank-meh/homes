@@ -20,7 +20,15 @@ public class OfficeService {
 		return or.findAll();
 	}
 	
-	public Office findOne(int id) {
+	public Office find(int id) {
 		return or.findOne(id);
+	}
+	
+	public Office save(Office office) {
+		return or.saveAndFlush(office);
+	}
+	
+	public void delete(int id) {
+		or.delete(id);
 	}
 }

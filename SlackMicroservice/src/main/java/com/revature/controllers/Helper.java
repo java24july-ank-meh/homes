@@ -101,4 +101,11 @@ public class Helper {
 		return null;
 		
 	}
+	
+	public String referenceAllUsersInMessage() {
+		String url = "https://slack.com/api/channels.list&token=" + slackProps.get("client_token");
+		String responseString = restTemplate.getForObject(url, String.class);
+		return url;
+	}
+	
 }

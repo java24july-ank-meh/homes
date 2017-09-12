@@ -2,23 +2,19 @@ package com.revature.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.revature.application.model.Unit;
 import com.revature.application.service.UnitService;
 
 @RestController
+@RequestMapping("unit")
 public class UnitController {
 
 	@Autowired
 	UnitService unitService;
 
-	@RequestMapping(value = "/Unit", method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<Object> displayAllUnit() {
 		return ResponseEntity.ok(unitService.findAll());
 	}
@@ -28,7 +24,7 @@ public class UnitController {
 		return ResponseEntity.ok(unitService.findByUnitId(id));
 	}*/
 
-	@RequestMapping(value = "/Unit/{id}")
+	@GetMapping(value = "{id}")
 	public ResponseEntity<Object> displayUnit(@PathVariable("id") long id) {
 		return ResponseEntity.ok(unitService.findByUnitId(id));
 	}
@@ -38,12 +34,12 @@ public class UnitController {
 		return ResponseEntity.ok(unitService.save(unit));
 	}*/
 
-	@RequestMapping(value = "/Unit/{id}", method = RequestMethod.PUT)
+	@PutMapping(value = "{id}")
 	public ResponseEntity<Object> updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
 		return ResponseEntity.ok(unitService.update(unit));
 	}
 
-	@DeleteMapping(value = "Unit/{id}")
+	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Object> deleteUnit(@PathVariable("id") long id){
 		return ResponseEntity.ok("Unit Deleted");
 	}

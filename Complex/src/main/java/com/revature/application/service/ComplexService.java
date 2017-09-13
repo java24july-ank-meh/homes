@@ -24,12 +24,14 @@ public class ComplexService {
 		return ComplexRepository.findOne(id);
 	}
 	
+
 	public int save(Complex complex){
 		return ComplexRepository.saveAndFlush(complex).getComplexId();
 	}
 	
-	public void delete(Complex complex) {
-		 ComplexRepository.delete(complex);
+	public String delete(int id) {
+		 ComplexRepository.delete(id);
+		 return id + " deleted";
 	}
 	
 	public int update(Complex complex) {

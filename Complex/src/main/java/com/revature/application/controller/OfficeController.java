@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.application.model.Complex;
@@ -20,23 +21,32 @@ public class OfficeController {
 	OfficeService os;
 	
 	@GetMapping
-	public List<Office> findAll() {
+	public Object findAll() {
 		return os.findAll();
 	}
 	
 	@GetMapping("{id}")
-	public Office findOne(@PathVariable("id") int id) {
+	public Object findOne(@PathVariable("id") int id) {
 		return os.find(id);
 	}
 	
-	@PostMapping()
-	public Office add() {
-		//return os.save(new Office(0,street,city,state,zip,phone,website));
-		return os.save(new Office(0,"street","city","state","zip","phone","website","timezone"));
+	@PostMapping("{id}")
+	public Object add(@PathVariable("id") int id, @RequestBody Office office) {
+		return os.save(office);
+	}
+	
+	@PutMapping("{id}")
+	public Object update(@PathVariable("id") int id, @RequestBody Office office) {
+		return os.save(office);
 	}	
 	
 	@GetMapping("{id}/complexes")
-	public Set<Complex> findComplexes(@PathVariable("id") int id){
+	public Object findComplexes(@PathVariable("id") int id){
 		return os.find(id).getComplexes();
+	}
+	
+	@DeleteMapping(value = "{id}")
+	public Object delete(@PathVariable("id") int id){
+		return os.delete(id);
 	}
 }

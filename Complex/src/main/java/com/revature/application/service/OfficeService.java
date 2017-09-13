@@ -28,7 +28,8 @@ public class OfficeService {
 		return or.saveAndFlush(office);
 	}
 	
-	public void delete(int id) {
+	public boolean delete(int id) {
 		or.delete(id);
+		return true;
 	}
 }

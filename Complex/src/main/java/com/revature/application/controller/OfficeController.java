@@ -15,7 +15,7 @@ import io.swagger.annotations.Api;
 
 @Api(value="office")
 @RestController
-@RequestMapping("office")
+@RequestMapping("/office")
 public class OfficeController {
 	@Autowired
 	OfficeService os;

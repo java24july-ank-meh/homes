@@ -31,7 +31,13 @@ public class UnitController {
 	
 	@PutMapping(value = "{id}")
 	public Object updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
-		return unitService.update(unit);
+		Unit u = unitService.findByUnitId(id);
+		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
+		if(unit.getComplex() != null) u.setComplex(unit.getComplex());
+		if(unit.getGender() != null) u.setGender(unit.getGender());
+		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
+		unitService.save(u);
+		return u;
 	}
 
 	@DeleteMapping(value = "{id}")

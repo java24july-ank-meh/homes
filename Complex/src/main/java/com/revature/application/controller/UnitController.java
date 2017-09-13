@@ -8,7 +8,7 @@ import com.revature.application.model.Unit;
 import com.revature.application.service.UnitService;
 
 @RestController
-@RequestMapping("unit")
+@RequestMapping("/unit")
 public class UnitController {
 
 	@Autowired

@@ -13,29 +13,34 @@ import com.revature.application.service.ComplexService;
 import com.revature.application.service.OfficeService;
 
 @RestController
-@RequestMapping("complex")
+@RequestMapping("/complex")
 public class ComplexController {
 	@Autowired
 	ComplexService cs;
 	
 	@GetMapping
-	public List<Complex> findAll() {
-		return cs.findAll();
+	public ResponseEntity<List<Complex>> findAll() {
+		return ResponseEntity.ok(cs.findAll());
 	}
 	
 	@GetMapping("{id}")
-	public Complex findOne(@PathVariable("id") int id) {
-		return cs.findByComplexId(id);
+	public ResponseEntity<Object> findOne(@PathVariable("id") int id) {
+		return ResponseEntity.ok(cs.findByComplexId(id));
+	}
+	@PostMapping
+	public ResponseEntity<Object> createComplex(@RequestBody Complex complex) {
+		return ResponseEntity.ok(cs.save(complex));
 	}
 	
 	@PutMapping(value = "{id}")
-	public ResponseEntity<Object> updateUnit(@PathVariable("id") int id, @RequestBody Complex complex) {
+	public ResponseEntity<Object> updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
 		return ResponseEntity.ok(cs.update(complex));
 	}
 
 	@DeleteMapping(value = "{id}")
-	public ResponseEntity<Object> deleteUnit(@PathVariable("id") long id){
-		return ResponseEntity.ok("Unit Deleted");
+	public ResponseEntity<String> deleteComplex(@PathVariable("id") int id){
+		 return ResponseEntity.ok(cs.delete(id));
+		 
 	}
 	
 }

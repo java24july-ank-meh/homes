@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -71,20 +72,6 @@ public class ResidentController {
 		
 	}
 	
-	/*send list of [userid1,username1, uid2,un2,...] to front end*/
-	@RequestMapping("message/listUsers/{complex}/{unit}")
-	public ResponseEntity<Object> listUser(@PathVariable("complex") String complex, @PathVariable("unit") String unit){
-		
-		String channelName = complex + unit;
-		String channelId = helper.getChannelId(channelName);
-		
-		String token = Helper.slackProps.get("client_token");
-		List<String> userArray = helper.getAllUsersInChannel(channelName);
-		
-		return ResponseEntity.ok(userArray);
-		
-	}
-	
 	@PostMapping("message/users/direct/{complex}/{unit}")
 	public ResponseEntity<Object> messageUserDirect(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
 			@RequestBody String message, @RequestBody List<String> userIds, @RequestBody int group){
@@ -118,10 +105,20 @@ public class ResidentController {
 		
 		String requestUrl  = "https://slack.com/api/channels.kick?token=" + token +
 				 "&channel="+ channelId+"&user=" + userId;
-
 		
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
 		return ResponseEntity.ok(responseString);
+		
+	}
+	
+	/*send list of [userid1,username1, uid2,un2,...] to front end*/
+	@RequestMapping(value="message/listUsers/{complex}/{unit}", method=RequestMethod.GET)
+	public ResponseEntity<Object> listUser(@PathVariable("complex") String complex, @PathVariable("unit") String unit){
+		
+		String channelName = complex + unit;
+		List<String> userList = helper.getAllUsersInChannel(channelName);
+		
+		return ResponseEntity.ok(userList);
 		
 	}
 	

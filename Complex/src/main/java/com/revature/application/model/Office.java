@@ -25,14 +25,6 @@ public class Office {
 	private String phone;
 	private String website;
 	private String timezone;
-	
-	public String getTimezone() {
-		return timezone;
-	}
-
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
 
 	@OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -115,6 +107,14 @@ public class Office {
 
 	public void setComplexes(Set<Complex> complexes) {
 		this.complexes = complexes;
+	}
+	
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 
 	@Override

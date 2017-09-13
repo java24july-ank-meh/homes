@@ -23,11 +23,10 @@ public class Unit {
 	private int capacity;
 	private String gender;
 
-	
-	  @ManyToOne(fetch = FetchType.EAGER)
-	  @JoinColumn(name = "complexId") 
-	  private Complex complex; //private Complex complex;
-	 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "complexId")
+	private Complex complex;
+
 	public Unit() {
 	}
 
@@ -36,6 +35,15 @@ public class Unit {
 		this.unitNumber = unitNumber;
 		this.capacity = capacity;
 		this.gender = gender;
+	}
+
+	public Unit(long unitId, String unitNumber, int capacity, String gender, Complex complex) {
+		super();
+		this.unitId = unitId;
+		this.unitNumber = unitNumber;
+		this.capacity = capacity;
+		this.gender = gender;
+		this.complex = complex;
 	}
 
 	public long getUnitId() {
@@ -70,11 +78,13 @@ public class Unit {
 		this.gender = gender;
 	}
 
-	/*
-	 * public Complex getComplex() { return complex; }
-	 * 
-	 * public void setComplex(Complex complex) { this.complex = complex; }
-	 */
+	public Complex getComplex() {
+		return complex;
+	}
+
+	public void setComplex(Complex complex) {
+		this.complex = complex;
+	}
 
 	@Override
 	public String toString() {

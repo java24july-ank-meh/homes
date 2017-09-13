@@ -19,11 +19,6 @@ public class UnitController {
 		return unitService.findAll();
 	}
 
-	@GetMapping(value = "/complex/{id}/unit")
-	public Object displayUnitFromComplex(@PathVariable("id") long id) {
-		return unitService.findByUnitId(id);
-	}
-
 	@GetMapping(value = "{id}")
 	public Object displayUnit(@PathVariable("id") long id) {
 		return unitService.findByUnitId(id);

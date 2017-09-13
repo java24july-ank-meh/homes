@@ -3,8 +3,10 @@ package com.revature.controllers;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -102,10 +104,118 @@ public class Helper {
 		
 	}
 	
-	public String referenceAllUsersInMessage() {
-		String url = "https://slack.com/api/channels.list&token=" + slackProps.get("client_token");
-		String responseString = restTemplate.getForObject(url, String.class);
-		return url;
+	/*	Returns ArrayList with the slack ID's of all users in a given channel*/
+	
+	public List<String> getAllUsersInChannel(String channelName) {
+		
+		String channelId = getChannelId(channelName);
+		
+		
+		String requestUrl = "https://slack.com/api/channels.info?token=" +slackProps.get("client_token") +
+				 "&channel="+ channelId;
+		
+		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		JsonNode rootNode, channelNode, idNode = null;
+		List<String> users = new ArrayList<String>();
+		
+		try {
+			rootNode = objectMapper.readTree(responseString);
+			channelNode = rootNode.path("channels");
+			idNode = channelNode.path("id");
+			
+			Iterator<JsonNode> elements = idNode.elements();
+			while(elements.hasNext()){
+				JsonNode member = elements.next();
+				users.add(member.toString());
+				users.add(getUserName(member.toString()) );
+			}
+			
+			return users;
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/*	Returns string with UserName given slack users ID*/
+	public String getUserName(String userId) {
+		
+		String requestUrl = "https://slack.com/api/users.info?token=" +slackProps.get("client_token") +
+				 "&user="+ userId;
+		
+		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		JsonNode rootNode, userNode, idNode = null;
+		String userName = "";
+		
+		try {
+			rootNode = objectMapper.readTree(responseString);
+			userNode = rootNode.path("user");
+			idNode = userNode.path("id");
+			userName = idNode.asText();
+			
+			return userName;
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public String  startConvo(List<String> userIds, String channelId) {
+		
+		String requestUrl = "https://slack.com/api/conversations.open?token=" +slackProps.get("client_token") +
+				"&channel="+channelId + "&return_im=false" + "&user=";
+		
+		for(int i = 0; i<(userIds.size()-1); i++) {
+			requestUrl += userIds.get(i) + ",";
+		}
+		requestUrl += userIds.get(userIds.size()-1);
+		
+		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		JsonNode rootNode, userNode, idNode = null;
+		String channel = "";
+		
+		try {
+			rootNode = objectMapper.readTree(responseString);
+			userNode = rootNode.path("user");
+			idNode = userNode.path("id");
+			channel = idNode.asText();
+			
+			return channel;
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public String  directMessage(String token, String channelId, String message, List<String> userIds) {
+		
+		String newChannel = startConvo(userIds, channelId);
+		
+		String requestUrl = "https://slack.com/api/chat.postMessage?token=" +slackProps.get("client_token") +
+				"&channel="+newChannel + "&return_im=false" + "&text="+message;
+			
+		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		
+		return responseString;
+	}
+	
+	public String  multiMessage(String token, String channelId, String message, List<String> userIds) {
+		
+		List<String> channels = new ArrayList<String>();
+		String responseString = "";
+		
+		for(int i = 0; i < userIds.size(); i++) {
+			channels.add(startConvo(userIds, channelId) );
+			List<String> singleUser = new ArrayList<String>();
+			singleUser.add(userIds.get(i));
+			
+			responseString = directMessage(token, channelId, message, singleUser);
+		}
+				
+		return responseString;
 	}
 	
 }

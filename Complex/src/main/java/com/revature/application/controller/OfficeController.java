@@ -32,8 +32,8 @@ public class OfficeController {
 	@PostMapping()
 	public Office add() {
 		//return os.save(new Office(0,street,city,state,zip,phone,website));
-		return os.save(new Office(0,"street","city","state","zip","phone","website"));
-	}
+		return os.save(new Office(0,"street","city","state","zip","phone","website","timezone"));
+	}	
 	
 	@GetMapping("{id}/complexes")
 	public Set<Complex> findComplexes(@PathVariable("id") int id){

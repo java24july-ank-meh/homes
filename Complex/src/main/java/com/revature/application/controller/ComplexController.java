@@ -19,27 +19,33 @@ public class ComplexController {
 	ComplexService cs;
 	
 	@GetMapping
-	public ResponseEntity<List<Complex>> findAll() {
-		return ResponseEntity.ok(cs.findAll());
+	public Object findAll() {
+		return cs.findAll();
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Object> findOne(@PathVariable("id") int id) {
-		return ResponseEntity.ok(cs.findByComplexId(id));
+	public Object findOne(@PathVariable("id") int id) {
+		return cs.findByComplexId(id);
 	}
+	
+	@GetMapping("{id}/units")
+	public Object findUnits(@PathVariable("id") int id) {
+		return cs.findByComplexId(id).getUnits();
+	}
+	
 	@PostMapping
-	public ResponseEntity<Object> createComplex(@RequestBody Complex complex) {
-		return ResponseEntity.ok(cs.save(complex));
+	public Object createComplex(@RequestBody Complex complex) {
+		return cs.save(complex);
 	}
 	
 	@PutMapping(value = "{id}")
-	public ResponseEntity<Object> updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
-		return ResponseEntity.ok(cs.update(complex));
+	public Object updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
+		return cs.update(complex);
 	}
 
 	@DeleteMapping(value = "{id}")
-	public ResponseEntity<String> deleteComplex(@PathVariable("id") int id){
-		 return ResponseEntity.ok(cs.delete(id));
+	public String deleteComplex(@PathVariable("id") int id){
+		 return cs.delete(id);
 		 
 	}
 	

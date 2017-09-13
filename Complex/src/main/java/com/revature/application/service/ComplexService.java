@@ -24,6 +24,7 @@ public class ComplexService {
 		return ComplexRepository.findOne(id);
 	}
 	
+
 	public int save(Complex complex){
 		return ComplexRepository.saveAndFlush(complex).getComplexId();
 	}

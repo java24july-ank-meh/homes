@@ -9,8 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-//Add entry of apartment unit by date 
+ 
 @Entity
 @Table(name = "UNIT")
 public class Unit {
@@ -28,13 +27,6 @@ public class Unit {
 	private Complex complex;
 
 	public Unit() {
-	}
-
-	public Unit(String unitNumber, int capacity, String gender) {
-		super();
-		this.unitNumber = unitNumber;
-		this.capacity = capacity;
-		this.gender = gender;
 	}
 
 	public Unit(long unitId, String unitNumber, int capacity, String gender, Complex complex) {

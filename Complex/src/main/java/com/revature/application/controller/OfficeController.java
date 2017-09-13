@@ -30,14 +30,23 @@ public class OfficeController {
 		return os.find(id);
 	}
 	
-	@PostMapping("{id}")
-	public Object add(@PathVariable("id") int id, @RequestBody Office office) {
+	@PostMapping
+	public Object add(@RequestBody Office office) {
 		return os.save(office);
 	}
 	
 	@PutMapping("{id}")
 	public Object update(@PathVariable("id") int id, @RequestBody Office office) {
-		return os.save(office);
+		Office o = os.find(id);
+		if(office.getCity() != null) o.setCity(office.getCity());
+		if(office.getPhone() != null) o.setPhone(office.getPhone());
+		if(office.getState() != null) o.setCity(office.getState());
+		if(office.getStreet() != null) o.setStreet(office.getStreet());
+		if(office.getTimezone() != null) o.setTimezone(office.getTimezone());
+		if(office.getWebsite() != null) o.setWebsite(office.getWebsite());
+		if(office.getZip() != null) o.setZip(office.getZip());
+		os.save(o);
+		return o;
 	}	
 	
 	@GetMapping("{id}/complexes")

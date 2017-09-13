@@ -24,8 +24,8 @@ public class UnitController {
 		return unitService.findByUnitId(id);
 	}
 	
-	@PostMapping(value = "{id}")
-	public Object createUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
+	@PostMapping
+	public Object createUnit(@RequestBody Unit unit) {
 		return unitService.save(unit);
 	}
 	

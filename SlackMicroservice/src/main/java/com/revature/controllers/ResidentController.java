@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import com.wordnik.swagger.annotations.Api;
 
+@Api(value="unit", description="This service allows users to message other users or their channel over slack")
 @RestController
 @RequestMapping("resident")
 public class ResidentController {

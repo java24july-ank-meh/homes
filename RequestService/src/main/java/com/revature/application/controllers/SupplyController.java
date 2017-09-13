@@ -47,7 +47,7 @@ public class SupplyController {
 		for(Supply supply: supplies)
 			supplyService.save(supply);
 		
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body("created");
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body("created");
 	}
 	
 	@GetMapping(value ="supply/{supplyId}")
@@ -71,6 +71,6 @@ public class SupplyController {
 		
 		supply.setResolved(true);
 		
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body(supplyService.update(supply));
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(supplyService.update(supply));
 	}
 }

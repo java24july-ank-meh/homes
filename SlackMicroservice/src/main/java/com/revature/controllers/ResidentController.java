@@ -1,6 +1,10 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import com.wordnik.swagger.annotations.Api;
@@ -22,12 +27,13 @@ public class ResidentController {
 	RestTemplate restTemplate;
 	
 	@Autowired
-	Helper helper;
+	Helper helper ;
+	
 	
 	/*Sends an email invite to the email and autofills first name and last name for slack registration
 	does not enforce names*/
 	@PostMapping("invite")
-	public  ResponseEntity<Object> invite(@RequestBody String email, @RequestBody String firstName, @RequestBody String lastName){
+	public  ResponseEntity<Object> invite(@RequestPart("email") String email, @RequestPart("fname") String firstName, @RequestPart("lname") String lastName){
 		
 	String token = Helper.slackProps.get("client_token");
 	String requestUrl = "https://slack.com/api/users.admin.invite?token=" +
@@ -41,7 +47,7 @@ public class ResidentController {
 
 	@PostMapping("message/{complex}/{unit}")
 	public ResponseEntity<Object> messageChannel(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
-			@RequestBody String message){
+			@RequestPart("message") String message){
 		
 		String token = Helper.slackProps.get("client_token");
 		String channelName = complex + unit;
@@ -57,7 +63,7 @@ public class ResidentController {
 	/*sends a message and @mentions all users in the userIds List*/
 	@PostMapping("message/users/{complex}/{unit}")
 	public ResponseEntity<Object> messageUser(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
-			@RequestBody String message, @RequestBody List<String> userIds){
+			@RequestPart("message") String message, @RequestBody List<String> userIds){
 		
 		String token = Helper.slackProps.get("client_token");
 		String channelName = complex + unit;
@@ -76,7 +82,14 @@ public class ResidentController {
 	
 	@PostMapping("message/users/direct/{complex}/{unit}")
 	public ResponseEntity<Object> messageUserDirect(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
-			@RequestBody String message, @RequestBody List<String> userIds, @RequestBody int group){
+			/*@RequestPart("message") String message, @RequestPart("group") String group,  @RequestBody String userIds2,*/HttpServletRequest req){
+		
+		String message = req.getParameter("message");
+		String group = req.getParameter("group");
+		String ids = req.getParameter("ids");
+		
+		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
+		System.out.println(userIds);
 		
 		String token = Helper.slackProps.get("client_token");
 		String channelName = complex + unit;
@@ -84,7 +97,8 @@ public class ResidentController {
 		String responseString ="";
 		
 		//individual message/s
-		if(group == 1) {
+		if(group.equals("0")) {
+			System.out.println("not group");
 			responseString = helper.multiMessage(token, channelId, message, userIds);
 		}
 		//group direct message
@@ -119,6 +133,7 @@ public class ResidentController {
 		
 		String channelName = complex + unit;
 		List<String> userList = helper.getAllUsersInChannel(channelName);
+		System.out.println(userList);
 		
 		return ResponseEntity.ok(userList);
 		

@@ -38,7 +38,11 @@ public class Helper {
 		Properties props = new Properties();
 		
 		try {
-			file = new FileInputStream("src/main/java/slack.properties");
+			System.out.println(" \n\n\n\n RUNNING STATIC BLOCK \n\n\n\n");
+			//file = new FileInputStream("src/main/java/slack.properties");
+			// \/\/ shitty madrone version \/\/
+			file = new FileInputStream("C:\\docs\\Revature\\batch-src\\homes\\SlackMicroservice\\src\\main\\java\\slack.properties");
+			// /\/\ shitty madrone version /\/\
 			props.load(file);
 			Set<String> propNames = props.stringPropertyNames();
 			for(String name : propNames) {
@@ -115,21 +119,21 @@ public class Helper {
 				 "&channel="+ channelId;
 		
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
-		JsonNode rootNode, channelNode, idNode = null;
+		JsonNode rootNode, channelNode, memNode = null;
 		List<String> users = new ArrayList<String>();
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
-			channelNode = rootNode.path("channels");
-			idNode = channelNode.path("id");
+			channelNode = rootNode.path("channel");
+			memNode = channelNode.path("members");
 			
-			Iterator<JsonNode> elements = idNode.elements();
+			Iterator<JsonNode> elements = memNode.elements();
 			while(elements.hasNext()){
 				JsonNode member = elements.next();
-				users.add(member.toString());
-				users.add(getUserName(member.toString()) );
+				users.add(member.asText());
+				users.add(getUserName(member.asText()) );
 			}
-			
+			System.out.println(users);
 			return users;
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -151,7 +155,7 @@ public class Helper {
 		try {
 			rootNode = objectMapper.readTree(responseString);
 			userNode = rootNode.path("user");
-			idNode = userNode.path("id");
+			idNode = userNode.path("name");
 			userName = idNode.asText();
 			
 			return userName;
@@ -165,23 +169,27 @@ public class Helper {
 	public String  startConvo(List<String> userIds, String channelId) {
 		
 		String requestUrl = "https://slack.com/api/conversations.open?token=" +slackProps.get("client_token") +
-				"&channel="+channelId + "&return_im=false" + "&user=";
+				 "&return_im=false" + "&users=";
 		
 		for(int i = 0; i<(userIds.size()-1); i++) {
-			requestUrl += userIds.get(i) + ",";
+			requestUrl += userIds.get(i) + "%2C";
 		}
 		requestUrl += userIds.get(userIds.size()-1);
+		requestUrl +="&pretty=1";
 		
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
-		JsonNode rootNode, userNode, idNode = null;
+		JsonNode rootNode, chanNode, idNode = null;
 		String channel = "";
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
-			userNode = rootNode.path("user");
-			idNode = userNode.path("id");
+			chanNode = rootNode.path("channel");
+			idNode = chanNode.path("id");
 			channel = idNode.asText();
 			
+			System.out.println("open channel: "+ requestUrl);
+			System.out.println(responseString);
+			System.out.println("channel: "+channel);
 			return channel;
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -198,7 +206,7 @@ public class Helper {
 				"&channel="+newChannel + "&return_im=false" + "&text="+message;
 			
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
-		
+		System.out.println("direct message: "+message+" " +requestUrl);
 		return responseString;
 	}
 	

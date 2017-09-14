@@ -168,11 +168,16 @@ public class Helper {
 	
 	public String  startConvo(List<String> userIds, String channelId) {
 		
+		String tag = "channel";
 		String requestUrl = "https://slack.com/api/conversations.open?token=" +slackProps.get("client_token") +
 				 "&return_im=false" + "&users=";
+		if(userIds.size()>1) {
+			requestUrl = "https://slack.com/api/mpim.open?token=" +slackProps.get("client_token") +"&users=";
+			tag = "group";
+		}
 		
 		for(int i = 0; i<(userIds.size()-1); i++) {
-			requestUrl += userIds.get(i) + "%2C";
+			requestUrl += userIds.get(i) + ",";
 		}
 		requestUrl += userIds.get(userIds.size()-1);
 		requestUrl +="&pretty=1";
@@ -183,13 +188,11 @@ public class Helper {
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
-			chanNode = rootNode.path("channel");
+			chanNode = rootNode.path(tag);
 			idNode = chanNode.path("id");
 			channel = idNode.asText();
 			
-			System.out.println("open channel: "+ requestUrl);
-			System.out.println(responseString);
-			System.out.println("channel: "+channel);
+
 			return channel;
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -206,7 +209,6 @@ public class Helper {
 				"&channel="+newChannel + "&return_im=false" + "&text="+message;
 			
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
-		System.out.println("direct message: "+message+" " +requestUrl);
 		return responseString;
 	}
 	

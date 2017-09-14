@@ -33,8 +33,12 @@ public class ResidentController {
 	/*Sends an email invite to the email and autofills first name and last name for slack registration
 	does not enforce names*/
 	@PostMapping("invite")
-	public  ResponseEntity<Object> invite(@RequestPart("email") String email, @RequestPart("fname") String firstName, @RequestPart("lname") String lastName){
-		
+	public  ResponseEntity<Object> invite(HttpServletRequest req){
+	
+	String email = req.getParameter("email"); 
+	String firstName = req.getParameter("fname");
+	String lastName = req.getParameter("lname");
+	
 	String token = Helper.slackProps.get("client_token");
 	String requestUrl = "https://slack.com/api/users.admin.invite?token=" +
 			token +"&email=" + email +
@@ -63,8 +67,12 @@ public class ResidentController {
 	/*sends a message and @mentions all users in the userIds List*/
 	@PostMapping("message/users/{complex}/{unit}")
 	public ResponseEntity<Object> messageUser(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
-			@RequestPart("message") String message, @RequestBody List<String> userIds){
+			HttpServletRequest req){
 		
+		String message = req.getParameter("message");
+		String ids = req.getParameter("ids");
+		
+		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
 		String token = Helper.slackProps.get("client_token");
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName);
@@ -82,7 +90,7 @@ public class ResidentController {
 	
 	@PostMapping("message/users/direct/{complex}/{unit}")
 	public ResponseEntity<Object> messageUserDirect(@PathVariable("complex") String complex, @PathVariable("unit") String unit, 
-			/*@RequestPart("message") String message, @RequestPart("group") String group,  @RequestBody String userIds2,*/HttpServletRequest req){
+			HttpServletRequest req){
 		
 		String message = req.getParameter("message");
 		String group = req.getParameter("group");
@@ -98,7 +106,6 @@ public class ResidentController {
 		
 		//individual message/s
 		if(group.equals("0")) {
-			System.out.println("not group");
 			responseString = helper.multiMessage(token, channelId, message, userIds);
 		}
 		//group direct message
@@ -133,7 +140,7 @@ public class ResidentController {
 		
 		String channelName = complex + unit;
 		List<String> userList = helper.getAllUsersInChannel(channelName);
-		System.out.println(userList);
+		//System.out.println(userList);
 		
 		return ResponseEntity.ok(userList);
 		

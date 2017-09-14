@@ -32,6 +32,9 @@ public class ComplexService {
 		 ComplexRepository.delete(complex);
 	}
 	
+	public int update(Complex complex) {
+		return ComplexRepository.saveAndFlush(complex).getComplexId();
+	}
 
 	
 

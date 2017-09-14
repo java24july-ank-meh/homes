@@ -45,12 +45,14 @@ public class AssociateController {
 		
 		System.out.println(people);
 		
-		if(people == null) {
+		
+		//It will never be null because we never know if the unit does not exist. We only know if none of the Associates
+		//are assigned to the particular unit with the ID we are using
+		/*if(people == null) {
 			//if the unit does not exist in the database, null is returned
 			//return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
-			//TODO: uncomment the above code later when it is possible to get null
 			return new ResponseEntity<Object>(null, HttpStatus.I_AM_A_TEAPOT);
-		}
+		}*/
 		
 		if(people.size() == 0) {
 			//because there is no one in this unit

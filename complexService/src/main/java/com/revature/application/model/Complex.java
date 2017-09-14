@@ -1,6 +1,7 @@
 package com.revature.application.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -36,14 +37,14 @@ public class Complex {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "OFFICE_ID")
 	private Office office;
-
-	// @OneToMany(mappedBy="complex", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	// @JsonIgnore
-	// private List<Unit> units;
+	
+	@OneToMany(mappedBy = "complex", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	List<Unit> units;
 
 	public Complex(int complexId, String website, String email, String phone, String name, String abbreviation,
 			String street, String city, String state, String zip, String parking,
-			Office office /* , List<Unit> units */) {
+			Office office  , List<Unit> units ) {
 		super();
 		this.complexId = complexId;
 		this.website = website;
@@ -57,12 +58,11 @@ public class Complex {
 		this.zip = zip;
 		this.parking = parking;
 		this.office = office;
-
-		/* this.units = units; */
+		this.units = units; 
 	}
 	public Complex( String website, String email, String phone, String name, String abbreviation,
 			String street, String city, String state, String zip, String parking,
-			Office office /* , List<Unit> units */) {
+			Office office  , List<Unit> units ) {
 		super();
 		this.website = website;
 		this.email = email;
@@ -75,8 +75,7 @@ public class Complex {
 		this.zip = zip;
 		this.parking = parking;
 		this.office = office;
-
-		/* this.units = units; */
+		this.units = units; 
 	}
 
 	public Complex() {

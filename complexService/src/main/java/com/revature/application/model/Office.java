@@ -24,7 +24,16 @@ public class Office {
 	private String zip;
 	private String phone;
 	private String website;
+	private String timezone;
 	
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
 	@OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	Set<Complex> complexes;
@@ -32,7 +41,7 @@ public class Office {
 	public Office() {
 	}
 
-	public Office(int officeId, String street, String city, String state, String zip, String phone, String website) {
+	public Office(int officeId, String street, String city, String state, String zip, String phone, String website, String timezone) {
 		super();
 		this.officeId = officeId;
 		this.street = street;
@@ -41,6 +50,7 @@ public class Office {
 		this.zip = zip;
 		this.phone = phone;
 		this.website = website;
+		this.timezone = timezone;
 	}
 
 	public int getOfficeId() {
@@ -110,6 +120,6 @@ public class Office {
 	@Override
 	public String toString() {
 		return "Office [officeId=" + officeId + ", street=" + street + ", city=" + city + ", state=" + state + ", zip="
-				+ zip + ", phone=" + phone + ", website=" + website;
+				+ zip + ", phone=" + phone + ", website=" + website + ", timezone" + timezone;
 	}
 }

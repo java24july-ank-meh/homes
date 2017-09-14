@@ -6,3 +6,5 @@ Servers/.project
 Servers/.settings/org.eclipse.wst.server.core.prefs
 Servers/Pivotal tc Server Developer Edition v3.2-config/catalina.policy
 .project
+*.properties
+Associate/target/classes/META-INF/maven/com.revature/Contact/pom.properties

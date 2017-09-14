@@ -1,0 +1,152 @@
+<md-button class="md-fab md-fab-bottom-right" aria-label="FAB" ng-click="showCreateApartmentForm()" >
+    <ng-md-icon icon="add" class="md-icon"></ng-md-icon>
+</md-button>
+
+<md-toolbar ng-show="!showSearch">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+            <ng-md-icon icon="menu"></ng-md-icon>
+        </md-button>
+        <h3>Complexes - {{complex.name}}</h3>
+        <span flex></span>
+        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+            <ng-md-icon icon="search"></ng-md-icon>
+        </md-button>
+        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+            <ng-md-icon icon="more_vert"></ng-md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-toolbar class="md-hue-1" ng-show="showSearch">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
+            <ng-md-icon icon="arrow_back"></ng-md-icon>
+        </md-button>
+        <h3 flex="10">
+            Back
+        </h3>
+        <md-input-container md-theme="input" flex>
+            <label>&nbsp;</label>
+            <input ng-model="search.who" placeholder="enter search">
+        </md-input-container>
+        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+            <ng-md-icon icon="search"></ng-md-icon>
+        </md-button>
+        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+            <ng-md-icon icon="more_vert"></ng-md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-content class="md-padding" >
+    <div layout layout-wrap layout-gt-sm="row" layout="column" >
+        <div flex="60" flex-sm="100" flex-xs="100" class="container">
+            <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!complex && !error">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
+                <h2>404 - Complex not found.</h2> 
+            </div>
+            <md-card ng-if="complex">
+                <md-toolbar class="md-hue-1" >
+                    <div class="md-toolbar-tools">
+                        <md-card-title-text >
+                            <span class="md-headline">{{complex.name}}</span>
+                        </md-card-title-text>
+                        <md-input-container md-theme="input" flex>
+                            <label>&nbsp;</label>
+                        </md-input-container>
+                        <md-button class="ng-icon-button" ui-sref="home.editComplex({complexId: complex.complexId})">
+                            <ng-md-icon icon="edit"></ng-md-icon>
+                        </md-button>
+                        <md-button class="ng-icon-button" ng-click="showConfirm()">
+                            <ng-md-icon icon="delete"></ng-md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <div ng-if"complex.photo != '' " style="background-image: url('{{complex.photo}}') !important; background-size: cover !important; min-height:400px; background: #eee;"></div>
+                <md-card-content layout-gt-md="row" layout="column" >
+                    <md-list class="md-dense" flex="50">
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3> {{complex.phone}}</h3>
+                                <p> PHONE</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3>{{complex.email}}</h3>
+                                <p> EMAIL</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <md-list class="md-dense">
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3>{{complex.address}}</h3>
+                                <p> ADDRESS</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="web"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3><a target="_blank" href="{{complex.website}}"> {{complex.website}} </a></h3>
+                                <p> WEBSITE</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+            <br>
+            
+            <md-card layout="column" >
+            	<md-card-title>
+	            	<md-card-title-text >
+	                     <span class="md-headline">Announcement</span>
+	                     <span class="md-subtitle">Send announcement to all Apartments in complex</span>
+	                 </md-card-title-text>
+	             </md-card-title>
+	             <md-divider></md-divider>
+	             	<form name="sendAnnouncementForm" ng-submit="sendAnnouncementFormSubmit()">
+						<md-input-container  class="md-block">
+					          <label>Announcement</label>
+					          <textarea ng-model="announcement" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+					    </md-input-container>    
+					    <md-card-actions layout="row" layout-align="end center">
+	                            <md-button type="submit" ng-disabled="!announcement" class="md-flat md-primary">SEND</md-button>
+	                    </md-card-actions>      
+                    </form>    
+            </md-card>
+            
+        
+        </div>
+        
+        <div flex flex-sm="100" flex-xs="100" class="container" ng-if="!error">
+            <md-card layout="column">
+                <md-card-title>
+                    <md-card-title-text >
+                        <span class="md-headline">Apartments</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-list flex>
+                    <md-list-item class="md-2-line noright" ng-repeat="apartment in complex.apartments" ui-sref="home.showApartment({apartmentId: apartment.apartmentId})">
+                        <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
+                        <div class="md-list-item-text" >
+                            <h3> {{apartment.apartmentNumber}}</h3>
+                            <p> {{apartment.residents.length}} of {{apartment.capacity}} residents</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-card>
+        </div>
+
+    </div>
+
+	
+</md-content>

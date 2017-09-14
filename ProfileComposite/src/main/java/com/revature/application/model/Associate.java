@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Associate {
 	private Long associateId;
 	private String firstName;

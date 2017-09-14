@@ -40,11 +40,23 @@ public class ComplexController {
 	
 	@PutMapping(value = "{id}")
 	public Object updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
+		Complex com = cs.findByComplexId(id);
+		if(complex.getCity() != null) com.setCity(complex.getCity());
+		if(complex.getStreet() != null) com.setCity(complex.getStreet());
+		if(complex.getState	() != null) com.setCity(complex.getState());
+		if(complex.getZip() != null) com.setCity(complex.getZip());
+		if(complex.getParking() != null) com.setCity(complex.getParking());
+		if(complex.getWebsite() != null) com.setCity(complex.getWebsite());
+		if(complex.getEmail() != null) com.setCity(complex.getEmail());
+		if(complex.getPhone() != null) com.setCity(complex.getPhone());
+		if(complex.getName() != null) com.setCity(complex.getName());
+		if(complex.getAbbreviation() != null) com.setCity(complex.getAbbreviation());
+		cs.save(com);
 		return cs.update(complex);
 	}
 
 	@DeleteMapping(value = "{id}")
-	public String deleteComplex(@PathVariable("id") int id){
+	public Object deleteComplex(@PathVariable("id") int id){
 		 return cs.delete(id);
 		 
 	}

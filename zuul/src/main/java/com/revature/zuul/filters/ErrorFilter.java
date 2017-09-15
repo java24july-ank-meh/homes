@@ -15,7 +15,7 @@ public class ErrorFilter extends ZuulFilter{
 		// TODO Auto-generated method stub
 		
 		//Check if the request is valid, if no, return filter.
-		return true;
+		return false;
 	}
 
 	@Override

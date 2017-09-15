@@ -22,7 +22,7 @@ public class ComplexCompositeController {
 	//this is for getting the big list of commplexes
 	@GetMapping("")
 	public ResponseEntity<Object> getComplexes(@PathVariable("id") String id) {
-		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex/" +id);
+		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
 		JsonObject associateJson = getJsonFromService("http://localhost:8090/associate");
 		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");
 		
@@ -42,7 +42,7 @@ public class ComplexCompositeController {
 		//add an occupancy paramater for each unit
 		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
 			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
-			unitEntryJson.addProperty("occupancy", unitMap.get(unitEntryJson.get("unitId")));
+			unitEntryJson.addProperty("occupancy", unitMap.get(unitEntryJson.get("unitId").getAsString()));
 			unitEntry.setValue(unitEntryJson);
 		}
 		
@@ -72,7 +72,9 @@ public class ComplexCompositeController {
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getComplex(@PathVariable("id") String id) {
-		
+		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex/"+id);
+		JsonObject associateJson = getJsonFromService("http://localhost:8090/associate");
+		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");
 		
 		return null;
 		

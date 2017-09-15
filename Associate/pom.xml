@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.revature</groupId>
-	<artifactId>Contact</artifactId>
+	<artifactId>Associate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Contact</name>
-	<description>Contact core for the Revature Housing Management System</description>
+	<name>Associate</name>
+	<description>Associate core for the Revature Housing Management System</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

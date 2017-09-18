@@ -30,7 +30,9 @@ public class Associate {
 	private Long unitId;
 	private int hasCar = 0; //fake boolean
 	private LocalDateTime moveInDate;
-	private int housingAgreed = 0; //fake boolean
+	private LocalDateTime moveO  utDate;
+	private LocalDateTime housingAgreed;//if not null then its agreed
+	private LocalDateTime hasKeys; // if null currently does not have keys
 
 	public Associate() {
 		super();

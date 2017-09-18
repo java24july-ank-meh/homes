@@ -112,7 +112,7 @@ public class ComplexCompositeController {
 	
 	private JsonObject getJsonFromService(String url) {
 		Client client = Client.create();
-		WebResource resource = client.resource("http://localhost:8090/associates");
+		WebResource resource = client.resource(url);
 		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
 		return new JsonParser().parse(associate).getAsJsonObject();
 	}

@@ -4,18 +4,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(name = "ASSOCIATE")
+@XmlRootElement
 public class Associate {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long associateId;
 	private String firstName;
 	private String lastName;
@@ -24,7 +16,6 @@ public class Associate {
 	private Long officeId;
 	private String phone;
 	private String about;
-	@Column(unique = true)
 	private String email;
 	private String gender;
 	private Long unitId;

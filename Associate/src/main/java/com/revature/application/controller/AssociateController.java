@@ -28,29 +28,31 @@ public class AssociateController {
 		this.associateService = associateService;
 	}
 
-	@GetMapping("Associates")
+	@GetMapping("associates")
 	public ResponseEntity<Object> findAll() {
 		return ResponseEntity.ok(associateService.listAll());
 	}
 
-	@GetMapping("Associates/{id}")
-	public Associate findByContactId(@PathVariable("id") Long id) {
-		return associateService.findByAssociateId(id);
+	@GetMapping("associates/{id}")
+	public ResponseEntity<Object> findByContactId(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(associateService.findByAssociateId(id));
 	}
 
-	@GetMapping("Associates/{id}/unit")
+	@GetMapping("associates/{id}/unit")
 	public ResponseEntity<Object> findByUnitId(@PathVariable("id") Long id) {
 		//return ResponseEntity.ok(associateService.findByUnitId(id));
 		List<Associate> people = associateService.findByUnitId(id);
 		
 		System.out.println(people);
 		
-		if(people == null) {
+		
+		//It will never be null because we never know if the unit does not exist. We only know if none of the Associates
+		//are assigned to the particular unit with the ID we are using
+		/*if(people == null) {
 			//if the unit does not exist in the database, null is returned
 			//return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
-			//TODO: uncomment the above code later when it is possible to get null
 			return new ResponseEntity<Object>(null, HttpStatus.I_AM_A_TEAPOT);
-		}
+		}*/
 		
 		if(people.size() == 0) {
 			//because there is no one in this unit
@@ -65,7 +67,7 @@ public class AssociateController {
 	 * @param associate the associate you want
 	 * @return the actual associate from the database
 	 */
-	@PostMapping("Associates/createOrUpdate")
+	@PostMapping("associates/createOrUpdate")
 	public ResponseEntity<Object> createAssociate(Associate associate) {
 		/* possible responses: 
 		 * OK - update worked
@@ -84,12 +86,12 @@ public class AssociateController {
 		}
 	}
 
-	@GetMapping("Associates/{email:.+}/email")
+	@GetMapping("associates/{email:.+}/email")
 	public Associate findByEmail(@PathVariable("email") String email) {
 		return associateService.findByEmail(email);
 	}
 
-	@DeleteMapping("Associates/{id}")
+	@DeleteMapping("associates/{id}")
 	public ResponseEntity<Object> removeResidentFromApartment(@PathVariable("id") Long id) {
 		associateService.delete(id);
 		return ResponseEntity.ok().build();

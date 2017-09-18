@@ -1,0 +1,70 @@
+
+<md-content class="md-padding" >
+    <div layout layout-wrap layout-gt-sm="row" layout="column" >
+        <div flex="60" flex-sm="100" flex-xs="100" class="container">
+    
+            
+            
+            <md-card ng-if="resident">
+            	<img ng-src="http://www.androidguys.com/wp-content/uploads/2013/07/wlp_retro-air_C.jpg" class="md-card-image" alt="Washed Out">
+            	<!-- <img ng-src="{{rootUser.image_1024}}" class="md-card-image" alt="Washed Out" ng-if="rootUser" width="20" height="20"> -->
+                <md-toolbar class="md-hue-1" >
+                    <div class="md-toolbar-tools">
+                        <md-card-title-text>
+                            <span class="md-headline">{{resident.firstName}} {{resident.lastName}}</span>
+                        </md-card-title-text>
+                        <md-input-container md-theme="input" flex>	
+                            <label>&nbsp;</label>
+                        </md-input-container>
+                        <md-button id="edit" class="ng-icon-button" ng-click="showEditResidentForm()"  ng-if="rootUser.isManager || rootResident.residentId == resident.residentId">
+                            <ng-md-icon icon="edit"></ng-md-icon>
+                        </md-button>
+                        <md-button class="ng-icon-button" ng-click="showConfirm()" ng-if="rootUser.isManager">
+                            <ng-md-icon icon="delete"></ng-md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-card-content layout-gt-md="row" layout="column" >
+                    <md-list class="md-dense" flex="50">
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3> {{resident.phone}}</h3>
+                                <p> PHONE</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3>{{resident.email}}</h3>
+                                <p> EMAIL</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <md-list class="md-dense">
+                        <md-list-item class="md-2-line" ng-if="resident.apartment">
+                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3>{{resident.apartment}}</h3>
+                                <p> COMPLEX</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <md-list class="md-dense">
+                    	<md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="person"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <h3>{{resident.about}} </h3>
+                                <p> ABOUT</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+     
+
+    </div>
+   
+
+</md-content> 	

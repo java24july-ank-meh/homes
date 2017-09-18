@@ -10,16 +10,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @EnableDiscoveryClient
-@RestController
 @SpringBootApplication
 public class ApartmentApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApartmentApplication.class, args);
-	}
-	
-	@RequestMapping(value="/")
-	public String helloWorld() {
-		return "Hello World!";
 	}
 }

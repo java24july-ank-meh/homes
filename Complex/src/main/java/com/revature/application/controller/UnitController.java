@@ -1,47 +1,48 @@
 package com.revature.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.application.model.Unit;
 import com.revature.application.service.UnitService;
 
 @RestController
-@RequestMapping("unit")
+@RequestMapping("/unit")
 public class UnitController {
 
 	@Autowired
 	UnitService unitService;
 
 	@GetMapping
-	public ResponseEntity<Object> displayAllUnit() {
-		return ResponseEntity.ok(unitService.findAll());
+	public Object displayAllUnit() {
+		return unitService.findAll();
 	}
-
-	/*@RequestMapping(value = "/Complex/{id}/Unit", method = RequestMethod.GET)
-	public ResponseEntity<Object> displayUnitFromComplex(@PathVariable("id") long id) {
-		return ResponseEntity.ok(unitService.findByUnitId(id));
-	}*/
 
 	@GetMapping(value = "{id}")
-	public ResponseEntity<Object> displayUnit(@PathVariable("id") long id) {
-		return ResponseEntity.ok(unitService.findByUnitId(id));
+	public Object displayUnit(@PathVariable("id") long id) {
+		return unitService.findByUnitId(id);
 	}
 	
-	/*@RequestMapping(value ="Complexes/{id}/Apartments/create", method=RequestMethod.POST)
-	public ResponseEntity<Object> createUnit(@PathVariable("id") int id, @RequestBody Unit unit){
-		return ResponseEntity.ok(unitService.save(unit));
-	}*/
-
+	@PostMapping
+	public Object createUnit(@RequestBody Unit unit) {
+		return unitService.save(unit);
+	}
+	
 	@PutMapping(value = "{id}")
-	public ResponseEntity<Object> updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
-		return ResponseEntity.ok(unitService.update(unit));
+	public Object updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
+		Unit u = unitService.findByUnitId(id);
+		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
+		if(unit.getComplex() != null) u.setComplex(unit.getComplex());
+		if(unit.getGender() != null) u.setGender(unit.getGender());
+		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
+		unitService.save(u);
+		return u;
 	}
 
 	@DeleteMapping(value = "{id}")
-	public ResponseEntity<Object> deleteUnit(@PathVariable("id") long id){
-		return ResponseEntity.ok("Unit Deleted");
+	public boolean deleteUnit(@PathVariable("id") long id){
+		return unitService.delete(id);
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.model.Unit;
+import com.revature.application.repository.ComplexRepository;
 import com.revature.application.repository.UnitRepository;
 
 @Service
@@ -16,14 +17,12 @@ public class UnitService {
 	@Autowired
 	UnitRepository unitRepository;
 	
+	@Autowired
+	ComplexRepository complexRepository;
 	
 	public List<Unit> findAll(){
 		return unitRepository.findAll();
 	}
-	
-	/*public List<Unit> findByComplexId(Long id) {
-		Complex apartmentComplex = ComplexRepository.findByComplexId(id);
-		return apartmentComplex.getUnit();*/
 	
 	public Unit findByUnitId(long id) {
 		return unitRepository.findByUnitId(id);
@@ -37,7 +36,8 @@ public class UnitService {
 		return unitRepository.saveAndFlush(unit).getUnitId();
 	}
 	
-	public void delete(Unit unit){
-		unitRepository.delete(unit);
+	public boolean delete(long id){
+		unitRepository.delete(id);
+		return true;
 	}
 }

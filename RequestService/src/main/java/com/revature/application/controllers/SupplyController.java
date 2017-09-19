@@ -1,5 +1,7 @@
 package com.revature.application.controllers;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 //import org.apache.http.HttpStatus;
@@ -45,7 +47,10 @@ public class SupplyController {
 	public ResponseEntity<Object> createSupplyRequest(@PathVariable("unitId") int unitId, @RequestBody List<Supply> supplies){
 		
 		for(Supply supply: supplies)
+		{
+			supply.setSubmitDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			supplyService.save(supply);
+		}
 		
 		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body("created");
 	}

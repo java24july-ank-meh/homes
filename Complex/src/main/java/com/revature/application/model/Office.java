@@ -18,10 +18,7 @@ public class Office {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int officeId;
-	private String street;
-	private String city;
-	private String state;
-	private String zip;
+	private String address;
 	private String phone;
 	private String website;
 	private String timezone;
@@ -33,13 +30,10 @@ public class Office {
 	public Office() {
 	}
 
-	public Office(int officeId, String street, String city, String state, String zip, String phone, String website, String timezone) {
+	public Office(int officeId, String address, String phone, String website, String timezone) {
 		super();
 		this.officeId = officeId;
-		this.street = street;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
+		this.address = address;
 		this.phone = phone;
 		this.website = website;
 		this.timezone = timezone;
@@ -53,36 +47,12 @@ public class Office {
 		this.officeId = officeId;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getPhone() {
@@ -119,7 +89,6 @@ public class Office {
 
 	@Override
 	public String toString() {
-		return "Office [officeId=" + officeId + ", street=" + street + ", city=" + city + ", state=" + state + ", zip="
-				+ zip + ", phone=" + phone + ", website=" + website + ", timezone" + timezone;
+		return "Office [officeId=" + officeId + ", address=" + address + ", phone=" + phone + ", website=" + website + ", timezone" + timezone;
 	}
 }

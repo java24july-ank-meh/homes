@@ -68,7 +68,7 @@ public class AssociateController {
 	 * @return the actual associate from the database
 	 */
 	@PostMapping("associates/createOrUpdate")
-	public ResponseEntity<Object> createAssociate(Associate associate) {
+	public ResponseEntity<Object> createAssociate(@RequestBody Associate resident, HttpSession session) {
 		/* possible responses: 
 		 * OK - update worked
 		 *X CREATED - the associate was created (can't be known at this time as there is no way to distinguish between

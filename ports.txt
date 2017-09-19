@@ -11,5 +11,7 @@ Cores 8090-8100
     Complex
 8097
     Maintence
+8081
+    Client
 
 Composites 8101-8105

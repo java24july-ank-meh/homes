@@ -59,8 +59,6 @@ public class Associate {
 		this.moveOutDate = moveOutDate;
 		this.housingAgreed = housingAgreed;
 		this.hasKeys = hasKeys;
-		this.username = username;
-		this.password = password;
 	}
 
 	public Long getAssociateId() {

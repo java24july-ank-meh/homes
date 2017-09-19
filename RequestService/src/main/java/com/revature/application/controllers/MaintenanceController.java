@@ -2,7 +2,8 @@ package com.revature.application.controllers;
 
 import java.util.List;
 
-import org.apache.http.HttpStatus;
+//import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class MaintenanceController
 		List<Maintenance>maintenanceRequests = maintenanceService.findByUnitId(unitId);
 		
 		if(maintenanceRequests.isEmpty())
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("No Maintenance Requests found for unit");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("No Maintenance Requests found for unit");
 		
 		return ResponseEntity.ok(maintenanceRequests);
 	}
@@ -47,7 +48,7 @@ public class MaintenanceController
 	@RequestMapping(value="units/{unitId}/maintenance", method=RequestMethod.POST)
 	public ResponseEntity<Object> createMaintanenceRequest(@PathVariable("unitId") int unitId, @RequestBody Maintenance maintenance)
 	{
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body(maintenanceService.save(maintenance));
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(maintenanceService.save(maintenance));
 	}
 	
 //	@ApiOperation(value = "View Maintenance Request By Maintenance Id.", response = Iterable.class)
@@ -57,7 +58,7 @@ public class MaintenanceController
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);
 		
 		if(maintenance == null)
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("Maintenance not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Maintenance not found");
 	
 		return ResponseEntity.ok(maintenance);
 	}
@@ -69,10 +70,10 @@ public class MaintenanceController
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);
 		
 		if(maintenance == null)
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("Maintenance not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Maintenance not found");
 	
 		maintenance.setResolved(true);
 		
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body(maintenanceService.update(maintenance));
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(maintenanceService.update(maintenance));
 	}
 }

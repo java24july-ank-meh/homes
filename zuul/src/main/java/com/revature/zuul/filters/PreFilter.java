@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PreFilter extends ZuulFilter {
 
-	Logger logger = LoggerFactory.getLogger(AccessLogFilter.class);
+	Logger logger = LoggerFactory.getLogger(PreFilter.class);
 	
 	@Override
 	public Object run() {

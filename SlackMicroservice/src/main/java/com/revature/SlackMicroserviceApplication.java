@@ -68,14 +68,25 @@ public class SlackMicroserviceApplication extends WebSecurityConfigurerAdapter{
 	
 	private Filter ssoFilter() {
 		
-		OAuth2ClientAuthenticationProcessingFilter slackFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/slack");
-		OAuth2RestTemplate slackTemplate = new OAuth2RestTemplate(slack(), oauth2ClientContext);
-		slackFilter.setRestTemplate(slackTemplate);
-		UserInfoTokenServices tokenServices = new UserInfoTokenServices(slackResource().getUserInfoUri(), slack().getClientId());
-		tokenServices.setRestTemplate(slackTemplate);
-		slackFilter.setTokenServices(tokenServices);
+		CompositeFilter filter = new CompositeFilter();
+		List<Filter> filters = new ArrayList<>();
 		
-		return slackFilter;
+		filters.add(ssoFilter(slack(), "/login/slack"));
+		//filters.add(ssoFilter(slackChannel(), "/channelwrite/slack"));
+		filter.setFilters(filters);
+		
+		return filter;
+	}
+	
+	private Filter ssoFilter(ClientResources client, String path) {
+		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
+		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
+		filter.setRestTemplate(template);
+		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
+				client.getResource().getUserInfoUri(), client.getClient().getClientId());
+		tokenServices.setRestTemplate(template);
+		filter.setTokenServices(tokenServices);
+		return filter;
 	}
 	
 	@Bean
@@ -103,15 +114,14 @@ public class SlackMicroserviceApplication extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Bean
-	@ConfigurationProperties("slack.client")
-	public AuthorizationCodeResourceDetails slack() {
-		return new AuthorizationCodeResourceDetails();
-	}
-
-	@Bean
-	@ConfigurationProperties("slack.resource")
-	public ResourceServerProperties slackResource() {
-		return new ResourceServerProperties();
+	@ConfigurationProperties("slack")
+	public ClientResources slack() {
+	  return new ClientResources();
 	}
 	
+	@Bean
+	@ConfigurationProperties("slackChannel")
+	public ClientResources slackChannel() {
+	  return new ClientResources();
+	}
 }

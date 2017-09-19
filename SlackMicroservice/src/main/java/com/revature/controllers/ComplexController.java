@@ -1,21 +1,39 @@
 package com.revature.controllers;
 
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.wordnik.swagger.annotations.Api;
+
+import net.minidev.json.parser.JSONParser;
 
 @Api(value="unit", description="This service creates, updates, and deletes slack channels for apartment complexes")
 @Service
@@ -32,29 +50,35 @@ public class ComplexController {
 	Helper helper;
 	
 	@HystrixCommand(fallbackMethod="createFallback")
-	@PostMapping("create/{complex}")
-	public ResponseEntity<String> createUnit(@PathVariable("complex") String complex) {
+	@PostMapping("create")
+	public ResponseEntity<String> createUnit(@RequestBody String complex, HttpSession http) {
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
+		
+		String channelName = helper.nameParameter(complex);
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
 		
 		String url = null;
 		String channelId = null;
 		
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
-		params.add("token", Helper.slackProps.get("client_token"));
+		params.add("token", token);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
-		if(helper.channelNameIsUnique(complex)) {
+		if(helper.channelNameIsUnique(complex, token)) {
 			//needs token and channelName 
 			url = "https://slack.com/api/channels.create";
-			params.add("name", complex);
+			params.add("name", channelName);
 		}
 		else {
-			channelId = helper.getChannelId(complex);
+			channelId = helper.getChannelId(channelName, token);
 			//needs token and channelId
 			url = "https://slack.com/api/channels.unarchive";
 			params.add("channel", channelId);
@@ -65,24 +89,38 @@ public class ComplexController {
 	 
 		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 	
-		channelId = helper.getChannelId(complex);
+		channelId = helper.getChannelId(channelName, token);
 		System.out.println("new channel id: " + channelId);
 		
 		return response;
 	}
 	
-	@PostMapping("update/{complex}/{new-complex}")
-	public ResponseEntity<String> updateUnit(@PathVariable("complex") String complex, 
-			@PathVariable("new-complex") String newComplex) {
+	@PostMapping("update")
+	public ResponseEntity<String> updateUnit(@RequestBody String complex, 
+			HttpSession http) {
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		
+		System.out.println(complex);
+		JSONObject json = null;
+		String oldName = null; String newName = null;
+		try{
+			json = new JSONObject(complex);
+			oldName = json.getString("oldName"); System.out.println(oldName);
+			newName = json.getString("newName"); System.out.println(newName);
+		}
+		catch(JSONException e) {e.printStackTrace();}
 		
 		//needs token, channel, name
 		String url = "https://slack.com/api/channels.rename";
 		
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
-		params.add("token", Helper.slackProps.get("client_token"));
-		params.add("channel", helper.getChannelId(complex));
-		params.add("name", newComplex);
+		params.add("token", token);
+		params.add("channel", helper.getChannelId(oldName, token));
+		params.add("name", newName);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -92,20 +130,34 @@ public class ComplexController {
 		
 		ResponseEntity<String> response = 
 				restTemplate.postForEntity(url, request, String.class);
-		return response;
+		return response; 
 	}
 	
-	@PostMapping("delete/{complex}")
-	public ResponseEntity<String> deleteUnit(@PathVariable("complex") String complex) {
+	@PostMapping("delete")
+	public ResponseEntity<String> deleteUnit(@RequestBody String complex, 
+			HttpSession http) {
 		
-		String channelId = helper.getChannelId(complex);
+		JSONObject json = null;
+		String name = null;
+		try {
+			json = new JSONObject(complex);
+			name = json.getString("name");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		
+		String channelId = helper.getChannelId(name, token);
 		
 		//needs token, channel
 		String url = "https://slack.com/api/channels.archive";
 		
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
-		params.add("token", Helper.slackProps.get("client_token"));
+		params.add("token", token);
 		params.add("channel", channelId);
 		
 		HttpHeaders headers = new HttpHeaders();

@@ -1,7 +1,6 @@
 package com.revature.application.model;
 
 public class Requirements {
-	private 
 	/*
 	 * docusign
 	 * received key

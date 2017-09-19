@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
-		<module>eureka</module>
+        <module>Eureka</module>
     	<module>zuul</module>
     	
     	<module>Associate</module>

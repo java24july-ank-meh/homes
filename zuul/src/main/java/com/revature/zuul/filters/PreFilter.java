@@ -1,12 +1,25 @@
 package com.revature.zuul.filters;
 
+import com.netflix.zuul.FilterProcessor;
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class PreFilter extends ZuulFilter {
 
+	Logger logger = LoggerFactory.getLogger(AccessLogFilter.class);
+	
 	@Override
 	public Object run() {
-		// TODO Auto-generated method stub
+		RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest request = ctx.getRequest();
+        logger.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+        String uri = request.getRequestURI();
 		return null;
 	}
 

@@ -24,8 +24,8 @@ public class OfficeService {
 		return or.findOne(id);
 	}
 	
-	public Office save(Office office) {
-		return or.saveAndFlush(office);
+	public int save(Office office) {
+		return or.saveAndFlush(office).getOfficeId();
 	}
 	
 	public boolean delete(int id) {

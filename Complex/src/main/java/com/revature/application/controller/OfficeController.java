@@ -40,7 +40,7 @@ public class OfficeController {
 		Office o = os.find(id);
 		if(office.getCity() != null) o.setCity(office.getCity());
 		if(office.getPhone() != null) o.setPhone(office.getPhone());
-		if(office.getState() != null) o.setCity(office.getState());
+		if(office.getState() != null) o.setState(office.getState());
 		if(office.getStreet() != null) o.setStreet(office.getStreet());
 		if(office.getTimezone() != null) o.setTimezone(office.getTimezone());
 		if(office.getWebsite() != null) o.setWebsite(office.getWebsite());

@@ -47,10 +47,7 @@ public class ComplexController {
 	@PutMapping(value = "{id}")
 	public Object updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
 		Complex com = cs.findByComplexId(id);
-		if(complex.getCity() != null) com.setCity(complex.getCity());
-		if(complex.getStreet() != null) com.setStreet(complex.getStreet());
-		if(complex.getState	() != null) com.setState(complex.getState());
-		if(complex.getZip() != null) com.setZip(complex.getZip());
+		if(complex.getAddress() != null) com.setAddress(complex.getAddress());
 		if(complex.getParking() != null) com.setParking(complex.getParking());
 		if(complex.getWebsite() != null) com.setWebsite(complex.getWebsite());
 		if(complex.getEmail() != null) com.setEmail(complex.getEmail());

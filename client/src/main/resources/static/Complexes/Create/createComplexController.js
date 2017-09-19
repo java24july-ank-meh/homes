@@ -26,7 +26,6 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
         $http.post('/api/complex/complex/', $scope.complex )
             .success(onSuccess)
             .error(onError);
-
     };
 
     //6. create resetForm() function. This will be called on Reset button click.

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,7 +69,7 @@ public class AssociateController {
 	 * @return the actual associate from the database
 	 */
 	@PostMapping("associates/createOrUpdate")
-	public ResponseEntity<Object> createAssociate(Associate associate) {
+	public ResponseEntity<Object> createAssociate(@RequestBody Associate resident, HttpSession session) {
 		/* possible responses: 
 		 * OK - update worked
 		 *X CREATED - the associate was created (can't be known at this time as there is no way to distinguish between

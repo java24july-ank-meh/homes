@@ -73,11 +73,11 @@
 			<artifactId>spring-kafka</artifactId>
 			<version>1.2.2.RELEASE</version>
 		</dependency>
-		 <dependency>
-        <groupId>org.codehaus.woodstox</groupId>
-        <artifactId>stax2-api</artifactId>
-        <version>3.1.1</version>
-    </dependency>
+		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>stax2-api</artifactId>
+			<version>3.1.1</version>
+		</dependency>
 	</dependencies>
 
 

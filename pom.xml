@@ -15,5 +15,6 @@
     	<module>Complex</module>
     	<module>RequestService</module>	
     	<module>SlackMicroservice</module>
+    	<module>client</module>
     </modules>
 </project>

@@ -1,11 +1,12 @@
-#This will be our parent imgage
-#it contains alpine linux and openjdk8
-FROM alpine:latest
+# This will be our parent image
+# it contains alpine linux and openjdk8
+FROM openjdk:alpine
 
-# Add package.json to allow for caching
-ADD /target/*.jar app.jar 
+# Add the jar file into image
+ADD /target/*.jar app.jar
 
-#Add a volume for spring boot
+# Add a volume for spring boot
+# boot writes data for tomcat here
 VOLUME /tmp
 
 #run the app

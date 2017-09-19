@@ -56,7 +56,14 @@ public class ComplexController {
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
 		
-		String channelName = helper.nameParameter(complex);
+
+		JSONObject json = null;
+		String channelName = null;
+		try{
+			json = new JSONObject(complex);
+			channelName = json.getString("name"); System.out.println(channelName);
+		}
+		catch(JSONException e) {e.printStackTrace();}
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
@@ -72,7 +79,7 @@ public class ComplexController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
-		if(helper.channelNameIsUnique(complex, token)) {
+		if(helper.channelNameIsUnique(channelName, token)) {
 			//needs token and channelName 
 			url = "https://slack.com/api/channels.create";
 			params.add("name", channelName);

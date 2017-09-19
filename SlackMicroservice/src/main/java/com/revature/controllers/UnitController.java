@@ -170,6 +170,8 @@ public class UnitController {
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
 		
+		System.out.println("name: " + channelName + ", channelId: " + channelId);
+		
 		//needs token, channel
 		String url = "https://slack.com/api/channels.archive";
 		

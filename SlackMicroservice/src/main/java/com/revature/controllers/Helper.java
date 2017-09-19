@@ -58,7 +58,8 @@ public class Helper {
 		Iterator<JsonNode> channels = channelList.elements();
 		
 		while(channels.hasNext()) {
-			if(name.equals(channels.next().path("name").asText())){return false;}
+			String currentName = channels.next().path("name").asText();
+			if(name.equals(currentName)){return false;}
 		}
 		
 		return true;
@@ -97,18 +98,26 @@ public class Helper {
 		
 	}
 	
-<<<<<<< HEAD
 	/*	Returns ArrayList with the slack ID's of all users in a given channel*/
 	
-	public List<String> getAllUsersInChannel(String channelName) {
+	public List<String> getAllUsersInChannel(String channelName, String userToken) {
 		
-		String channelId = getChannelId(channelName);
+		String channelId = getChannelId(channelName, userToken);
 		
+		String requestUrl = "https://slack.com/api/channels.info";
 		
-		String requestUrl = "https://slack.com/api/channels.info?token=" +slackProps.get("client_token") +
-				 "&channel="+ channelId;
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", userToken);
+		params.add("channel", channelId);
 		
-		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		
+		String responseString = restTemplate.postForObject(requestUrl, request, String.class);
 		JsonNode rootNode, channelNode, memNode = null;
 		List<String> users = new ArrayList<String>();
 		
@@ -121,7 +130,7 @@ public class Helper {
 			while(elements.hasNext()){
 				JsonNode member = elements.next();
 				users.add(member.asText());
-				users.add(getUserName(member.asText()) );
+				users.add(getUserName(member.asText(), userToken) );
 			}
 			System.out.println(users);
 			return users;
@@ -133,12 +142,22 @@ public class Helper {
 	}
 	
 	/*	Returns string with UserName given slack users ID*/
-	public String getUserName(String userId) {
+	public String getUserName(String userId, String userToken) {
 		
-		String requestUrl = "https://slack.com/api/users.info?token=" +slackProps.get("client_token") +
-				 "&user="+ userId;
+		String requestUrl = "https://slack.com/api/users.info";
 		
-		String responseString = restTemplate.getForObject(requestUrl, String.class);
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", userToken);
+		params.add("user", userId);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		
+		String responseString = restTemplate.postForObject(requestUrl, request, String.class);
 		JsonNode rootNode, userNode, idNode = null;
 		String userName = "";
 		
@@ -156,13 +175,13 @@ public class Helper {
 		return null;
 	}
 	
-	public String  startConvo(List<String> userIds, String channelId) {
+	public String  startConvo(List<String> userIds, String channelId, String userToken) {
 		
 		String tag = "channel";
-		String requestUrl = "https://slack.com/api/conversations.open?token=" +slackProps.get("client_token") +
+		String requestUrl = "https://slack.com/api/conversations.open?token=" + userToken +
 				 "&return_im=false" + "&users=";
 		if(userIds.size()>1) {
-			requestUrl = "https://slack.com/api/mpim.open?token=" +slackProps.get("client_token") +"&users=";
+			requestUrl = "https://slack.com/api/mpim.open?token=" + userToken +"&users=";
 			tag = "group";
 		}
 		
@@ -193,13 +212,26 @@ public class Helper {
 	
 	public String  directMessage(String token, String channelId, String message, List<String> userIds) {
 		
-		String newChannel = startConvo(userIds, channelId);
+		String newChannel = startConvo(userIds, channelId, token);
 		
-		String requestUrl = "https://slack.com/api/chat.postMessage?token=" +slackProps.get("client_token") +
-				"&channel="+newChannel + "&return_im=false" + "&text="+message;
+		String requestUrl = "https://slack.com/api/chat.postMessage";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", token);
+		params.add("channel", newChannel);
+		params.add("return_im", "false");
+		params.add("text", message);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(params, headers);
+	 
+		String response = restTemplate.postForObject(requestUrl, request, String.class);
 			
-		String responseString = restTemplate.getForObject(requestUrl, String.class);
-		return responseString;
+		return response;
 	}
 	
 	public String  multiMessage(String token, String channelId, String message, List<String> userIds) {
@@ -208,7 +240,7 @@ public class Helper {
 		String responseString = "";
 		
 		for(int i = 0; i < userIds.size(); i++) {
-			channels.add(startConvo(userIds, channelId) );
+			channels.add(startConvo(userIds, channelId, token) );
 			List<String> singleUser = new ArrayList<String>();
 			singleUser.add(userIds.get(i));
 			
@@ -218,12 +250,10 @@ public class Helper {
 		return responseString;
 	}
 	
-=======
 	//Extracts name parameter from json  
 	public String nameParameter(String json) {
 		String channelName = json.split(":")[1];
 		channelName = channelName.substring(1, channelName.length()-2);
 		return channelName;
 	}
->>>>>>> chrisp
 }

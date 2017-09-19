@@ -18,6 +18,9 @@ public class ComplexController {
 	@Autowired
 	ComplexService cs;
 	
+	@Autowired
+	OfficeService os;
+	
 	@GetMapping
 	public Object findAll() {
 		return cs.findAll();
@@ -35,6 +38,9 @@ public class ComplexController {
 	
 	@PostMapping
 	public Object createComplex(@RequestBody Complex complex) {
+		if(complex.getOffice() != null) {
+			complex.setOffice(os.find(complex.getOffice().getOfficeId()));
+		}
 		return cs.save(complex);
 	}
 	
@@ -51,6 +57,9 @@ public class ComplexController {
 		if(complex.getPhone() != null) com.setPhone(complex.getPhone());
 		if(complex.getName() != null) com.setName(complex.getName());
 		if(complex.getAbbreviation() != null) com.setAbbreviation(complex.getAbbreviation());
+		if(complex.getOffice() != null) {
+			complex.setOffice(os.find(complex.getOffice().getOfficeId()));
+		}
 		cs.save(com);
 		return cs.update(complex);
 	}

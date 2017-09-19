@@ -55,10 +55,9 @@ public class ComplexController {
 		if(complex.getName() != null) com.setName(complex.getName());
 		if(complex.getAbbreviation() != null) com.setAbbreviation(complex.getAbbreviation());
 		if(complex.getOffice() != null) {
-			complex.setOffice(os.find(complex.getOffice().getOfficeId()));
+			com.setOffice(os.find(complex.getOffice().getOfficeId()));
 		}
-		cs.save(com);
-		return cs.update(complex);
+		return cs.save(com);
 	}
 
 	@DeleteMapping(value = "{id}")

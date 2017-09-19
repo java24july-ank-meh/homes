@@ -29,16 +29,13 @@ public class ComplexService {
 		return ComplexRepository.saveAndFlush(complex).getComplexId();
 	}
 	
-	public String delete(int id) {
-		 ComplexRepository.delete(id);
-		 return id + " deleted";
+	public boolean delete(int id) {
+		Complex com = ComplexRepository.findOne(id);
+		com.setOffice(null);
+		ComplexRepository.save(com);
+		ComplexRepository.delete(id);
+		return ComplexRepository.findOne(id) == null;
 	}
-	
-	public int update(Complex complex) {
-		return ComplexRepository.saveAndFlush(complex).getComplexId();
-	}
-
-	
 
 }
 

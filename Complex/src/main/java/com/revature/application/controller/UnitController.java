@@ -43,7 +43,7 @@ public class UnitController {
 		if(unit.getGender() != null) u.setGender(unit.getGender());
 		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
 		if(unit.getComplex() != null) {
-			unit.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));
+			u.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));
 		}
 		unitService.save(u);
 		return u;

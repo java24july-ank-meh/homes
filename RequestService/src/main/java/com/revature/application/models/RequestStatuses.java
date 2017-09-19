@@ -1,5 +1,5 @@
 package com.revature.application.models;
 
-enum RequestStatus {
+enum RequestStatuses {
 	pending, approved, denied;
 }

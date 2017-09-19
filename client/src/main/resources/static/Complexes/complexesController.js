@@ -2,7 +2,7 @@ angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBotto
 
 	$scope.error = false;
 	
-     $http.get("/api/ApartmentComplexes").then(function(response) {
+     $http.get("/api/complex/complex").then(function(response) {
          $scope.complexes = response.data;
          
          if($scope.complexes === '')

@@ -1,4 +1,4 @@
-package com.revature.application;
+package com.revature;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class ComplexCompositeApplication {
+public class ClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ComplexCompositeApplication.class, args);
+		SpringApplication.run(ClientApplication.class, args);
 	}
 }

@@ -1,0 +1,26 @@
+server:
+  port: 8085
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8086/eureka
+      
+zuul:    
+  routes: 
+    client:
+      path: /**
+      serviceId: CLIENT-SERVICE
+      strip-prefix: false
+    request:
+      path: /api/request/**
+      serviceId: REQUEST-SERVICE
+    associate:
+      path: /api/associates/**
+      serviceId: ASSOCIATE-SERVICE
+    complex:
+      path: /api/complex/**
+      serviceId: COMPLEX-SERVICE
+spring:
+  application:
+    name: zuul-server

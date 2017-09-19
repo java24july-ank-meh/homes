@@ -18,6 +18,9 @@ public class ComplexController {
 	@Autowired
 	ComplexService cs;
 	
+	@Autowired
+	OfficeService os;
+	
 	@GetMapping
 	public Object findAll() {
 		return cs.findAll();
@@ -35,6 +38,9 @@ public class ComplexController {
 	
 	@PostMapping
 	public Object createComplex(@RequestBody Complex complex) {
+		if(complex.getOffice() != null) {
+			complex.setOffice(os.find(complex.getOffice().getOfficeId()));
+		}
 		return cs.save(complex);
 	}
 	
@@ -42,15 +48,18 @@ public class ComplexController {
 	public Object updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
 		Complex com = cs.findByComplexId(id);
 		if(complex.getCity() != null) com.setCity(complex.getCity());
-		if(complex.getStreet() != null) com.setCity(complex.getStreet());
-		if(complex.getState	() != null) com.setCity(complex.getState());
-		if(complex.getZip() != null) com.setCity(complex.getZip());
-		if(complex.getParking() != null) com.setCity(complex.getParking());
-		if(complex.getWebsite() != null) com.setCity(complex.getWebsite());
-		if(complex.getEmail() != null) com.setCity(complex.getEmail());
-		if(complex.getPhone() != null) com.setCity(complex.getPhone());
-		if(complex.getName() != null) com.setCity(complex.getName());
-		if(complex.getAbbreviation() != null) com.setCity(complex.getAbbreviation());
+		if(complex.getStreet() != null) com.setStreet(complex.getStreet());
+		if(complex.getState	() != null) com.setState(complex.getState());
+		if(complex.getZip() != null) com.setZip(complex.getZip());
+		if(complex.getParking() != null) com.setParking(complex.getParking());
+		if(complex.getWebsite() != null) com.setWebsite(complex.getWebsite());
+		if(complex.getEmail() != null) com.setEmail(complex.getEmail());
+		if(complex.getPhone() != null) com.setPhone(complex.getPhone());
+		if(complex.getName() != null) com.setName(complex.getName());
+		if(complex.getAbbreviation() != null) com.setAbbreviation(complex.getAbbreviation());
+		if(complex.getOffice() != null) {
+			complex.setOffice(os.find(complex.getOffice().getOfficeId()));
+		}
 		cs.save(com);
 		return cs.update(complex);
 	}

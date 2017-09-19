@@ -1,16 +1,29 @@
 package com.revature.application.service;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.revature.application.model.Associate;
+import com.revature.application.model.Complex;
+import com.revature.application.model.Notification;
+import com.revature.application.model.Unit;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
@@ -20,9 +33,14 @@ public class ComplexCompositeService {
 	public JsonObject getAllComplexes() {
 		
 		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
-		JsonObject associateJson = getJsonFromService("http://localhost:8090/associate");
+		JsonObject associateJson = getJsonFromService("http://localhost:8090/associates");
 		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");
-		
+		RestTemplate restTemplate = new RestTemplate();
+
+		/*Complex[] complexes = restTemplate.getForEntity("http://localhost:8093/complex", Complex[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();
+		Unit[] units = restTemplate.getForEntity("http://localhost:8093/units", Unit[].class).getBody();*/
+				
 		//counting occupancy
 		// get all of the units and store in a map so that way i can use ids as keys
 		Map<String, Integer> unitMap = new HashMap<>();
@@ -69,7 +87,7 @@ public class ComplexCompositeService {
 	
 	public JsonObject getComplex(String id) {
 		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex/"+id);
-		JsonObject associateJson = getJsonFromService("http://localhost:8090/associate");
+		JsonObject associateJson = getJsonFromService("http://localhost:8090/associates");
 		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");
 		
 		//unit map so i can assign occupancies based on unitids as keys
@@ -103,6 +121,29 @@ public class ComplexCompositeService {
 		compositeObj.add("units", complexUnits);
 		
 		return compositeObj;
+	}
+	
+	public void unitReassignment(String jsonString) {
+		JsonObject reassignJson = new JsonParser().parse(jsonString).getAsJsonObject();
+		if (reassignJson.get("unitId").getAsString() == null)
+			reassignJson.addProperty("unitId", "unnassigned");
+		String message = "Associate /associates/" + reassignJson.get("associateId").getAsString() + 
+				" would like to request a housing transfer from /units/" + reassignJson.get("unitId").getAsString() +
+				" to /units/" + reassignJson.get("targetUnitId").getAsString();
+		Notification notification = new Notification(message);
+		
+		try {
+			HttpPost post = new HttpPost("http://localhost:8097/notification");
+			post.setHeader("Content-type", "application/json");
+			
+			StringEntity postingString = new StringEntity(new Gson().toJson(notification));
+			post.setEntity(postingString);
+			HttpClientBuilder.create().build().execute(post);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private JsonObject getJsonFromService(String url) {

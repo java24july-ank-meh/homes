@@ -2,18 +2,7 @@ package com.revature.application.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "ASSOCIATE")
 public class Associate {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long associateId;
 	private String firstName;
 	private String lastName;
@@ -22,7 +11,6 @@ public class Associate {
 	private Long officeId;
 	private String phone;
 	private String about;
-	@Column(unique = true)
 	private String email;
 	private String gender;
 	private Long unitId;
@@ -31,6 +19,8 @@ public class Associate {
 	private LocalDateTime moveOutDate;
 	private LocalDateTime housingAgreed;// if not null then its agreed
 	private LocalDateTime hasKeys; // if null currently does not have keys
+	private String username;
+	private String password;
 
 	public Associate() {
 		super();
@@ -38,7 +28,8 @@ public class Associate {
 
 	public Associate(Long associateId, String firstName, String lastName, String slackId, String role, Long officeId,
 			String phone, String about, String email, String gender, Long unitId, int hasCar, LocalDateTime moveInDate,
-			LocalDateTime moveOutDate, LocalDateTime housingAgreed, LocalDateTime hasKeys) {
+			LocalDateTime moveOutDate, LocalDateTime housingAgreed, LocalDateTime hasKeys, String username,
+			String password) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
@@ -186,15 +177,29 @@ public class Associate {
 		this.hasKeys = hasKeys;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
 				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", hasCar=" + hasCar
 				+ ", moveInDate=" + moveInDate + ", moveOutDate=" + moveOutDate + ", housingAgreed=" + housingAgreed
-				+ ", hasKeys=" + hasKeys + "]";
+				+ ", hasKeys=" + hasKeys + ", username=" + username + ", password=" + password + "]";
 	}
-
-	
 
 }

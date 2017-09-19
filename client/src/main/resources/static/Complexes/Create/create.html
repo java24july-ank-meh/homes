@@ -79,18 +79,24 @@
                             <label>Address</label>
                             <input id="address" ng-model="complex.address" required  map-autocomplete placeholder="">
                         </md-input-container>
-
+                        
+			            <md-input-container class="md-block" flex-gt-sm>
+                               <label>Office</label>
+                                <md-select ng-model="selected" required>
+					              <md-option ng-repeat="location in offices" value="{{location}}">
+					                {{location.city}}
+					              </md-option>
+         						  </md-select>
+                           </md-input-container>
                         <br>
                         
                         <md-card-actions layout="row" layout-align="end center">
                             <md-button type="submit"  class="md-raised md-primary">CREATE</md-button>
                         </md-card-actions>
                     </form>
-
-
              </md-card-content>
             </md-card>
-           
+
         </div>
     </div>
 </md-content>

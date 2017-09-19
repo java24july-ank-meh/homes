@@ -38,13 +38,10 @@ public class OfficeController {
 	@PutMapping("{id}")
 	public Object update(@PathVariable("id") int id, @RequestBody Office office) {
 		Office o = os.find(id);
-		if(office.getCity() != null) o.setCity(office.getCity());
+		if(office.getAddress() != null) o.setAddress(office.getAddress());
 		if(office.getPhone() != null) o.setPhone(office.getPhone());
-		if(office.getState() != null) o.setCity(office.getState());
-		if(office.getStreet() != null) o.setStreet(office.getStreet());
 		if(office.getTimezone() != null) o.setTimezone(office.getTimezone());
 		if(office.getWebsite() != null) o.setWebsite(office.getWebsite());
-		if(office.getZip() != null) o.setZip(office.getZip());
 		os.save(o);
 		return o;
 	}	

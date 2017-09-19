@@ -31,13 +31,7 @@ public class ComplexCompositeController {
 	//this is for getting the big list of complexes
 	@GetMapping
 	public ResponseEntity<Object> getComplexes() {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<Associate[]> responseEntity = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class);
-
-		Associate[] blah = responseEntity.getBody();
-		
-		return ResponseEntity.ok(blah);
-		//return ResponseEntity.ok(compositeService.getAllComplexes().toString());
+		return ResponseEntity.ok(compositeService.getAllComplexes().toString());
 	}
 	
 	@GetMapping("{id}")
@@ -47,11 +41,11 @@ public class ComplexCompositeController {
 	}
 	
 	@PostMapping("reassignment")
-	public String unitReassignmentRequest(@RequestBody String announcement) {
+	public ResponseEntity<Object> unitReassignmentRequest(@RequestBody String jsonString) {
 		
+		compositeService.unitReassignment(jsonString);
 		
-		
-		return null;
+		return ResponseEntity.ok().build();
 	}
 	
 	

@@ -133,7 +133,7 @@ public class ComplexCompositeService {
 		Notification notification = new Notification(message);
 		
 		try {
-			HttpPost post = new HttpPost("http://localhost:8097/notification");
+			HttpPost post = new HttpPost("http://localhost:8097/notifications/create");
 			post.setHeader("Content-type", "application/json");
 			
 			StringEntity postingString = new StringEntity(new Gson().toJson(notification));

@@ -1,27 +1,12 @@
-# This will be our parent image
-# it contains alpine linux and openjdk8
+#This will be our parent imgage
+#it contains alpine linux and openjdk8
+FROM alpine:latest
 
-FROM openjdk:alpine
+# Add package.json to allow for caching
+ADD /target/*.jar app.jar 
 
-# Update the alpine package
-
-RUN apk update \
-    && apk add maven
-    
-# Add the project folders to this container
-
-ADD . .
-
-# Add a volume for spring boot
-# boot writes data for tomcat here
-
+#Add a volume for spring boot
 VOLUME /tmp
 
-# Package the application
-
-RUN mvn clean package
-RUN mv /target/*.jar app.jar
-
 #run the app
-
 ENTRYPOINT ["sh", "-c", "java -jar app.jar"]

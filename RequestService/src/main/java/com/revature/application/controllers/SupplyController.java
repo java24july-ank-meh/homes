@@ -1,8 +1,11 @@
 package com.revature.application.controllers;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.http.HttpStatus;
+//import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +37,7 @@ public class SupplyController {
 		List<Supply> supplyRequests = supplyService.findByUnitId(unitId);
 		
 		if(supplyRequests.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("No maintenance requests found for unit");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("No maintenance requests found for unit");
 		}
 		
 		return ResponseEntity.ok(supplyRequests);
@@ -44,9 +47,12 @@ public class SupplyController {
 	public ResponseEntity<Object> createSupplyRequest(@PathVariable("unitId") int unitId, @RequestBody List<Supply> supplies){
 		
 		for(Supply supply: supplies)
+		{
+			supply.setSubmitDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			supplyService.save(supply);
+		}
 		
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body("created");
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body("created");
 	}
 	
 	@GetMapping(value ="supply/{supplyId}")
@@ -54,7 +60,7 @@ public class SupplyController {
 		Supply supply = supplyService.findById(supplyId);
 		
 		if(supply == null) {
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("Supply not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Supply not found");
 		}
 		
 		return ResponseEntity.ok(supply);
@@ -65,11 +71,11 @@ public class SupplyController {
 		Supply supply = supplyService.findById(supplyId);
 		
 		if(supply == null) {
-			return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("Supply not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Supply not found");
 		}
 		
 		supply.setResolved(true);
 		
-		return ResponseEntity.status(HttpStatus.SC_CREATED).body(supplyService.update(supply));
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(supplyService.update(supply));
 	}
 }

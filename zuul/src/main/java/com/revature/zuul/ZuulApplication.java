@@ -15,7 +15,7 @@ public class ZuulApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulApplication.class, args);
 	}
-	
+	/* Commenting out filters in case that is causing the bugs.
 	@Bean
 	public PreFilter preFilter() {
 		return new PreFilter();
@@ -25,4 +25,5 @@ public class ZuulApplication {
 	public ErrorFilter errorFilter() {
 		return new ErrorFilter();
 	}
+	*/
 }

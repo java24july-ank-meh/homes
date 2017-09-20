@@ -80,7 +80,7 @@ public class AssociateController {
 		 * already used for another account
 		 * (known if an exception is thrown)*/
 		try {
-			Associate a = associateService.saveOrUpdate(associate);
+			Associate a = associateService.saveOrUpdate(resident);
 			return ResponseEntity.ok(a);
 		} catch (DataAccessException e){
 			//TODO: Test to make sure this works properly.

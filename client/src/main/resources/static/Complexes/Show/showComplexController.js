@@ -36,6 +36,12 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 
          $scope.complex = response.data;
          
+         $http.get("/api/complex/complex/"+$stateParams.complexId+"/units").then(function(response) {
+        	 
+        	 $scope.complex.units = response.data;
+        	 
+         });
+         
          if($scope.complex === ''){
         	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
         	 $scope.error = true;

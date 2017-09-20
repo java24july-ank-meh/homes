@@ -130,16 +130,16 @@
             <md-card layout="column">
                 <md-card-title>
                     <md-card-title-text >
-                        <span class="md-headline">Apartments</span>
+                        <span class="md-headline">Units</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
                 <md-list flex>
-                    <md-list-item class="md-2-line noright" ng-repeat="apartment in complex.apartments" ui-sref="home.showApartment({apartmentId: apartment.apartmentId})">
+                    <md-list-item class="md-2-line noright" ng-repeat="unit in complex.units" ui-sref="home.showApartment({apartmentId: unit.unitId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> {{apartment.apartmentNumber}}</h3>
-                            <p> {{apartment.residents.length}} of {{apartment.capacity}} residents</p>
+                            <h3> {{unit.apartmentNumber}}</h3>
+                            <p> {{unit.residents.length}} of {{unit.capacity}} residents</p>
                         </div>
                     </md-list-item>
                 </md-list>

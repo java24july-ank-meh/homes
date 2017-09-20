@@ -108,7 +108,7 @@
 	<div layout layout-wrap layout-gt-sm="row" layout="column">
 		<div flex-sm="100" flex-xs="100" class="container" flex="50">
 			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref="home.showApartment({apartmentId: rootResident.apartment})">
+				<md-card layout="column"> <md-card-title ui-sref="home.showApartment({apartmentId: rootAssociate.unitId})">
 				<md-card-title-text> <span class="md-headline">Apartment
 				</span>  </md-card-title-text> </md-card-title> <md-card-content>
 				<ng-md-icon icon="home" style="width:100%;"></ng-md-icon>
@@ -117,7 +117,7 @@
 		</div>
 		<div flex-sm="100" flex-xs="100" class="container" flex="50">
 			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref='home.showResident({residentId: rootResident.residentId})'>
+				<md-card layout="column"> <md-card-title ui-sref='home.showAssociate({associateId: rootAssociate.associateId})'>
 				<md-card-title-text> <span class="md-headline">Profile
 				</span>  </md-card-title-text> </md-card-title> <md-card-content>
 				<ng-md-icon icon="person" style="width:100%;"></ng-md-icon>

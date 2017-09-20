@@ -1,8 +1,8 @@
-angular.module('rhmsApp').controller('maintenanceController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http) {
+angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http) {
 
 	$scope.error = false;
 	
-     $http.get("/api/Maintenance").then(function(response) {
+     $http.get("/api/request/maintenance").then(function(response) {
          $scope.maintenanceRequests = response.data;
          
          if($scope.maintenanceRequests === '')
@@ -10,6 +10,8 @@ angular.module('rhmsApp').controller('maintenanceController', ['$scope', '$mdBot
      });
      
  	 $scope.resolveMaintenance = function (maintenance) {
+ 		 
+ 		 $scope.maintenanceRequest.unitId = $ro
 
 	      var onSuccess = function (data, status, headers, config) {
 	    	  $mdToast.show($mdToast.simple().textContent("Maintenance Completed").position('top right'));

@@ -2,8 +2,8 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
 	
 	$scope.error = false;
 	
-     $http.get("/api/Apartments").then(function(response) {
-         $scope.apartments = response.data;
+     $http.get("/api/complex/units").then(function(response) {
+         $scope.units = response.data;
          
          
          if($scope.complexes === '')
@@ -11,7 +11,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
      });
      
 
-     $http.get("/api/Residents").then(function(response) {
+     $http.get("/api/associates/associates").then(function(response) {
          $scope.residents = response.data;
          
          

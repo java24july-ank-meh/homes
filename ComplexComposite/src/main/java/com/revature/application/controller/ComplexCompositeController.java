@@ -48,7 +48,9 @@ public class ComplexCompositeController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
-	
+	@PostMapping("{unitId}/assign/{associateId}")
+	public ResponseEntity<Object> assignUnitToAssociate(@PathVariable("unitId") int unitId, @PathVariable("associateId") int associateId) {
+		return ResponseEntity.ok(compositeService.assignUnitToAssociate(unitId, associateId));
+	}
 	
 }

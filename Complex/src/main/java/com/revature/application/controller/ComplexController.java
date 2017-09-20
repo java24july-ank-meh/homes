@@ -54,6 +54,7 @@ public class ComplexController {
 		if(complex.getPhone() != null) com.setPhone(complex.getPhone());
 		if(complex.getName() != null) com.setName(complex.getName());
 		if(complex.getAbbreviation() != null) com.setAbbreviation(complex.getAbbreviation());
+		if(complex.getPhotoUrl() != null) com.setPhotoUrl(complex.getPhotoUrl());
 		if(complex.getOffice() != null) {
 			com.setOffice(os.find(complex.getOffice().getOfficeId()));
 		}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,9 @@ public class OfficeController {
 	
 	@GetMapping("{id}")
 	public Object findOne(@PathVariable("id") int id) {
-		return os.find(id);
+		Office office = os.find(id);
+		if(office == null) throw new ResourceNotFoundException();
+		return office;
 	}
 	
 	@PostMapping
@@ -38,6 +41,7 @@ public class OfficeController {
 	@PutMapping("{id}")
 	public Object update(@PathVariable("id") int id, @RequestBody Office office) {
 		Office o = os.find(id);
+		if(o == null) throw new ResourceNotFoundException();
 		if(office.getAddress() != null) o.setAddress(office.getAddress());
 		if(office.getPhone() != null) o.setPhone(office.getPhone());
 		if(office.getTimezone() != null) o.setTimezone(office.getTimezone());
@@ -49,8 +53,8 @@ public class OfficeController {
 	@GetMapping("{id}/complexes")
 	public Object findComplexes(@PathVariable("id") int id){
 		Office office = os.find(id);
-		if(office != null) return office.getComplexes();
-		return null;
+		if(office == null) throw new ResourceNotFoundException();
+		return office.getComplexes();
 	}
 	
 	@DeleteMapping(value = "{id}")

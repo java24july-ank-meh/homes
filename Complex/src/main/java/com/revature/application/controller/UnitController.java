@@ -1,6 +1,8 @@
 package com.revature.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,9 @@ public class UnitController {
 
 	@GetMapping(value = "{id}")
 	public Object displayUnit(@PathVariable("id") long id) {
-		return unitService.findByUnitId(id);
+		Unit unit = unitService.findByUnitId(id);
+		if(unit == null) throw new ResourceNotFoundException();
+		return unit;
 	}
 	
 	@PostMapping
@@ -39,6 +43,7 @@ public class UnitController {
 	@PutMapping(value = "{id}")
 	public Object updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
 		Unit u = unitService.findByUnitId(id);
+		if(u == null) throw new ResourceNotFoundException();
 		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
 		if(unit.getGender() != null) u.setGender(unit.getGender());
 		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());

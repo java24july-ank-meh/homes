@@ -58,8 +58,8 @@
 	                        <md-list-item class="md-2-line" ng-if="associate.unitId">
 	                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
 	                            <div class="md-list-item-text" >
-	                                <h3>{{associate.unitId}}</h3>
-	                                <p> COMPLEX</p>
+	                                <h3><a ui-sref='home.showApartment({apartmentId: associate.unitId})' > {{associate.unitId}}</a></h3>
+	                                <p> Unit</p>
 	                            </div>
 	                        </md-list-item>
 	                    </md-list>
@@ -76,9 +76,5 @@
                 </md-card-content>
             </md-card>
         </div>
-     
-
     </div>
-   
-
 </md-content> 	

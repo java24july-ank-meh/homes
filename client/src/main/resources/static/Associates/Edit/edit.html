@@ -3,10 +3,10 @@
 <form name="editResident" ng-submit="editResidentFormSubmit()" ng-cloak>
 	    <md-toolbar>
 	    	<div class="md-toolbar-tools">
-	    		<h2>Edit Resident</h2>
+	    		<h2>Edit Associate</h2>
 	    		<span flex></span>
 	    		<md-button class="md-icon-button" ng-click="cancel()"><ng-icon icon="close" aria-label="Close dialog">
-	    		</ng-icon></md-button><
+	    		</ng-icon></md-button>
 	    	</div>
 	    </md-toolbar>
 	    <md-dialog-content>
@@ -14,31 +14,31 @@
 			    <div layout-gt-xs="row">
 			    	<md-input-container>
 			    		<label>First Name:</label>
-			    		<input ng-model="resident.firstName" type="text">
+			    		<input ng-model="associate.firstName" type="text">
 			    	</md-input-container>
 			    </div>
 			    <div layout-gt-xs="row">
 			    	<md-input-container>
 			    		<label>Last Name:</label>
-			    		<input ng-model="resident.lastName" type="text">
+			    		<input ng-model="associate.lastName" type="text">
 			    	</md-input-container>
 			    </div>
 			    <div layout-gt-xs="row">
 			    	<md-input-container>
 			    		<label>Phone:</label>
-			    		<input ng-model="resident.phone" type="tel">
+			    		<input ng-model="associate.phone" type="tel">
 			    	</md-input-container>
 			    </div>
 			    <div layout-gt-xs="row">
 			    	<md-input-container>
 			    		<label>Email:</label>
-			    		<input ng-model="resident.email" type="email">
+			    		<input ng-model="associate.email" type="email">
 			    	</md-input-container>
 			    </div>
 			    <div layout-gt-xs="row">
 			    	<md-input-container class="md-block">
 			    		<label>About:</label>
-			    		<textarea ng-model="resident.about" md-maxlength="200" rows="5" md-select-on-focus></textarea>
+			    		<textarea ng-model="associate.about" md-maxlength="200" rows="5" md-select-on-focus></textarea>
 			    	</md-input-container>
 			    </div>
 			    

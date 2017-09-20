@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog','$http', '$stateParams', '$state', '$rootScope', '$mdToast', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $stateParams, $state, $rootScope, $mdToast) {
+angular.module('rhmsApp').controller('showAssociateController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog','$http', '$stateParams', '$state', '$rootScope', '$mdToast', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $stateParams, $state, $rootScope, $mdToast) {
 	
 	  $scope.showConfirm = function(deleteResident) {
 
@@ -17,20 +17,20 @@ angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBo
 
         var onSuccess = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("Resident Deleted").position('top right'));
-            $state.go('home.residents');
+            $state.go('home.associates');
         };
 
         var onError = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("Error occured").position('top right'));
         };
 
-        $http.delete('/api/associates/associates/'+ $scope.resident.residentId)
+        $http.delete('/api/associates/associates/'+ $scope.associate.associateId)
         	.success(onSuccess)
         	.error(onError);
 
     };
     
-     $http.get("/api/associates/associates/"+$stateParams.residentId).then(function(response) {
+     $http.get("/api/associates/associates/"+$stateParams.associateId).then(function(response) {
 
          $scope.associate = response.data;
          console.log(response.data);
@@ -39,8 +39,8 @@ angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBo
      $scope.showEditResidentForm = function(ev){
     	
     	 $mdDialog.show({
-    		 controller: 'editResidentController',
-    		 templateUrl: '/../../Residents/Edit/edit.html',
+    		 controller: 'editAssociateController',
+    		 templateUrl: '/../../Associates/Edit/edit.html',
     		 parent: angular.element(document.body),
     		 targetEvent: ev,
     		 clickOutsideToClose: true,

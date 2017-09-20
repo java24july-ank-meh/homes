@@ -1,9 +1,9 @@
-angular.module('rhmsApp').controller('createResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
 
 
-    $http.get("/api/Residents/")
+    $http.get("/api/associates/associates/")
     .then(function(response) {
-        $scope.residents = response.data;
+        $scope.associates = response.data;
     });
     /*$http.get("/api/Apartments/1").then(function(response) {
     	$scope.unnassignedApartment = response.data; //assign to the unnassigned complex
@@ -14,8 +14,8 @@ angular.module('rhmsApp').controller('createResidentController', ['$scope', '$ht
     $scope.createResidentFormSubmit = function () {
 
         var onSuccess = function (data, status, headers, config) {
-        	$mdToast.show($mdToast.simple().textContent("Resident Created").position('top right'));
-            $state.go('home.showResident', { residentId: data});
+        	$mdToast.show($mdToast.simple().textContent("Associate Created").position('top right'));
+            $state.go('home.showAssociate', { residentId: data});
             $scope.hide();
             
         };
@@ -26,7 +26,7 @@ angular.module('rhmsApp').controller('createResidentController', ['$scope', '$ht
         
         //$scope.resident.apartment = $scope.unnassignedApartment;
         //console.log($scope.resident);
-        $http.post('/api/Residents/Create', $scope.resident)
+        $http.post('/api/associates/associates/', $scope.associate)
             .success(onSuccess)
             .error(onError);
 
@@ -62,6 +62,6 @@ angular.module('rhmsApp').controller('createResidentController', ['$scope', '$ht
 
     //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {
-        $scope.resident = "";
+        $scope.associate = "";
     };
 }]);

@@ -3,6 +3,7 @@ package com.revature.application.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +29,16 @@ public class ComplexController {
 	
 	@GetMapping("{id}")
 	public Object findOne(@PathVariable("id") int id) {
-		return cs.findByComplexId(id);
+		Complex com = cs.findByComplexId(id);
+		if(com == null) throw new ResourceNotFoundException();
+		return com;
 	}
 	
 	@GetMapping("{id}/units")
 	public Object findUnits(@PathVariable("id") int id) {
-		return cs.findByComplexId(id).getUnits();
+		Complex com = cs.findByComplexId(id);
+		if(com == null) throw new ResourceNotFoundException();
+		return com.getUnits();
 	}
 	
 	@PostMapping
@@ -47,6 +52,7 @@ public class ComplexController {
 	@PutMapping(value = "{id}")
 	public Object updateComplex(@PathVariable("id") int id, @RequestBody Complex complex) {
 		Complex com = cs.findByComplexId(id);
+		if(com == null) throw new ResourceNotFoundException();
 		if(complex.getAddress() != null) com.setAddress(complex.getAddress());
 		if(complex.getParking() != null) com.setParking(complex.getParking());
 		if(complex.getWebsite() != null) com.setWebsite(complex.getWebsite());
@@ -66,5 +72,4 @@ public class ComplexController {
 		 return cs.delete(id);
 		 
 	}
-	
 }

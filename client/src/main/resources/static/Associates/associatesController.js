@@ -1,18 +1,18 @@
-angular.module('rhmsApp').controller('residentsController', ['$scope', '$mdBottomSheet','$http', '$mdDialog','$stateParams','$state' ,'$mdToast', '$filter', 'NgTableParams', function($scope, $mdBottomSheet,$http, $mdDialog, $stateParams, $state, $mdToast, $filter, NgTableParams) {
+angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBottomSheet','$http', '$mdDialog','$stateParams','$state' ,'$mdToast', '$filter', 'NgTableParams', function($scope, $mdBottomSheet,$http, $mdDialog, $stateParams, $state, $mdToast, $filter, NgTableParams) {
 	
-	$http.get("/api/Residents").then(function(response) {
-		$scope.residents = response.data;
+	$http.get("/api/associates/associates").then(function(response) {
+		$scope.associates = response.data;
     });
 
-	$http.get("/api/ApartmentComplexes").then(function(response) {
+	$http.get("/api/complex/complex").then(function(response) {
 		
 		
 		$scope.residentData = [];
 		response.data.forEach(function(complex) {
-			if(complex.apartments){
-				complex.apartments.forEach(function(apartment) {
-					if(apartment.residents){ 
-						apartment.residents.forEach(function(resident) {
+			if(complex.units){
+				complex.units.forEach(function(unit) {
+					if(unit.residents){ 
+						unit.residents.forEach(function(resident) {
 							$scope.residents.forEach(function(trueResident) {
 								if (trueResident.apartmentNumber === undefined){
 									trueResident.apartmentNumber = 0;
@@ -37,8 +37,8 @@ angular.module('rhmsApp').controller('residentsController', ['$scope', '$mdBotto
 	$scope.showCreateResidentForm = function(ev) {
 		  
 		  $mdDialog.show({
-			  controller: 'createResidentController',
-			  templateUrl: '/../../Residents/Create/createResident.html',
+			  controller: 'createAssociateController',
+			  templateUrl: '/../../Associates/Create/createAssociate.html',
 			  parent: angular.element(document.body),
 			  targetEvent: ev,
 			  clickOutsideToClose:true,

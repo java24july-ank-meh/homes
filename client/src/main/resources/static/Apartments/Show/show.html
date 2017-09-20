@@ -7,7 +7,7 @@
         <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
-        <h3>Apartment - {{unit.unitNumber}}</h3>
+        <h3><span ng-if="unit.buildingNumber">Building {{unit.buildingNumber}}</span> Unit {{unit.unitNumber}}</h3>
         <span flex></span>
         <md-button aria-label="Search" ng-click="showSearch = !showSearch">
             <ng-md-icon icon="search"></ng-md-icon>
@@ -55,7 +55,7 @@
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text ui-sref="home.editComplex({complexId: unit.complex.complexId})" >
-                            <span class="md-headline">Apartment {{unit.unitNumber}} - {{unit.complex.name}}</span>
+                            <span class="md-headline">Unit {{unit.unitNumber}} - {{unit.complex.name}}</span>
                         </md-card-title-text>
                         <md-input-container md-theme="input" flex>
                             <label>&nbsp;</label>
@@ -69,7 +69,7 @@
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
-				<img ng-src="{{unit.complex.photo}}" class="md-card-image" alt="{{unit.complex.name}}.img" >
+				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" >
                 <md-card-content layout-gt-md="row" layout="column" >
                     <md-list class="md-dense" flex="50">
                         <md-list-item class="md-2-line" >

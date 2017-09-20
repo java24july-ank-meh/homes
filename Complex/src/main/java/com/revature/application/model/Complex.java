@@ -23,39 +23,24 @@ public class Complex {
 	private String email;
 	private String phone;
 	private String name;
+	private String address;
+	private String parking;
+	private String photoUrl;
 
 	@Column(unique = true)
 	@Size(max = 12)
 	private String abbreviation; // abbreviation of the name unique and under 12 char
-	private String address;
-	private String parking;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "OFFICE_ID")
 	private Office office;
 
-	@OneToMany(mappedBy = "complex", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "complex", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	List<Unit> units;
 
-
-	public Complex(int complexId, String website, String email, String phone, String name, String abbreviation,
-			String address, String parking, Office office, List<Unit> units) {
-		super();
-		this.complexId = complexId;
-		this.website = website;
-		this.email = email;
-		this.phone = phone;
-		this.name = name;
-		this.abbreviation = abbreviation;
-		this.address = address;
-		this.parking = parking;
-		this.office = office;
-		this.units = units;
-	}
-
 	public Complex(String website, String email, String phone, String name, String abbreviation, String address,
-			String parking, Office office, List<Unit> units) {
+			String parking, String photoUrl, Office office, List<Unit> units) {
 		super();
 		this.website = website;
 		this.email = email;
@@ -64,24 +49,22 @@ public class Complex {
 		this.abbreviation = abbreviation;
 		this.address = address;
 		this.parking = parking;
+		this.photoUrl = photoUrl;
 		this.office = office;
 		this.units = units;
 	}
-
 
 	public String getAddress() {
 		return address;
 	}
 
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	public Complex() {
 	}
 
-	
 	public int getComplexId() {
 		return complexId;
 	}
@@ -136,6 +119,14 @@ public class Complex {
 
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 
 	public Office getOffice() {

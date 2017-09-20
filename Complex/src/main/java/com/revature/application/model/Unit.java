@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
- 
+
 @Entity
 @Table(name = "UNIT")
 public class Unit {
@@ -17,8 +17,8 @@ public class Unit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long unitId;
-	@Column
 	private String unitNumber;
+	private String buildingNumber;
 	private int capacity;
 	private String gender;
 
@@ -29,10 +29,11 @@ public class Unit {
 	public Unit() {
 	}
 
-	public Unit(long unitId, String unitNumber, int capacity, String gender, Complex complex) {
+	public Unit(long unitId, String unitNumber, String buildingNumber, int capacity, String gender, Complex complex) {
 		super();
 		this.unitId = unitId;
 		this.unitNumber = unitNumber;
+		this.buildingNumber = buildingNumber;
 		this.capacity = capacity;
 		this.gender = gender;
 		this.complex = complex;
@@ -52,6 +53,14 @@ public class Unit {
 
 	public void setUnitNumber(String unitNumber) {
 		this.unitNumber = unitNumber;
+	}
+
+	public String getBuildingNumber() {
+		return buildingNumber;
+	}
+
+	public void setBuildingNumber(String buildingNumber) {
+		this.buildingNumber = buildingNumber;
 	}
 
 	public int getCapacity() {

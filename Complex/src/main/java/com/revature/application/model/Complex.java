@@ -34,7 +34,7 @@ public class Complex {
 	@JoinColumn(name = "OFFICE_ID")
 	private Office office;
 
-	@OneToMany(mappedBy = "complex", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "complex", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	List<Unit> units;
 

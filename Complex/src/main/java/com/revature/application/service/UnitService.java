@@ -37,10 +37,7 @@ public class UnitService {
 	}
 	
 	public boolean delete(long id){
-		Unit u = unitRepository.findOne(id);
-		u.setComplex(null);
-		unitRepository.save(u);
 		unitRepository.delete(id);
-		return unitRepository.findOne(id) == null;
+		return true;
 	}
 }

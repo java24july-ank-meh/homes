@@ -30,6 +30,6 @@ public class OfficeService {
 	
 	public boolean delete(int id) {
 		or.delete(id);
-		return or.findOne(id) == null;
+		return true;
 	}
 }

@@ -30,11 +30,8 @@ public class ComplexService {
 	}
 	
 	public boolean delete(int id) {
-		Complex com = ComplexRepository.findOne(id);
-		com.setOffice(null);
-		ComplexRepository.save(com);
 		ComplexRepository.delete(id);
-		return ComplexRepository.findOne(id) == null;
+		return true;
 	}
 
 }

@@ -23,7 +23,7 @@ public class Office {
 	private String website;
 	private String timezone;
 
-	@OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "office", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	Set<Complex> complexes;
 	

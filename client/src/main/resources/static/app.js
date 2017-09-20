@@ -38,20 +38,20 @@ app.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             templateUrl: 'Complexes/complexes.html',
             controller: 'complexesController'
         })
-        .state('home.residents',{
-            url:'/residents',
-            templateUrl: 'Residents/residents.html',
-            controller: 'residentsController'
+        .state('home.associates',{
+            url:'/associates',
+            templateUrl: 'Associates/associates.html',
+            controller: 'associatesController'
         })
-        .state('home.showResident',{
-            url:'/residents/:residentId',
-            templateUrl: 'Residents/Show/ShowResident.html',
-            controller: 'showResidentController'
+        .state('home.showAssociate',{
+            url:'/associates/:associateId',
+            templateUrl: 'Associates/Show/ShowAssociate.html',
+            controller: 'showAssociateController'
         })
-        .state('home.editResident',{
-        	url:'/residents/edit/:residentId',
-        	templateUrl:'Residents/Edit/edit.html',
-        	controller: 'editResidentController'
+        .state('home.editAssociate',{
+        	url:'/associates/edit/:associateId',
+        	templateUrl:'Associates/Edit/edit.html',
+        	controller: 'editAssociateController'
         })
         .state('home.createComplex', {
             url: '/complexes/create',

@@ -42,6 +42,7 @@ public class UnitController {
 		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
 		if(unit.getGender() != null) u.setGender(unit.getGender());
 		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
+		if(unit.getBuildingNumber() != null) u.setBuildingNumber(unit.getBuildingNumber());
 		if(unit.getComplex() != null) {
 			u.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));
 		}

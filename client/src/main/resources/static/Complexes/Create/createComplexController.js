@@ -2,15 +2,18 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
 
 	$scope.place = {};
 	$scope.complex = {};
-	$scope.selected = {};
+
 	
 	$http.get('/api/complex/office')
-		.success(function(data){
-			$scope.offices = data;
+		.then(function(response){
+			$scope.offices = response.data;
 		});
 	
     $scope.newComplexFormSubmit = function () {
     	
+    	$scope.complex.office = {};
+    	$scope.complex.office.officeId = JSON.parse($scope.selected).officeId;
+       	
         var onSuccess = function (data, status, headers, config) {
             $scope.complex.office = {};
         	$scope.complex.office.id = $scope.selected.id;
@@ -28,7 +31,6 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
             .error(onError);
     };
 
-    //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {
         $scope.complex = "";
     };

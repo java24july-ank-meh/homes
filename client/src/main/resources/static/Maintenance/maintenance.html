@@ -28,7 +28,7 @@
         </h3>
         <md-input-container md-theme="input" flex style="padding-top:28px;">
             <label>&nbsp;</label>
-            <input ng-model="search.who" placeholder="enter search">
+            <input ng-model="search.$" placeholder="enter search">
         </md-input-container>
         <md-button aria-label="Search" ng-click="showSearch = !showSearch" class="ng-icon-button">
             <ng-md-icon icon="search"></ng-md-icon>
@@ -48,7 +48,7 @@
              <h2>No Maintenance Requests Found</h2>
         </div>
             
-        <div flex="25" flex-sm="100" flex-xs="100" ng-repeat="maintenance in maintenanceRequests" class="container">
+        <div flex="25" flex-sm="100" flex-xs="100" ng-repeat="maintenance in maintenanceRequests | filter:search" class="container">
             <md-card ui-sref="home.showApartment({apartmentId: maintenance.apartment})" >
                 <md-card-title>
                     <md-card-title-text  >

@@ -2,6 +2,15 @@ angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBotto
 
 	$scope.error = false;
 	
+	$scope.selected = {};
+	
+	$http.get('/api/complex/office')
+	.success(function(data){
+		$scope.offices = data;
+		$scope.filtered = $scope.offices;
+	});
+
+	
      $http.get("/api/complex/complex").then(function(response) {
          $scope.complexes = response.data;
          

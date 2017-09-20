@@ -8,12 +8,13 @@
     <packaging>pom</packaging>
 
     <modules>
-		<module>eureka</module>
+        <module>Eureka</module>
     	<module>zuul</module>
     	
     	<module>Associate</module>
     	<module>Complex</module>
     	<module>RequestService</module>	
     	<module>SlackMicroservice</module>
+    	<module>client</module>
     </modules>
 </project>

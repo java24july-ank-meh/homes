@@ -3,33 +3,30 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
 	$scope.error = false;
 	$scope.aptannouncement = ' ';
 	
-     $http.get("/api/Apartments/"+$stateParams.apartmentId).then(function(response) {
-         $scope.apartment = response.data;
+     $http.get("/api/complex/unit/"+$stateParams.apartmentId).then(function(response) {
+         $scope.unit = response.data;
          
-         if($scope.apartment === ''){
+         if($scope.unit === ''){
 
         	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
         	 $scope.error = true;
          }
          else
-        	$http.get("/api/ApartmentComplexes/"+$scope.apartment.complex).then(function(response) {
-        	 $scope.complex = response.data;
-        	 
-        	 $http.get("/api/Apartments/"+$scope.apartment.apartmentId +'/Maintenance').then(function(response) {
+               
+        	 $http.get("/api/request/maintenance/unit/"+$scope.unit.unitId +'/maintenance').then(function(response) {
             	 $scope.maintenanceRequests = response.data;
         	 });
         	 
-        	 
-             if($scope.complex === ''){
-            	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
-            	 $scope.error = true;
-             } else {
-            	 
-            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.complex.address.split(' ').join('+')+"&destination=11730+Plaza+America+Drive,+Reston,+VA&avoid=tolls|highways";
-            	 document.getElementById('complexMap').src = parsedAddress;
-             }
-         });
-         
+//        	 
+//             if($scope.complex === ''){
+//            	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
+//            	 $scope.error = true;
+//             } else {
+//            	 
+//            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.complex.address.split(' ').join('+')+"&destination=11730+Plaza+America+Drive,+Reston,+VA&avoid=tolls|highways";
+//            	 document.getElementById('complexMap').src = parsedAddress;
+//             }
+//         });
      },function (response){
     	   $mdToast.show($mdToast.simple().textContent(response));
      });
@@ -58,7 +55,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
     	  $mdToast.show($mdToast.simple().textContent(data));
       };
 
-      $http.delete('/api/Apartments/'+$stateParams.apartmentId)
+      $http.delete('/api/unit/'+$stateParams.apartmentId)
       	.success(onSuccess)
       	.error(onSuccess);
 

@@ -26,15 +26,21 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         };
 
-        $http.delete('/api/ApartmentComplexes/'+$stateParams.complexId)
+        $http.delete('/api/complex/complex/'+$stateParams.complexId)
         	.success(onSuccess)
         	.error(onSuccess);
 
     };
     
-     $http.get("/api/ApartmentComplexes/"+$stateParams.complexId).then(function(response) {
+     $http.get("/api/complex/complex/"+$stateParams.complexId).then(function(response) {
 
          $scope.complex = response.data;
+         
+         $http.get("/api/complex/complex/"+$stateParams.complexId+"/units").then(function(response) {
+        	 
+        	 $scope.complex.units = response.data;
+        	 
+         });
          
          if($scope.complex === ''){
         	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
@@ -73,7 +79,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 	        }
 
 	      /*  $stateParams.complexId*/
-	        $http.post('/api/ApartmentComplexes/message/'+$stateParams.complexId, $scope.announcement )
+	        $http.post('/api/complex/complex/message/'+$stateParams.complexId, $scope.announcement )
 	            .success(onSuccess)
 	            .error(onError);
 

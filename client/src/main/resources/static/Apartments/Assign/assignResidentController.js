@@ -1,13 +1,10 @@
 angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
 
-
-    $http.get("/api/Residents/")
+    $http.get("/api/associates/associates")
     .then(function(response) {
         $scope.residents = response.data;
     });
 
-	
-	
     $scope.newApartmentFormSubmit = function () {
 
         var onSuccess = function (data, status, headers, config) {
@@ -37,7 +34,6 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
         $mdDialog.cancel();
       };
       
-      
  	 $scope.assignResident = function (residentId) {
 
  	      var onSuccess = function (data, status, headers, config) {
@@ -55,7 +51,6 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	      	.error(onSuccess);
 
  	  };
-
 
     //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {

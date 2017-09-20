@@ -29,16 +29,10 @@ public class ComplexService {
 		return ComplexRepository.saveAndFlush(complex).getComplexId();
 	}
 	
-	public String delete(int id) {
-		 ComplexRepository.delete(id);
-		 return id + " deleted";
+	public boolean delete(int id) {
+		ComplexRepository.delete(id);
+		return true;
 	}
-	
-	public int update(Complex complex) {
-		return ComplexRepository.saveAndFlush(complex).getComplexId();
-	}
-
-	
 
 }
 

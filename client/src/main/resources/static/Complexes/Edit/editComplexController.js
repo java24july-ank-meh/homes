@@ -1,7 +1,7 @@
 angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http', '$stateParams','$mdDialog','$state','$mdToast', function($scope, $http, $stateParams, $mdDialog, $state, $mdToast ) {
 
 
-    $http.get("/api/ApartmentComplexes/"+$stateParams.complexId)
+    $http.get("/api/complex/complex/"+$stateParams.complexId)
         .success(function(data) {
             $scope.complex = data;
 
@@ -23,7 +23,7 @@ angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http'
         };
 
         
-        $http.put('/api/ApartmentComplexes/'+$stateParams.complexId, $scope.complex )
+        $http.put('/api/complex/complex/'+$stateParams.complexId, $scope.complex )
         	.success(onSuccess)
         	.error(onError);
 

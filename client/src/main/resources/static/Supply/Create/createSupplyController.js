@@ -2,7 +2,11 @@ angular.module('rhmsApp').controller('createSupplyController', ['$scope', '$http
 
 	$scope.supply = [
 		{
-			'name': 'Dishwasher Capsules',
+			'name': 'Detergent Pods',
+			'selected': false
+		},	
+		{
+			'name': 'Dish Soap',
 			'selected': false
 		},
 		{
@@ -10,19 +14,12 @@ angular.module('rhmsApp').controller('createSupplyController', ['$scope', '$http
 			'selected': false
 		},
 		{
-			'name': 'Plates',
-			'selected': false
-		},
-		{
 			'name': 'Sponge',
 			'selected': false
 		},
+
 		{
-			'name': 'Soap',
-			'selected': false
-		},	
-		{
-			'name': 'Trash bags',
+			'name': 'Trash Bags',
 			'selected': false
 		},
 		{

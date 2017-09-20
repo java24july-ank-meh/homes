@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.application.model.Unit;
+import com.revature.application.service.ComplexService;
 import com.revature.application.service.UnitService;
 
 @RestController
@@ -13,6 +14,9 @@ public class UnitController {
 
 	@Autowired
 	UnitService unitService;
+	
+	@Autowired
+	ComplexService complexService;
 
 	@GetMapping
 	public Object displayAllUnit() {
@@ -26,6 +30,9 @@ public class UnitController {
 	
 	@PostMapping
 	public Object createUnit(@RequestBody Unit unit) {
+		if(unit.getComplex() != null) {
+			unit.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));
+		}
 		return unitService.save(unit);
 	}
 	
@@ -33,9 +40,12 @@ public class UnitController {
 	public Object updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
 		Unit u = unitService.findByUnitId(id);
 		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
-		if(unit.getComplex() != null) u.setComplex(unit.getComplex());
 		if(unit.getGender() != null) u.setGender(unit.getGender());
 		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
+		if(unit.getBuildingNumber() != null) u.setBuildingNumber(unit.getBuildingNumber());
+		if(unit.getComplex() != null) {
+			u.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));
+		}
 		unitService.save(u);
 		return u;
 	}

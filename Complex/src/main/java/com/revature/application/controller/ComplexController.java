@@ -33,7 +33,9 @@ public class ComplexController {
 	
 	@GetMapping("{id}/units")
 	public Object findUnits(@PathVariable("id") int id) {
-		return cs.findByComplexId(id).getUnits();
+		Complex com = cs.findByComplexId(id);
+		if(com != null) return com.getUnits();
+		return null;
 	}
 	
 	@PostMapping

@@ -1,8 +1,12 @@
 package com.revature.controllers;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,6 +55,33 @@ public class Helper {
 		}
 		
 		return null;
+	}
+	
+	public String scopes(String token) {
+		StringBuilder scopes = new StringBuilder("");
+		try {
+	    	URL obj = new URL("https://slack.com/api/users.identity?token=" + token);
+	    	URLConnection conn = obj.openConnection();
+	    	
+	    	
+	    	Map<String, List<String>> map = conn.getHeaderFields();
+	    	
+	    	for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+	    		System.out.println("Key : " + entry.getKey()
+	                               + " ,Value : " + entry.getValue());
+	    		//check for client scope
+	    		for(int i = 0; i < entry.getValue().size(); ++i) {
+	    		if(entry.getValue().get(i).contains("client"))
+	    			scopes.append("client");
+	    		if(entry.getValue().get(i).contains("channels:write"))
+	    			scopes.append("channels:write");
+	    		}
+	    	}
+		    System.out.println(scopes.toString());
+	    	}catch (Exception e) {
+	    		e.printStackTrace();
+	        }
+	    return scopes.toString();
 	}
 	
 	public boolean channelNameIsUnique(String name, String userToken) {

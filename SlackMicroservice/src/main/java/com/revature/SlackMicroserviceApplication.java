@@ -86,7 +86,8 @@ public class SlackMicroserviceApplication extends WebSecurityConfigurerAdapter{
 		List<Filter> filters = new ArrayList<>();
 		
 		filters.add(ssoFilter(slack(), "/login/slack"));
-		//filters.add(ssoFilter(slackChannel(), "/channelwrite/slack"));
+		filters.add(ssoFilter(slackClient(), "/client/slack"));
+		filters.add(ssoFilter(slackChannel(), "/channelwrite/slack"));
 		filter.setFilters(filters);
 		
 		return filter;
@@ -138,4 +139,11 @@ public class SlackMicroserviceApplication extends WebSecurityConfigurerAdapter{
 	public ClientResources slackChannel() {
 	  return new ClientResources();
 	}
+	
+	@Bean
+	@ConfigurationProperties("slackClient")
+	public ClientResources slackClient() {
+	  return new ClientResources();
+	}
+	
 }

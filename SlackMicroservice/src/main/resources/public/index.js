@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module("app", []).controller("home", function($http){
+angular.module("app", []).controller("home", function($http,$window){
 			var self = this;
 			$http.get("/user").success(function(data){
 				console.log(data);
@@ -15,6 +15,34 @@ angular.module("app", []).controller("home", function($http){
 				self.user = "N/A";
 				self.authenticated = false;
 			});
+			
+			 self.onload = function() {
+				 $http.get("/manager/scopes/basic").then(function(response){
+			        	if(response.data.scope === "basic"){
+			        		$http.post('/logout', {}).then(function(){
+								self.authenticated = false;
+				        		alert("basic call");
+					        	$window.location.href = "/channelwrite/slack";
+			        		}).error(function(data){
+								console.log("Logout failed");
+								self.authenticated = false;
+							});
+			        	
+			        	}else if(response.data.scope === "client"){
+			        		$http.post('/logout', {}).then(function(){
+								self.authenticated = false;
+								alert("client call");
+								$window.location.href = "/client/slack";
+							}).error(function(data){
+								console.log("Logout failed");
+								self.authenticated = false;
+							});
+					      
+			        	}  else {
+			        		console.log("you in bro!");
+			        	}
+			        })
+			 }
 			
 			self.logout = function(){
 				$http.post('/logout', {}).success(function(){

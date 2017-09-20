@@ -1,8 +1,8 @@
-angular.module('rhmsApp').controller('editResidentController', ['$scope', '$http', '$mdDialog', '$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast){
+angular.module('rhmsApp').controller('editAssociateController', ['$scope', '$http', '$mdDialog', '$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast){
 	
-	$http.get("api/Residents/"+$stateParams.residentId)
+	$http.get("api/associates/associates/"+$stateParams.associateId)
 	.success(function(data){
-		$scope.resident = data;
+		$scope.associate = data;
 	})
 	.error(function(){
 		$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
@@ -11,7 +11,7 @@ angular.module('rhmsApp').controller('editResidentController', ['$scope', '$http
 	$scope.editResidentFormSubmit = function(){
 		
 		var onSuccess = function(data, status, headers, config) {
-			$mdToast.show($mdToast.simple().textContent("Resident Updated").position('top right'));
+			$mdToast.show($mdToast.simple().textContent("Associate Updated").position('top right'));
 			$state.reload();
 			$scope.hide();
 		};
@@ -19,9 +19,8 @@ angular.module('rhmsApp').controller('editResidentController', ['$scope', '$http
 		var onError = function(data, status, headers, config) {
 			$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
 		};
-		$scope.apartment = $scope.resident.apartment;
-		delete $scope.resident.apartment;
-		$http.put('/api/Residents/'+$scope.apartment, $scope.resident)
+
+		$http.post('/api/associates/associates/createOrUpdate/', $scope.associate)
 			.success(onSuccess)
 			.error(onError);
 		
@@ -36,6 +35,6 @@ angular.module('rhmsApp').controller('editResidentController', ['$scope', '$http
 	};
 	
 	$scope.resetForm = function() {
-		$scope.resident = "";
+		$scope.associate = "";
 	};
 }]);

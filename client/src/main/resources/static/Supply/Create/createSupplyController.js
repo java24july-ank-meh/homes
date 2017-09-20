@@ -36,28 +36,28 @@ angular.module('rhmsApp').controller('createSupplyController', ['$scope', '$http
 
 	    angular.forEach($scope.supply, function (item, value) {
 	        if (item.selected){
-	        		item.unitId = 5;
-	        		item.submittedBy = 4;
+	        		item.unitId = $rootScope.rootAssociate.unitId;
+	        		item.submittedBy = $rootScope.rootAssociate.associateId;
 	        		requestedSupplies.push(item);
 	        	}
 	    });
 	    
         var onSuccess = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("Supply Request Created").position('top right'));
-            $state.go('home.showApartment', { apartmentId: $rootScope.rootResident.apartment});
+            $state.go('home.showApartment', { apartmentId: $rootScope.rootAssociate.unitId});
         };
 
         var onError = function (data, status, headers, config) {
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
 
-        $http.post('/api/request/units/'+5 +'/supply', requestedSupplies)
+        $http.post('/api/request/units/'+$rootScope.rootAssociate.unitId+'/supply', requestedSupplies)
             .success(onSuccess)
             .error(onError);
     };
 
     //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {
-        $scope.complex = "";
+        $scope.supplies = "";
     };
 }]);

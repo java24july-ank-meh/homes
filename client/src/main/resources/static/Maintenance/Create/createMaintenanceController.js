@@ -25,11 +25,14 @@ angular.module('rhmsApp').controller('createMaintenanceController', ['$scope', '
 	
 	
     $scope.newMaintenanceFormSubmit = function () {
+    	
+    	$scope.maintenance.unitId = $rootScope.rootAssociate.unitId;
+    	$scope.maintenance.submittedBy = $rootScope.rootAssociate.associateId;
 
         var onSuccess = function (data, status, headers, config) {
             
         	 $mdToast.show($mdToast.simple().textContent("Maintenance Created").position('top right'));
-            $state.go('home.showApartment', { apartmentId: $rootScope.rootResident.apartment});
+            $state.go('home.showApartment', { apartmentId: $rootScope.rootAssociate.unitId});
             
         };
 
@@ -37,7 +40,7 @@ angular.module('rhmsApp').controller('createMaintenanceController', ['$scope', '
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
 
-        $http.post('/api/Apartments/'+$rootScope.rootResident.apartment +'/Maintenance/create', $scope.maintenance )
+        $http.post('/api/request/units/'+$rootScope.rootAssociate.unitId+'/maintenance', $scope.maintenance )
             .success(onSuccess)
             .error(onError);
 

@@ -152,4 +152,21 @@ public class ComplexCompositeService {
 		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
 		return new JsonParser().parse(associate).getAsJsonObject();
 	}
+
+	public Object assignUnitToAssociate(int unitId, int associateId) {
+		RestTemplate restTemplate = new RestTemplate();
+		Associate associate = restTemplate.getForObject("http://localhost:8090/associates/"+associateId, Associate.class);
+		associate.setUnitId((long) unitId);
+		try {
+			HttpPost post = new HttpPost("http://localhost:8090/associates/createOrUpdate");
+			post.setHeader("Content-type", "application/json");
+			StringEntity postingString = new StringEntity(new Gson().toJson(associate));
+			post.setEntity(postingString);
+			HttpClientBuilder.create().build().execute(post);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

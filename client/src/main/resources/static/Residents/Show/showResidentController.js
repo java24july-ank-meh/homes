@@ -1,6 +1,5 @@
 angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog','$http', '$stateParams', '$state', '$rootScope', '$mdToast', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $stateParams, $state, $rootScope, $mdToast) {
 	
-	
 	  $scope.showConfirm = function(deleteResident) {
 
 		    var confirm = $mdDialog.confirm()
@@ -14,7 +13,6 @@ angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBo
 		    });
 		  };
 
-	
     $scope.deleteResident = function () {
 
         var onSuccess = function (data, status, headers, config) {
@@ -26,19 +24,17 @@ angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBo
         	$mdToast.show($mdToast.simple().textContent("Error occured").position('top right'));
         };
 
-        $http.delete('/api/Residents/'+ $scope.resident.residentId)
+        $http.delete('/api/associates/associates/'+ $scope.resident.residentId)
         	.success(onSuccess)
         	.error(onError);
 
     };
     
+     $http.get("/api/associates/associates/"+$stateParams.residentId).then(function(response) {
 
-     $http.get("/api/Residents/"+$stateParams.residentId).then(function(response) {
-
-         $scope.resident = response.data;
+         $scope.associate = response.data;
          console.log(response.data);
      });
-     
      
      $scope.showEditResidentForm = function(ev){
     	
@@ -50,7 +46,5 @@ angular.module('rhmsApp').controller('showResidentController', ['$scope', '$mdBo
     		 clickOutsideToClose: true,
     		 fullscreen: $scope.customFullScreen
     	 });
-    	 
      };
-
 }]);

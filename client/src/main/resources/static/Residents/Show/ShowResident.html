@@ -14,18 +14,16 @@
     </div>
 </md-toolbar>
 <md-content class="md-padding" >
-    <div layout layout-wrap layout-gt-sm="row" layout="column" >
+    <div layout layout-wrap layout-gt-sm="row" layout="column" layout-align="center center">
         <div flex="60" flex-sm="100" flex-xs="100" class="container">
-    
-            
-            
-            <md-card ng-if="resident">
-            	<img ng-src="http://www.androidguys.com/wp-content/uploads/2013/07/wlp_retro-air_C.jpg" class="md-card-image" alt="Washed Out">
+            <md-card ng-if="associate">
+            	<div style="width: 100%; height:400px; background-color: #FF5722; background-size: cover; background-blend-mode: overlay; background-image: url('http://www.androidguys.com/wp-content/uploads/2013/07/wlp_retro-air_C.jpg');" class="md-card-image" alt="Washed Out">
+            	</div>
             	<!-- <img ng-src="{{rootUser.image_1024}}" class="md-card-image" alt="Washed Out" ng-if="rootUser" width="20" height="20"> -->
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text>
-                            <span class="md-headline">{{resident.firstName}} {{resident.lastName}}</span>
+                            <span class="md-headline">{{associate.firstName}} {{associate.lastName}}</span>
                         </md-card-title-text>
                         <md-input-container md-theme="input" flex>	
                             <label>&nbsp;</label>
@@ -38,38 +36,40 @@
                         </md-button>
                     </div>
                 </md-toolbar>
-                <md-card-content layout-gt-md="row" layout="column" >
-                    <md-list class="md-dense" flex="50">
-                        <md-list-item class="md-2-line" >
-                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
-                            <div class="md-list-item-text" >
-                                <h3> {{resident.phone}}</h3>
-                                <p> PHONE</p>
-                            </div>
-                        </md-list-item>
-                        <md-list-item class="md-2-line" >
-                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
-                            <div class="md-list-item-text" >
-                                <h3>{{resident.email}}</h3>
-                                <p> EMAIL</p>
-                            </div>
-                        </md-list-item>
-                    </md-list>
-                    <md-list class="md-dense">
-                        <md-list-item class="md-2-line" ng-if="resident.apartment">
-                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
-                            <div class="md-list-item-text" >
-                                <h3>{{resident.apartment}}</h3>
-                                <p> COMPLEX</p>
-                            </div>
-                        </md-list-item>
-                    </md-list>
-                    <md-list class="md-dense">
+                <md-card-content layout="column" >
+                	<div layout="row">	
+	                    <md-list class="md-dense" flex="50" >
+	                        <md-list-item class="md-2-line" >
+	                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+	                            <div class="md-list-item-text" >
+	                                <h3> {{associate.phone}}</h3>
+	                                <p> PHONE</p>
+	                            </div>
+	                        </md-list-item>
+	                        <md-list-item class="md-2-line" >
+	                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+	                            <div class="md-list-item-text" >
+	                                <h3>{{associate.email}}</h3>
+	                                <p> EMAIL</p>
+	                            </div>
+	                        </md-list-item>
+	                    </md-list>
+	                    <md-list class="md-dense" flex >
+	                        <md-list-item class="md-2-line" ng-if="associate.unitId">
+	                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+	                            <div class="md-list-item-text" >
+	                                <h3>{{associate.unitId}}</h3>
+	                                <p> COMPLEX</p>
+	                            </div>
+	                        </md-list-item>
+	                    </md-list>
+                   </div>
+                   <md-list class="md-dense">
                     	<md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="person"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-                                <h3>{{resident.about}} </h3>
                                 <p> ABOUT</p>
+                                <h3>{{associate.about}} </h3>
                             </div>
                         </md-list-item>
                     </md-list>

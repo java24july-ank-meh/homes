@@ -48,7 +48,9 @@ public class OfficeController {
 	
 	@GetMapping("{id}/complexes")
 	public Object findComplexes(@PathVariable("id") int id){
-		return os.find(id).getComplexes();
+		Office office = os.find(id);
+		if(office != null) return office.getComplexes();
+		return null;
 	}
 	
 	@DeleteMapping(value = "{id}")

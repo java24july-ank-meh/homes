@@ -31,17 +31,17 @@ public class AssociateController {
 		this.associateService = associateService;
 	}
 
-	@GetMapping("associates")
+	@GetMapping
 	public ResponseEntity<Object> findAll() {
 		return ResponseEntity.ok(associateService.listAll());
 	}
 
-	@GetMapping("associates/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Object> findByContactId(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(associateService.findByAssociateId(id));
 	}
 
-	@GetMapping("associates/{id}/unit")
+	@GetMapping("{id}/unit")
 	public ResponseEntity<Object> findByUnitId(@PathVariable("id") Long id) {
 		//return ResponseEntity.ok(associateService.findByUnitId(id));
 		List<Associate> people = associateService.findByUnitId(id);
@@ -70,7 +70,7 @@ public class AssociateController {
 	 * @param associate the associate you want
 	 * @return the actual associate from the database
 	 */
-	@PostMapping("associates/createOrUpdate")
+	@PostMapping("createOrUpdate")
 	public ResponseEntity<Object> createAssociate(@RequestBody Associate resident, HttpSession session) {
 		/* possible responses: 
 		 * OK - update worked
@@ -89,12 +89,12 @@ public class AssociateController {
 		}
 	}
 
-	@GetMapping("associates/{email:.+}/email")
+	@GetMapping("{email:.+}/email")
 	public Associate findByEmail(@PathVariable("email") String email) {
 		return associateService.findByEmail(email);
 	}
 
-	@DeleteMapping("associates/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<Object> removeResidentFromApartment(@PathVariable("id") Long id) {
 		associateService.delete(id);
 		return ResponseEntity.ok().build();

@@ -101,11 +101,7 @@ public class RequestCompositeService {
 			System.out.println(requestEntry.toString());
 		}
 		
-		String jsonString = compositeObj.toString();
-		System.out.println(jsonString);
-		//jsonString = jsonString.replaceAll("[{", "{[{");
-	    //jsonString = jsonString.replaceAll("}]", "}]}");
-		return jsonString; //jsonParser.parse(jsonString).getAsJsonObject();
+		return compositeObj.toString();
 	}
 	
 	public String getAllSupplyRequests() {
@@ -117,10 +113,12 @@ public class RequestCompositeService {
 		Unit[] units = restTemplate.getForEntity("http://localhost:8093/unit", Unit[].class).getBody();
 		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();
 		
-		JsonObject compositeObj = jsonParser.parse(gson.toJson(requests)).getAsJsonObject();
-		
-		for (Map.Entry<String,JsonElement> compEntry : compositeObj.entrySet()) {
-			JsonObject compEntryJson = compEntry.getValue().getAsJsonObject();
+		JsonObject compositeObj = new JsonObject();
+		compositeObj.add("requests", jsonParser.parse(gson.toJson(requests)));
+
+		System.out.println(compositeObj.toString());
+		for (JsonElement requestEntry : compositeObj.get("requests").getAsJsonArray()) {
+			JsonObject compEntryJson = requestEntry.getAsJsonObject();
 			for (Unit unit : units) {	
 				if (compEntryJson.get("unitId").getAsInt() == unit.getUnitId()) {
 					compEntryJson.add("unit", jsonParser.parse(gson.toJson(unit)));
@@ -133,12 +131,10 @@ public class RequestCompositeService {
 					break;
 				}
 			}
-			compEntry.setValue(compEntryJson);
+			requestEntry = compEntryJson;
+			System.out.println(requestEntry.toString());
 		}
-		/*
-		 * whole associate for the submitted by
-		 * hwole unit for thee unit associated with the maintenane request
-		 */
+		
 		return compositeObj.toString();
 	}
 }

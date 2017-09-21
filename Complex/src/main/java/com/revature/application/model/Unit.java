@@ -29,9 +29,8 @@ public class Unit {
 	public Unit() {
 	}
 
-	public Unit(long unitId, String unitNumber, String buildingNumber, int capacity, String gender, Complex complex) {
+	public Unit(String unitNumber, String buildingNumber, int capacity, String gender, Complex complex) {
 		super();
-		this.unitId = unitId;
 		this.unitNumber = unitNumber;
 		this.buildingNumber = buildingNumber;
 		this.capacity = capacity;

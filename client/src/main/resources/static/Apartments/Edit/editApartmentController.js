@@ -1,8 +1,8 @@
 angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams','$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
 
-    $http.get("/api/Apartments/"+$stateParams.apartmentId)
+    $http.get("/api/complex/unit/"+$stateParams.apartmentId)
     .success(function(data) {
-        $scope.apartment = data;
+        $scope.unit = data;
 
     })
     .error(function(){
@@ -13,7 +13,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
     $scope.editApartmentFormSubmit = function () {
 
         var onSuccess = function (data, status, headers, config) {
-        	$mdToast.show($mdToast.simple().textContent("Apartment Updated").position('top right'));
+        	$mdToast.show($mdToast.simple().textContent("Unit Updated").position('top right'));
             $state.reload();
             $scope.hide();
             
@@ -23,9 +23,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
         
-        $scope.apartment.complex = null;
-        
-        $http.put('/api/Apartments/'+$stateParams.apartmentId, $scope.apartment)
+        $http.put('/api/complex/unit/'+$stateParams.apartmentId, $scope.unit)
             .success(onSuccess)
             .error(onError);
 

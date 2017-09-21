@@ -47,14 +47,14 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
 
       var onSuccess = function (data, status, headers, config) {
     	  $mdToast.show($mdToast.simple().textContent("Apartment Deleted").position('top right'));
-          $state.go('home.showComplex', { complexId: $scope.apartment.complex});
+          $state.go('home.showComplex', { complexId: $scope.unit.complex.complexId});
       };
 
       var onError = function (data, status, headers, config) {
     	  $mdToast.show($mdToast.simple().textContent(data));
       };
 
-      $http.delete('/api/unit/'+$stateParams.apartmentId)
+      $http.delete('/api/complex/unit/'+$stateParams.apartmentId)
       	.success(onSuccess)
       	.error(onSuccess);
 

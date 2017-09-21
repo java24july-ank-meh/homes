@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
@@ -28,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
 
 @Api(value="unit", description="This service allows users to message other users or their channel over slack")
@@ -39,7 +44,10 @@ public class ResidentController {
 	RestTemplate restTemplate;
 	
 	@Autowired
-	Helper helper ;
+	Helper helper;
+	
+	@Autowired
+	ObjectMapper objectMapper;
 	
 	/*Sends an email invite to the email and autofills first name and last name for slack registration
 	does not enforce names*/
@@ -351,6 +359,58 @@ public class ResidentController {
 		
 		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
 		return response;
+	}
+	
+	@PostMapping("admin")
+	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
+		
+		JSONObject json = null;
+		String userId = null;
+		String isAdmin = null;
+		try {
+			json = new JSONObject(body);
+			userId = json.getString("userId");
+			isAdmin = json.getString("isAdmin");
+			
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		
+		
+		String requestUrl = "https://slack.com/api/users.info";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", token);
+		params.add("user", userId);
+			
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType( MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>( params, headers);
+		
+		String responseString = restTemplate.postForObject( requestUrl, request, String.class);
+		JsonNode rootNode, userNode, adminNode = null;
+		
+		try {
+			rootNode = objectMapper.readTree( responseString);
+			userNode = rootNode.path( "user");
+			adminNode = userNode.path( "is_admin");
+			isAdmin = adminNode.asText();
+			
+			ResponseEntity<String> responseEntity =  new ResponseEntity<>("{isAdmin:" + isAdmin + "}", HttpStatus.OK);
+			
+			return responseEntity;
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

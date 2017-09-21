@@ -1,0 +1,81 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" style="min-width:240px;">
+    <md-toolbar class="md-tall" layout="column" flex> 
+        <div layout-align="center center" layout="row" class="md-toolbar-tools"  style="margin-top: 30px;">
+        <div layout="column"><img src="imgs/rhms.png" style="max-width: 60px; margin: 8px;"></div>
+        <div layout="column" layout-align="center center"><strong>REVATURE</strong> HOMES </div>
+       </div>
+    </md-toolbar>
+    <md-toolbar class="md-tall md-hue-1 " style="background-color: #fafafa;">
+        <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+            <md-list-item class="md-3-line noright">
+                <md-icon class="md-avatar" ng-if="!rootUser.image_32"> <ng-md-icon icon="person" ></ng-md-icon></md-icon>
+                 <img ng-src="{{rootUser.image_32}}" class="md-avatar" alt="{{rootUser.name}}"
+               ng-if="rootUser.image_24"/>
+                
+                <div class="md-list-item-text" >
+                    <h3><strong>{{rootUser.name}}</strong></h3>
+                    <p>{{rootUser.email}}</p>
+                    <p> {{isManager}}</p>
+                </div>
+            </md-list-item>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-list>
+    	<div ng-if="!rootUser.isManager">
+    		<md-list-item ng-repeat="item in residentMenu">
+            <a ui-sref="{{item.link}}" ui-sref-active="active" style="text-decoration: none; color:#333;">
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    </div>
+                    <div class="inset">{{item.title}}</div>
+                </md-item-content>
+            </a>
+   
+        </md-list-item>
+    	</div>
+        <div ng-if="rootUser.isManager">
+        <md-list-item ng-repeat="item in menu">
+            <a ui-sref="{{item.link}}" ui-sref-active="active" style="text-decoration: none; color:#333;">
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    </div>
+                    <div class="inset">{{item.title}}</div>
+                </md-item-content>
+            </a>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-subheader>Management</md-subheader>
+        <md-list-item ng-repeat="item in admin">
+            <a>
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    </div>
+                    <div class="inset">{{item.title}}
+                    </div>
+                </md-item-content>
+            </a>
+        </md-list-item>
+        </div>
+        <md-divider></md-divider>
+        <md-list-item ng-repeat="item in commonMenu">
+            <a ui-sref="{{item.link}}" ui-sref-active="active" style="text-decoration: none; color:#333;">
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    </div>
+                    <div class="inset">{{item.title}}</div>
+                </md-item-content>
+            </a>
+        </md-list-item>
+        <md-divider></md-divider>
+    </md-list>
+</md-sidenav>
+
+<div layout="column" class="relative" layout-fill role="main" ui-view>
+    <h5>Some welcome text here</h5>
+</div>

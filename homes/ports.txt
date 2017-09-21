@@ -1,0 +1,17 @@
+
+Zuul 8085
+Eureka 8086
+Kafka 8087
+Slack Auth 8088
+
+Cores 8090-8100
+8090
+    Contact
+8093
+    Complex
+8097
+    Maintence
+8081
+    Client
+
+Composites 8101-8105

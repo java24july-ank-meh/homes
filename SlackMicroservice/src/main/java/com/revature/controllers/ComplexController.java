@@ -51,7 +51,7 @@ public class ComplexController {
 	
 	@HystrixCommand(fallbackMethod="createFallback")
 	@PostMapping("create")
-	public ResponseEntity<String> createUnit(@RequestBody String complex, HttpSession http) {
+	public ResponseEntity<String> createComplex(@RequestBody String complex, HttpSession http) {
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
@@ -103,7 +103,7 @@ public class ComplexController {
 	}
 	
 	@PostMapping("update")
-	public ResponseEntity<String> updateUnit(@RequestBody String complex, 
+	public ResponseEntity<String> updateComplex(@RequestBody String complex, 
 			HttpSession http) {
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
@@ -141,7 +141,7 @@ public class ComplexController {
 	}
 	
 	@PostMapping("delete")
-	public ResponseEntity<String> deleteUnit(@RequestBody String complex, 
+	public ResponseEntity<String> deleteComplex(@RequestBody String complex, 
 			HttpSession http) {
 		
 		JSONObject json = null;

@@ -57,6 +57,57 @@ public class Helper {
 		return null;
 	}
 	
+	//get a user's slack id from their email
+	public String getSlackId(String token, String email) {
+		JsonNode usersList = getUserList(token);
+		Iterator<JsonNode> users = usersList.elements();
+			
+		while(users.hasNext()) {
+			JsonNode nextUser = users.next();
+			JsonNode nextUserEmail = nextUser.path("email");
+			if(email.equals(nextUserEmail.asText())) {
+				return nextUser.path("id").asText();
+			}
+		}
+		
+		return null;
+	}
+	
+	//retrieve all users in team
+	public JsonNode getUserList(String userToken) {
+		
+		String url = "https://slack.com/api/users.list";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", userToken);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		
+		String responseString = 
+				restTemplate.postForObject(url, request, String.class);
+	
+		//String responseString = restTemplate.getForObject(url, String.class);
+		JsonNode root, channelElement = null;
+		Iterator<JsonNode> channels = null;
+		
+		try {
+			root = objectMapper.readTree(responseString);
+			channelElement = root.path("channels");
+			return channelElement;
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	
 	public String scopes(String token) {
 		StringBuilder scopes = new StringBuilder("");
 		try {
@@ -67,8 +118,8 @@ public class Helper {
 	    	Map<String, List<String>> map = conn.getHeaderFields();
 	    	
 	    	for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-	    		System.out.println("Key : " + entry.getKey()
-	                               + " ,Value : " + entry.getValue());
+/*	    		System.out.println("Key : " + entry.getKey()
+	                               + " ,Value : " + entry.getValue());*/
 	    		//check for client scope
 	    		for(int i = 0; i < entry.getValue().size(); ++i) {
 	    		if(entry.getValue().get(i).contains("client"))

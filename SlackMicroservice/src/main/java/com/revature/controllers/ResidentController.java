@@ -44,7 +44,10 @@ public class ResidentController {
 	RestTemplate restTemplate;
 	
 	@Autowired
-	Helper helper ;
+	Helper helper;
+	
+	@Autowired
+	ObjectMapper objectMapper;
 	
 	@Autowired
 	ObjectMapper objectMapper;
@@ -278,6 +281,93 @@ public class ResidentController {
 		
 	}
 	
+<<<<<<< HEAD
+=======
+	/*Add a user to the slack channel for their complex and unit*/
+	@PostMapping("complexInvite")
+	public ResponseEntity<String> complexInvite(@RequestBody String body, HttpSession http){
+		
+		JSONObject json = null;
+		String complex = null;
+		String userId = null;
+		String email = null;
+		try {
+			json = new JSONObject(body);
+			complex = json.getString("complex");
+			email = json.getString("email");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		System.out.println(complex);
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		userId = helper.getSlackId(token, email);
+		String requestUrl = "https://slack.com/api/channels.invite";
+		
+		String complexChannelId = helper.getChannelId(complex, token);
+		
+		/*Request Slack to invite user to complex channel*/
+		
+		MultiValueMap<String, String> complexParams = 
+				new LinkedMultiValueMap<String, String>();
+		complexParams.add("token", token);
+		complexParams.add("channel", complexChannelId);
+		complexParams.add("user", userId);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(complexParams, headers);
+		
+		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
+		return response;
+	}
+	
+	/*Add a user to the slack channel for their complex and unit*/
+	@PostMapping("unitInvite")
+	public ResponseEntity<String> unitInvite(@RequestBody String body, HttpSession http){
+		
+		JSONObject json = null;
+		String complex = null; String unit = null;
+		String userId = null;
+		try {
+			json = new JSONObject(body);
+			complex = json.getString("complex");
+			unit = json.getString("unit");
+			userId = json.getString("userId");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		
+		String requestUrl = "https://slack.com/api/channels.invite";
+		
+		String unitChannelId = helper.getChannelId(complex + unit, token);
+		
+		/*Request Slack to invite user to complex channel*/
+		
+		MultiValueMap<String, String> complexParams = 
+				new LinkedMultiValueMap<String, String>();
+		complexParams.add("token", token);
+		complexParams.add("channel", unitChannelId);
+		complexParams.add("user", userId);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(complexParams, headers);
+		
+		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
+		return response;
+	}
+>>>>>>> Slack-Docs
 	
 	@PostMapping("admin")
 	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
@@ -330,4 +420,8 @@ public class ResidentController {
 		}
 		return null;
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> Slack-Docs
 }

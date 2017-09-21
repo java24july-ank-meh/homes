@@ -287,4 +287,5 @@ public class Helper {
 		channelName = channelName.substring(1, channelName.length()-2);
 		return channelName;
 	}
+	
 }

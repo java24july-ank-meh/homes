@@ -112,6 +112,15 @@ angular.module("app", []).controller("home", function($http,$window){
 				});
 			};
 			
+			self.checkAdmin = function(){
+				$http.post('/resident/admin', {isAdmin:self.isAdmin}).success(function(response){
+					console.log(response);
+				}).error(function(response){
+					console.log(response);
+				});
+			};
+			
+			
 			/*Slack returns the user info object as a string. This method retrieves the value of the 
 			name attribute (between the string 'name=' and the following comma) */
 			let getNameFromString = function(input){

@@ -21,6 +21,18 @@ zuul:
     complex:
       path: /api/complex/**
       serviceId: COMPLEX-SERVICE
+    complex-composite:
+      path: /api/complex-composite/**
+      serviceId: COMPLEX-COMPOSITE
+    request-composite:
+      path: /api/request-composite/**
+      serviceId: REQUEST-COMPOSITE
+    resident-composite:
+      path: /api/resident-composite/**
+      serviceId: RESIDENT-COMPOSITE
+    profile-composite:
+      path: /api/profile-composite/**
+      serviceId: PROFILE-COMPOSITE
 spring:
   application:
     name: zuul-server

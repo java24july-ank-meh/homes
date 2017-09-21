@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
@@ -32,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.revature.controllers.ComplexController;
+import com.revature.controllers.Helper;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -40,18 +43,30 @@ import static org.mockito.Mockito.when;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+import java.nio.charset.Charset;
 import java.security.Principal;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration
-@SpringBootTest
+@SpringBootTest(classes=SlackMicroserviceApplication.class)
 public class SlackMicroserviceApplicationTest{
+	
+	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(), 
+			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+	
+	private MockMvc mockMvc;
+	
+	@Mock
+	RestTemplate restTemplate;
+	
+	@Mock
+	Helper helper;
+	
+	@InjectMocks
+	ComplexController complexController;
 	
 	@Autowired
 	RestTemplate rt;
-	
-	@Autowired
-	ComplexController cc;
 	
 	@Autowired 
 	WebApplicationContext wac;
@@ -68,11 +83,13 @@ public class SlackMicroserviceApplicationTest{
 	public void setupMock() {
 		MockitoAnnotations.initMocks(this);
 		
+		this.mockMvc = MockMvcBuilders.standaloneSetup(complexController).build();
+	
 	}
 	
 	@Test
 	public void contextLoads() {
-		assertThat(cc, notNullValue());
+		assertThat(complexController, notNullValue());
 		assertThat(rt, notNullValue());
 	}
 	

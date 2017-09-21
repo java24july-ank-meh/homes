@@ -1,11 +1,15 @@
 angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBottomSheet','$http', '$mdDialog','$stateParams','$state' ,'$mdToast', '$filter', 'NgTableParams', function($scope, $mdBottomSheet,$http, $mdDialog, $stateParams, $state, $mdToast, $filter, NgTableParams) {
 	
+	$scope.error = false;
+	
 	$http.get("/api/associates/associates").then(function(response) {
 		$scope.associates = response.data;
+    }, function(response){
+   	 $scope.error = true;
+	 $mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
     });
 
 	$http.get("/api/complex/complex").then(function(response) {
-		
 		
 		$scope.residentData = [];
 		response.data.forEach(function(complex) {

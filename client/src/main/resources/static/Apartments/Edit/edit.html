@@ -3,7 +3,7 @@
 	ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Edit Apartment</h2>
+		<h2>Edit Unit</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel()"> <ng-icon
 			icon="close" aria-label="Close dialog">
@@ -15,15 +15,21 @@
 	<div class="md-dialog-content">
 		<div layout-gt-sm="row">
 			<md-input-container class="md-block" flex-gt-sm>
-				<label>Apartment Number</label> 
-				<input ng-model="apartment.apartmentNumber" required> 
+				<label>Building Number</label> 
+				<input ng-model="unit.buildingNumber" > 
+			</md-input-container>
+		</div>
+		<div layout-gt-sm="row">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Unit Number</label> 
+				<input ng-model="unit.unitNumber" required> 
 			</md-input-container>
 		</div>
 
 		<div layout-gt-sm="row">
 			<md-input-container class="md-block" flex-gt-sm>
 				<label>Capacity</label> 
-				<input ng-model="apartment.capacity" type="number" required> 
+				<input ng-model="unit.capacity" type="number" required> 
 			</md-input-container>
 		</div>
 	</md-dialog-content>

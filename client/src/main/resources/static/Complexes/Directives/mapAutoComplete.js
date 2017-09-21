@@ -36,7 +36,7 @@ angular.module('rhmsApp').directive('mapAutocomplete', ['$document', function($d
         scope.complex.name =place.name;
         scope.complex.phone =place.formatted_phone_number;
         scope.complex.address =place.formatted_address;
-        scope.complex.photo = place.photos[0].getUrl({'maxWidth': 1000, 'maxHeight': 1000});
+        scope.complex.photoUrl = place.photos[0].getUrl({'maxWidth': 1000, 'maxHeight': 1000});
         scope.complex.website = place.website;
       
       }

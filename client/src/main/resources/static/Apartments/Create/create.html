@@ -1,9 +1,9 @@
-<md-dialog aria-label="">
+<md-dialog aria-label="" >
 <form name="newApartmentForm" ng-submit="newApartmentFormSubmit()"
 	ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h3>Create Apartment</h3>
+		<h3>Create Unit</h3>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel()"> <ng-icon
 			icon="close" aria-label="Close dialog">
@@ -13,9 +13,17 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
+	
 		<div layout-gt-sm="row">
 			<md-input-container class="md-block" flex-gt-sm>
-				<label>Apartment Number</label> 
+				<label>Bulding Number</label> 
+				<input ng-model="unit.buildingNumber"> 
+			</md-input-container>
+		</div>
+		
+		<div layout-gt-sm="row">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Unit Number</label> 
 				<input ng-model="unit.unitNumber" required> 
 			</md-input-container>
 		</div>

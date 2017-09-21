@@ -57,4 +57,16 @@ angular.module("app", []).controller("resident", function($http){
 				});
 	};
 	
+	self.inviteUser = function(){
+		alert("u done messed up");
+		let url = "/resident/complexInvite";
+		$http.post(url, {complex:self.complexForInvite, email:self.emailForInvite})
+				.success(function(response){
+					console.log(response);
+				}).error(function(response){
+					console.log(response);
+				});
+	};
+	
+	
 });

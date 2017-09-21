@@ -32,6 +32,11 @@
 	<input type="text" id="complexForList" placeholder="complex" ng-model="resident.complexForList">
 	<button class="btn btn-primary" ng-click="resident.listUsers()">List Users</button>
 	
+		<h2>Invite User To Channel</h2>
+		<input type="text" id="emailForInvite" placeholder="email" ng-model="resident.emailForInvite">
+	<input type="text" id="complexForInvite" placeholder="complex" ng-model="resident.complexForInvite">
+	<button class="btn btn-primary" ng-click="resident.inviteUser()">Invite User</button>	
+	
 	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
 	<script type="text/javascript" src="../js/resident.js"></script>
 </body>

@@ -39,18 +39,18 @@
 <md-content class="md-padding" ng-if="rootUser.isManager">
     <div layout layout-wrap layout-gt-sm="row" layout="column" >
         <div flex="40" flex-sm="100" flex-xs="100" class="container">
-             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!apartments && !error">
+             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!units && !error">
                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
              <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
-               <h2>404 - Apartment not found</h2>
+               <h2>Error. Try again later</h2>
             </div>
               <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
             <md-card layout="column" >
                 <md-card-title>
                     <md-card-title-text >
-                        <span class="md-headline">Apartments </span>
-                        <span class="small">Available Apartments</span>
+                        <span class="md-headline">Units </span>
+                        <span class="small">Available Units</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
@@ -59,8 +59,8 @@
                     <md-list-item class="md-3-line noright" ng-if="apartment.residents.length < apartment.capacity" ui-sref="home.showApartment({apartmentId: apartment.apartmentId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> Apartment {{apartment.apartmentNumber}}</h3>
-                            <p> {{apartment.residents.length}} of {{apartment.capacity}} Residents</p>
+                            <h3> Unit {{unit.unitNumber}}</h3>
+                            <p> {{unit.residents.length}} of {{unit.capacity}} Associates</p>
                            <!--  <p> {{resident.email}}</p> -->
                         </div>
                         

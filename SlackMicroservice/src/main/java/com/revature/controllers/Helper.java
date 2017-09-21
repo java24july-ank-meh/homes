@@ -64,7 +64,9 @@ public class Helper {
 			
 		while(users.hasNext()) {
 			JsonNode nextUser = users.next();
-			JsonNode nextUserEmail = nextUser.path("email");
+			System.out.println(users.next().asText());
+			JsonNode nextUserEmail = nextUser.path("profile").path("email");
+			System.out.println(nextUser.path("profile").path("email").asText());
 			if(email.equals(nextUserEmail.asText())) {
 				return nextUser.path("id").asText();
 			}
@@ -97,7 +99,7 @@ public class Helper {
 		
 		try {
 			root = objectMapper.readTree(responseString);
-			channelElement = root.path("channels");
+			channelElement = root.path("members");
 			return channelElement;
 		}catch(IOException e) {
 			e.printStackTrace();

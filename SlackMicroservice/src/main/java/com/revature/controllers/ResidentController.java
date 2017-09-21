@@ -293,12 +293,12 @@ public class ResidentController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		System.out.println(complex);
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		userId = helper.getSlackId(token, email);
+		System.out.println("userid = "+userId);
 		String requestUrl = "https://slack.com/api/channels.invite";
 		
 		String complexChannelId = helper.getChannelId(complex, token);
@@ -328,11 +328,12 @@ public class ResidentController {
 		JSONObject json = null;
 		String complex = null; String unit = null;
 		String userId = null;
+		String email = null;
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
-			userId = json.getString("userId");
+			email = json.getString("email");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -340,6 +341,7 @@ public class ResidentController {
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
+		helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
 		

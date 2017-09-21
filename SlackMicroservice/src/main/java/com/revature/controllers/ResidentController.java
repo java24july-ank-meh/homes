@@ -49,8 +49,6 @@ public class ResidentController {
 	@Autowired
 	ObjectMapper objectMapper;
 	
-	@Autowired
-	ObjectMapper objectMapper;
 	
 	/*Sends an email invite to the email and autofills first name and last name for slack registration
 	does not enforce names*/
@@ -281,8 +279,7 @@ public class ResidentController {
 		
 	}
 	
-<<<<<<< HEAD
-=======
+
 	/*Add a user to the slack channel for their complex and unit*/
 	@PostMapping("complexInvite")
 	public ResponseEntity<String> complexInvite(@RequestBody String body, HttpSession http){
@@ -367,18 +364,17 @@ public class ResidentController {
 		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
 		return response;
 	}
->>>>>>> Slack-Docs
 	
 	@PostMapping("admin")
 	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String userId = null;
-		String isAdmin = null;
+		String id = null;
+		String is_admin = null;
 		try {
 			json = new JSONObject(body);
-			userId = json.getString("userId");
-			isAdmin = json.getString("isAdmin");
+			id = json.getString("id");
+			//is_admin = json.getString("is_admin");
 			
 		} catch(JSONException e) {
 			e.printStackTrace();
@@ -394,7 +390,7 @@ public class ResidentController {
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
 		params.add("token", token);
-		params.add("user", userId);
+		params.add("user", id);
 			
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType( MediaType.APPLICATION_FORM_URLENCODED);
@@ -409,9 +405,9 @@ public class ResidentController {
 			rootNode = objectMapper.readTree( responseString);
 			userNode = rootNode.path( "user");
 			adminNode = userNode.path( "is_admin");
-			isAdmin = adminNode.asText();
+			is_admin = adminNode.asText();
 			
-			ResponseEntity<String> responseEntity =  new ResponseEntity<>("{isAdmin:" + isAdmin + "}", HttpStatus.OK);
+			ResponseEntity<String> responseEntity =  new ResponseEntity<>("{isAdmin:" + is_admin + "}", HttpStatus.OK);
 			
 			return responseEntity;
 			
@@ -420,8 +416,5 @@ public class ResidentController {
 		}
 		return null;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> Slack-Docs
+
 }

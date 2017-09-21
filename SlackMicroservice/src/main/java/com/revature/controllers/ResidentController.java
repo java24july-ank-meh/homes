@@ -371,21 +371,26 @@ public class ResidentController {
 	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
+		String email = null;
 		String id = null;
 		String is_admin = null;
+	
+	
 		try {
 			json = new JSONObject(body);
-			id = json.getString("id");
-			//is_admin = json.getString("is_admin");
-			
+			email = json.getString("email");
+		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
+		
+		
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
+		id = helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/users.info";
 		
@@ -401,6 +406,7 @@ public class ResidentController {
 				new HttpEntity<MultiValueMap<String, String>>( params, headers);
 		
 		String responseString = restTemplate.postForObject( requestUrl, request, String.class);
+		
 		JsonNode rootNode, userNode, adminNode = null;
 		
 		try {
@@ -408,8 +414,8 @@ public class ResidentController {
 			userNode = rootNode.path( "user");
 			adminNode = userNode.path( "is_admin");
 			is_admin = adminNode.asText();
-			
-			ResponseEntity<String> responseEntity =  new ResponseEntity<>("{isAdmin:" + is_admin + "}", HttpStatus.OK);
+		
+			ResponseEntity<String> responseEntity =  new ResponseEntity<>(is_admin, HttpStatus.OK);
 			
 			return responseEntity;
 			

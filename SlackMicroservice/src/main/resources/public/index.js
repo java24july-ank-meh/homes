@@ -113,7 +113,7 @@ angular.module("app", []).controller("home", function($http,$window){
 			};
 			
 			self.checkAdmin = function(){
-				$http.post('/resident/admin', {id:self.id}).success(function(response){
+				$http.post('/resident/admin', {email:self.email}).success(function(response){
 					console.log(response);
 				}).error(function(response){
 					console.log(response);

@@ -30,9 +30,8 @@ public class Office {
 	public Office() {
 	}
 
-	public Office(int officeId, String address, String phone, String website, String timezone) {
+	public Office(String address, String phone, String website, String timezone) {
 		super();
-		this.officeId = officeId;
 		this.address = address;
 		this.phone = phone;
 		this.website = website;

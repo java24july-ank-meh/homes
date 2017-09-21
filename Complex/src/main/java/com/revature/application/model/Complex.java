@@ -40,7 +40,7 @@ public class Complex {
 	List<Unit> units;
 
 	public Complex(String website, String email, String phone, String name, String abbreviation, String address,
-			String parking, String photoUrl, Office office, List<Unit> units) {
+			String parking, String photoUrl, Office office) {
 		super();
 		this.website = website;
 		this.email = email;
@@ -51,7 +51,6 @@ public class Complex {
 		this.parking = parking;
 		this.photoUrl = photoUrl;
 		this.office = office;
-		this.units = units;
 	}
 
 	public String getAddress() {

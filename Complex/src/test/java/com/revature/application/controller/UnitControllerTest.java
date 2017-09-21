@@ -3,9 +3,15 @@ package com.revature.application.controller;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.mockito.Mock;
+
+import com.revature.application.service.UnitService;
 
 public class UnitControllerTest {
 
+	@Mock
+	private UnitService unitService;
+	
 	@Test
 	public void testDisplayAllUnit() {
 		fail("Not yet implemented");

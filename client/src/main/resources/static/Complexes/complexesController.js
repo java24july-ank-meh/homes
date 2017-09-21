@@ -16,6 +16,8 @@ angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBotto
          
          if($scope.complexes === '')
         	 $scope.error = true;
+     },function(response){
+    	 $scope.error = true;
      });
 
 }]);

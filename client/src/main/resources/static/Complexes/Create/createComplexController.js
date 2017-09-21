@@ -3,10 +3,11 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
 	$scope.place = {};
 	$scope.complex = {};
 
-	
 	$http.get('/api/complex/office')
 		.then(function(response){
 			$scope.offices = response.data;
+		}, function(response){
+			$mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
 		});
 	
     $scope.newComplexFormSubmit = function () {

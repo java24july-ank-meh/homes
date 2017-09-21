@@ -46,7 +46,7 @@ public class UnitController {
 		if(u == null) throw new ResourceNotFoundException();
 		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
 		if(unit.getGender() != null) u.setGender(unit.getGender());
-		if(unit.getUnitNumber() != null) u.setGender(unit.getGender());
+		if(unit.getUnitNumber() != null) u.setUnitNumber(unit.getUnitNumber());
 		if(unit.getBuildingNumber() != null) u.setBuildingNumber(unit.getBuildingNumber());
 		if(unit.getComplex() != null) {
 			u.setComplex(complexService.findByComplexId(unit.getComplex().getComplexId()));

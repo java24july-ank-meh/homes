@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http) {
+angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$mdToast', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast) {
 
 	$scope.error = false;
 	
@@ -7,6 +7,9 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
          
          if($scope.maintenanceRequests === '')
         	 $scope.error = true;
+     }, function(response){
+    	 $scope.error = true;
+    	 $mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
      });
      
  	 $scope.resolveMaintenance = function (maintenance) {

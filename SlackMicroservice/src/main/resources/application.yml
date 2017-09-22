@@ -44,6 +44,15 @@ slackClient:
     tokenType: Bearer
     preferTokenInfo: false
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.61.123:8086/eureka
+      
+spring:
+  application:
+    name: slack-microservice
+    
 server:
   port: 8088
   

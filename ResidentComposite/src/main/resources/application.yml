@@ -3,7 +3,7 @@ server:
   
 spring:
   application:
-    name: RESIDENT-COMPOSITE
+    name: resident-composite
     
 eureka:
   instance:
@@ -11,4 +11,4 @@ eureka:
     leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
-      defaultZone: http://localhost:8086/eureka
+      defaultZone: http://127.0.0.1:8086/eureka

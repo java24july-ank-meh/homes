@@ -47,7 +47,7 @@ public class ResidentCompositeController {
 		Gson gson = new Gson();
 
 		//		Associate[] jsonArr = gson.fromJson(getJsonFromService(ASSOCIATESERV+"associates"), Associate[].class);
-		Associate[] jsonArr = gson.fromJson(jsonReturned("associates", ""), );
+		Associate[] jsonArr = gson.fromJson(jsonReturned("associates", ""), Associate[].class);
 
 		return new ResponseEntity<Object>(jsonArr, HttpStatus.OK);
 	}
@@ -55,7 +55,8 @@ public class ResidentCompositeController {
 	@GetMapping("residentinfo/withRoomDetails")
 	public ResponseEntity<Object> findAllAssociatesWithRoomDetails() {
 		Gson gson = new Gson();
-		Associate[] associates = gson.fromJson(getJsonFromService(ASSOCIATESERV+"associates"), Associate[].class);
+//		Associate[] associates = gson.fromJson(getJsonFromService(ASSOCIATESERV+"associates"), Associate[].class);
+		Associate[] associates = gson.fromJson(jsonReturned("associates", ""), Associate[].class);
 
 		List<ResidentUnitComplexOffice> residentInfoList = new ArrayList<>();
 

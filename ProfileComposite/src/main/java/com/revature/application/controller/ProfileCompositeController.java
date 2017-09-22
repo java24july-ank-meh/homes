@@ -1,6 +1,13 @@
 package com.revature.application.controller;
 
+import java.net.URI;
+
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+
+import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +23,7 @@ public class ProfileCompositeController {
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getProfileInfo(@PathVariable("id") String id) {
-		JsonObject compositeObj = getJsonFromService("http://localhost:8090/associates/" +id);
+		JsonObject compositeObj = getJsonFromService("http://localhost:8090/associates/" +id);		
 		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit/" +compositeObj.get("unitId").getAsString());
 		JsonObject complexJson = getJsonFromService("http://localhost:8093/complex/" +compositeObj.get("complexId").getAsString());
 		
@@ -26,13 +33,48 @@ public class ProfileCompositeController {
 		compositeObj.add("unitName", unitJson.get("unitNumber"));
 		// profile needs to know id for routing
 		compositeObj.add("unitId", unitJson.get("unitId"));
+		
+		/*
+		 * maybe this will work?
+		 */
+		
+		JsonObject obj1 = jsonReturned("associates", id);
+		
 		return ResponseEntity.ok(compositeObj.toString());
 	}
-	
+	/*
+	 * so they moved sun jersey to glassfish jersey, check dependencies and mvnrepository.com
+	 */
 	private JsonObject getJsonFromService(String url) {
-		Client client = Client.create();
-		WebResource resource = client.resource("http://localhost:8090/associates");
-		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
+		//for consuming a rest service
+		ClientConfig config = new ClientConfig();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
+		WebTarget target = client.target(getRestServiceURI());
+		String associate = target.path(url).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+		
+//		Client client = Client.create();
+//		WebResource resource = client.resource("http://localhost:8090/associates");
+//		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
 		return new JsonParser().parse(associate).getAsJsonObject();
+	}
+	
+	/*
+	 * maybe this will work? 
+	 */
+	private JsonObject jsonReturned(String endpoint1, String endpoint2) {
+		//for consuming a rest service
+		ClientConfig config = new ClientConfig();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
+		WebTarget target = client.target(getRestServiceURI());
+		String associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+		return new JsonParser().parse(associate).getAsJsonObject();
+	}
+	
+	private static URI getRestServiceURI() {
+
+		String loc = "http://localhost:8085";
+		String site = "/api";//idk if this is right..?
+
+		return UriBuilder.fromUri(loc+site).build();
 	}
 }

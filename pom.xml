@@ -18,7 +18,7 @@
     	<module>RequestService</module>	
 	
 	<!-- Build #91 error-->
-	<!--<module>ResidentComposite</module>-->
+	<module>ResidentComposite</module>
 	
 	<!-- Build #93 error-->
 	<!--<module>ComplexComposite</module>-->

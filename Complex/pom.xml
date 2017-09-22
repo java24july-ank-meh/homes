@@ -79,11 +79,6 @@
 			<version>3.1.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId></groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>

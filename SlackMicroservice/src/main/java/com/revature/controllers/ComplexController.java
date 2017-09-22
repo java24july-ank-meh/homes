@@ -1,17 +1,13 @@
 package com.revature.controllers;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -33,15 +30,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.wordnik.swagger.annotations.Api;
 
-@Api(value="unit", description="This service creates, updates, and deletes slack channels for individual units")
+import net.minidev.json.parser.JSONParser;
+
+@Api(value="unit", description="This service creates, updates, and deletes slack channels for apartment complexes")
 @Service
 @RestController
-@RequestMapping("unit")
-public class UnitController {
-	
+@RequestMapping("complex")
+public class ComplexController {
+
 	/*restTemplate bean handles all http requests to slack API. A single RestTemplate
 	 * object can be used for multiple requests.
 	 */
@@ -52,26 +52,23 @@ public class UnitController {
 	
 	@HystrixCommand(fallbackMethod="createFallback")
 	@PostMapping("create")
-	public ResponseEntity<String> createUnit(@RequestBody String body, 
-			HttpSession http) {
+	public ResponseEntity<String> createComplex(@RequestBody String complex, HttpSession http) {
+		
+		/*The url string includes the endpoint and all necessary parameters. For slack's 
+		 *channel.create method, we need the app token and complex name.*/
 		
 		JSONObject json = null;
-		String complex = null; String unit = null;
-		try {
-			json = new JSONObject(body);
-			complex = json.getString("complex");
-			unit = json.getString("unit");
-		}catch(JSONException e) {
-			e.printStackTrace();
+		String channelName = null;
+		try{
+			json = new JSONObject(complex);
+			channelName = json.getString("name"); System.out.println(channelName);
 		}
+		catch(JSONException e) {e.printStackTrace();}
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		/*The url string includes the endpoint and all necessary parameters. For slack's 
-		 *channel.create method, we need the app token and complex name.*/
-		String channelName = complex + unit;
 		String url = null;
 		String channelId = null;
 		
@@ -106,28 +103,22 @@ public class UnitController {
 	}
 	
 	@PostMapping("update")
-	public ResponseEntity<String> updateUnit(@RequestBody String body, 
+	public ResponseEntity<String> updateComplex(@RequestBody String complex, 
 			HttpSession http) {
-		
-		JSONObject json = null;
-		String complex = null; String unit = null; 
-		String newComplex = null; String newUnit = null;
-		try {
-			json = new JSONObject(body);
-			complex = json.getString("complex");
-			unit = json.getString("unit");
-			newComplex = json.getString("newComplex");
-			newUnit = json.getString("newUnit");
-		}catch(JSONException e) {
-			e.printStackTrace();
-		}
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		String oldName = complex + unit;
-		String newName = newComplex + newUnit;
+		System.out.println(complex);
+		JSONObject json = null;
+		String oldName = null; String newName = null;
+		try{
+			json = new JSONObject(complex);
+			oldName = json.getString("oldName"); System.out.println(oldName);
+			newName = json.getString("newName"); System.out.println(newName);
+		}
+		catch(JSONException e) {e.printStackTrace();}
 		
 		//needs token, channel, name
 		String url = "https://slack.com/api/channels.rename";
@@ -146,19 +137,18 @@ public class UnitController {
 		
 		ResponseEntity<String> response = 
 				restTemplate.postForEntity(url, request, String.class);
-		return response;
+		return response; 
 	}
 	
 	@PostMapping("delete")
-	public ResponseEntity<String> deleteUnit(@RequestBody String body,
+	public ResponseEntity<String> deleteComplex(@RequestBody String complex, 
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; 
+		String name = null;
 		try {
-			json = new JSONObject(body);
-			complex = json.getString("complex");
-			unit = json.getString("unit");
+			json = new JSONObject(complex);
+			name = json.getString("name");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -167,10 +157,7 @@ public class UnitController {
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		String channelName = complex + unit;
-		String channelId = helper.getChannelId(channelName, token);
-		
-		System.out.println("name: " + channelName + ", channelId: " + channelId);
+		String channelId = helper.getChannelId(name, token);
 		
 		//needs token, channel
 		String url = "https://slack.com/api/channels.archive";
@@ -194,4 +181,5 @@ public class UnitController {
 	public void createFallback() {
 		System.out.println("Reached create fallback");
 	}
+	
 }

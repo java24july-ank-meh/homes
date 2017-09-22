@@ -26,7 +26,7 @@ public class UnitController {
 	}
 
 	@GetMapping(value = "{id}")
-	public Object displayUnit(@PathVariable("id") long id) {
+	public Object displayUnit(@PathVariable("id") int id) {
 		Unit unit = unitService.findByUnitId(id);
 		if(unit == null) throw new ResourceNotFoundException();
 		return unit;
@@ -41,7 +41,7 @@ public class UnitController {
 	}
 	
 	@PutMapping(value = "{id}")
-	public Object updateUnit(@PathVariable("id") long id, @RequestBody Unit unit) {
+	public Object updateUnit(@PathVariable("id") int id, @RequestBody Unit unit) {
 		Unit u = unitService.findByUnitId(id);
 		if(u == null) throw new ResourceNotFoundException();
 		if(unit.getCapacity() != 0) u.setCapacity(unit.getCapacity());
@@ -56,7 +56,7 @@ public class UnitController {
 	}
 
 	@DeleteMapping(value = "{id}")
-	public boolean deleteUnit(@PathVariable("id") long id){
+	public boolean deleteUnit(@PathVariable("id") int id){
 		return unitService.delete(id);
 	}
 	

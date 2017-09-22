@@ -153,7 +153,7 @@ public class ResidentController {
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
+		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
 		
@@ -190,7 +190,7 @@ public class ResidentController {
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
+		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		System.out.println(userIds);
 		
 		String channelName = complex + unit;

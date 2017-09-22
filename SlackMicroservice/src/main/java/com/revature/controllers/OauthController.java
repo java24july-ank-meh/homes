@@ -48,9 +48,4 @@ public class OauthController {
 		return ResponseEntity.ok(jobj.toString());
 	}
 
-	@RequestMapping("scopes/client")
-	public void getClientScope() {
-		
-	}
-	
 }

@@ -1,0 +1,14 @@
+server:
+  port: 8103
+  
+spring:
+  application:
+    name: RESIDENT-COMPOSITE
+    
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8086/eureka

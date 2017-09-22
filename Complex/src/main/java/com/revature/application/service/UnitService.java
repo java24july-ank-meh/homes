@@ -25,16 +25,16 @@ public class UnitService {
 	}
 	
 	public Unit findByUnitId(int id) {
-		return unitRepository.findByUnitId(id);
+		return unitRepository.findOne(id);
 	}
 	
 	public int save(Unit unit) {
 		return unitRepository.saveAndFlush(unit).getUnitId();
 	}
 	
-	public int update(Unit unit) {
-		return unitRepository.saveAndFlush(unit).getUnitId();
-	}
+//	public int update(Unit unit) {
+//		return unitRepository.saveAndFlush(unit).getUnitId();
+//	}
 	
 	public boolean delete(int id){
 		unitRepository.delete(id);

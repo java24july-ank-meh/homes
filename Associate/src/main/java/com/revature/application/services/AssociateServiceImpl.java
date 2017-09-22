@@ -1,6 +1,5 @@
 package com.revature.application.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 

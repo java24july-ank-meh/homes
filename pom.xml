@@ -10,5 +10,12 @@
     <modules>
         <module>zuul</module>
         <module>eureka</module>
+        <module>Contact</module>
+        <module>complexService</module>
+        <module>RequestService</module>
+        <module>SlackMicroservice</module>
+        
+        <module>ProfileComposite</module>
+        <module>ComplexComposite</module>
     </modules>
 </project>

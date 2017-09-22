@@ -80,8 +80,8 @@ public class AssociateController {
 			Associate a = associateService.saveOrUpdate(associate);
 			return ResponseEntity.ok(a);
 		} catch (DataAccessException e){
-			//TODO: Test to make sure this works properly.
-			e.printStackTrace(); //for testing purposes. Comment out later.
+			//This has been proven to work
+			//e.printStackTrace(); //for testing purposes. Comment out later.
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 	}

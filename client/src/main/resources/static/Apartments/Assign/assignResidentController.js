@@ -2,29 +2,8 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
 
     $http.get("/api/associates/associates")
     .then(function(response) {
-        $scope.residents = response.data;
+        $scope.associates = response.data;
     });
-
-    $scope.newApartmentFormSubmit = function () {
-
-        var onSuccess = function (data, status, headers, config) {
-        	$mdToast.show($mdToast.simple().textContent("Apartment Created").position('top right'));
-            $state.go('home.showApartment', { apartmentId: data});
-            $scope.hide();
-            
-        };
-
-        var onError = function (data, status, headers, config) {
-        	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
-        }
-        
-        $scope.apartment.complexId = $stateParams.complexId;
-
-        $http.post('/api/ApartmentComplexes/'+$stateParams.complexId+'/Apartments/create', $scope.apartment)
-            .success(onSuccess)
-            .error(onError);
-
-    };
     
     $scope.hide = function() {
         $mdDialog.hide();
@@ -34,10 +13,10 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
         $mdDialog.cancel();
       };
       
- 	 $scope.assignResident = function (residentId) {
+ 	 $scope.assignAssociate = function (associateId) {
 
  	      var onSuccess = function (data, status, headers, config) {
- 	    	  $mdToast.show($mdToast.simple().textContent("Resident Assigned").position('top right'));
+ 	    	  $mdToast.show($mdToast.simple().textContent("Associate Assigned").position('top right'));
  	          $scope.hide();
  	         $state.reload();
  	      };
@@ -46,10 +25,9 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	    	  $mdToast.show($mdToast.simple().textContent(data));
  	      };
 
- 	      $http.post('/api/Apartments/'+$stateParams.apartmentId+'/Resident/'+residentId)
+ 	      $http.post('api/complex-composite/complexcomposite/'+$stateParams.apartmentId +'/assign/'+associateId)
  	      	.success(onSuccess)
  	      	.error(onSuccess);
-
  	  };
 
     //6. create resetForm() function. This will be called on Reset button click.

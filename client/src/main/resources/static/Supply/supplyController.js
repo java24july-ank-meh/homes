@@ -1,5 +1,33 @@
-angular.module('rhmsApp').controller('maintenanceController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http) {
+angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http','$mdToast',  function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast) {
 
+    $scope.deleteRowCallback = function(rows){
+        $mdToast.show(
+            $mdToast.simple()
+                .content('Deleted row id(s): '+rows)
+                .hideDelay(3000)
+        );
+    };
+    $scope.nutritionList = [
+    	  {
+    		    "suppliesId": 41,
+    		    "name": "Toilet Paper",
+    		    "submitDate": "2017-09-18",
+    		    "resolved": true,
+    		    "resolveDate": null,
+    		    "unitId": 10,
+    		    "submittedBy": 5
+    		  },
+    		  {
+    		    "suppliesId": 42,
+    		    "name": "Trash Bags",
+    		    "submitDate": "2017-09-18",
+    		    "resolved": false,
+    		    "resolveDate": null,
+    		    "unitId": 11,
+    		    "submittedBy": 6
+    		  },
+    ];
+	
 	$scope.error = false;
 	
      $http.get("/api/Maintenance").then(function(response) {

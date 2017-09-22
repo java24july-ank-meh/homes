@@ -1,0 +1,9 @@
+
+.project
+/.metadata/
+
+Servers/.project
+Servers/.settings/org.eclipse.wst.server.core.prefs
+Servers/Pivotal tc Server Developer Edition v3.2-config/catalina.policy
+.project
+/.recommenders/

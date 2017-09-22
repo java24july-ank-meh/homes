@@ -2,15 +2,20 @@ package com.revature.application.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,8 +29,6 @@ import com.revature.application.model.Associate;
 import com.revature.application.model.Complex;
 import com.revature.application.model.Notification;
 import com.revature.application.model.Unit;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
 
 @Service
 public class ComplexCompositeService {
@@ -168,7 +171,8 @@ public class ComplexCompositeService {
 		Notification notification = new Notification(message);
 		
 		try {
-			HttpPost post = new HttpPost("http://localhost:8097/notifications/create");
+			//HttpPost post = new HttpPost("http://localhost:8097/notifications/create");
+			HttpPost post = new HttpPost(getRestServiceURI()+"/notifications/create");
 			post.setHeader("Content-type", "application/json");
 			
 			StringEntity postingString = new StringEntity(new Gson().toJson(notification));
@@ -188,6 +192,7 @@ public class ComplexCompositeService {
 		associate.setUnitId((long) unitId);
 		try {
 			HttpPost post = new HttpPost(baseurl + "associates/associates/createOrUpdate");
+
 			post.setHeader("Content-type", "application/json");
 			StringEntity postingString = new StringEntity(new Gson().toJson(associate));
 			post.setEntity(postingString);
@@ -198,4 +203,51 @@ public class ComplexCompositeService {
 		}
 		return null;
 	}
+	
+	//this service was created 
+		private JsonObject getJsonFromService(String endpoint1, String endpoint2) {
+			ClientConfig config = new ClientConfig();
+			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
+			ClientBuilder.newClient(config);
+			WebTarget target = client.target(getRestServiceURI());
+			String associate = null;
+			if(endpoint2.isEmpty()) {
+				associate = target.path(endpoint1).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+			}
+			else {
+				associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+			}
+			
+			
+			return new JsonParser().parse(associate).getAsJsonObject();
+			
+		}
+		
+		private <T> Object getObject(String endpoint1, String endpoint2, Class<T> objectClass) {
+			Object obj = null;
+			RestTemplate restTemplate = new RestTemplate();
+
+			if(endpoint2.isEmpty()) {
+				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1, objectClass).getBody();
+			}else {
+				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1+"/"+endpoint2, objectClass).getBody();
+			}
+
+			return obj;
+		}
+		
+		private JsonObject jsonReturned(String endpoint1, String endpoint2) {
+			//for consuming a rest service
+			ClientConfig config = new ClientConfig();
+			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
+			WebTarget target = client.target(getRestServiceURI());
+			String associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+			return new JsonParser().parse(associate).getAsJsonObject();
+		}
+
+		private static URI getRestServiceURI() {
+			String loc = "http://localhost:8085";
+			String site = "/api";//idk if this is right..?
+			return UriBuilder.fromUri(loc+site).build();
+		}
 }

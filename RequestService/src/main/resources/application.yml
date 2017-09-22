@@ -5,7 +5,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://192.168.61.123:8086/eureka
-      
+  instance:
+    preferIpAddress: true
+
 spring:
   application:
     name: request-service

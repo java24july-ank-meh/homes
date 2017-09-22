@@ -94,6 +94,7 @@ public class AssociateController {
 	public ResponseEntity<Object> unnassignAssociate(@PathVariable("id") long id) {
 		Associate associate = associateService.findByAssociateId(id);
 		associate.setUnitId(null);
+		associateService.saveOrUpdate(associate);
 		return ResponseEntity.ok().build();
 	}
 

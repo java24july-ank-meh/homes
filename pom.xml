@@ -17,16 +17,17 @@
 		<module>Complex</module>
     	<module>RequestService</module>	
 	
-		<module>RequestComposite</module>
-		
-    <!-- Build #94error-->
-	<!--<module>ProfileComposite</module> -->
-	
 	<!-- Build #91 error-->
 	<!--<module>ResidentComposite</module>-->
 	
-	<!-- Build #91 error-->
+	<!-- Build #93 error-->
 	<!--<module>ComplexComposite</module>-->
+	
+	<!-- Build #94error-->
+	<!--<module>ProfileComposite</module> -->
+	
+	<!-- Build #94error-->
+	<!--<module>RequestComposite</module>-->
 	    
     </modules>
 </project>

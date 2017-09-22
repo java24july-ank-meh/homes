@@ -1,0 +1,89 @@
+Jenkins build #95
+
+Compilation failure: 
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[5,38] package org.apache.http.client.methods does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[6,30] package org.apache.http.entity does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[7,35] package org.apache.http.impl.client does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[11,23] package com.google.gson does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[12,23] package com.google.gson does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[13,23] package com.google.gson does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[14,23] package com.google.gson does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[15,23] package com.google.gson does not exist
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[36,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[36,45] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[37,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[37,33] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[44,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[56,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[56,45] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[57,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[57,33] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[64,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[76,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[76,45] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[77,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[77,33] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[82,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[82,47] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[86,22] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonElement
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[87,25] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[109,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[109,45] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonParser
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[110,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[110,33] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class Gson
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[116,17] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[116,47] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[120,22] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonElement
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService
+05:46:03 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/RequestComposite/src/main/java/com/revature/application/services/RequestCompositeService.java:[121,25] cannot find symbol
+05:46:03 [[1;31mERROR[m]   symbol:   class JsonObject
+05:46:03 [[1;31mERROR[m]   location: class com.revature.application.services.RequestCompositeService

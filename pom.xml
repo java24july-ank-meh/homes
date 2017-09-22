@@ -21,13 +21,13 @@
 	<module>ResidentComposite</module>
 	
 	<!-- Build #93 error-->
-	<!--<module>ComplexComposite</module>-->
+	<module>ComplexComposite</module>
 	
 	<!-- Build #94 error-->
-	<!--<module>ProfileComposite</module> -->
+	<module>ProfileComposite</module>
 	
 	<!-- Build #95 error-->
-	<!--<module>RequestComposite</module>-->
+	<module>RequestComposite</module>
 	    
     </modules>
 </project>

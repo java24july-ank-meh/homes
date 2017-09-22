@@ -1,22 +1,11 @@
 package com.revature.application.service;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.glassfish.jersey.client.ClientConfig;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,25 +38,6 @@ public class ComplexCompositeService {
 		JsonArray unitJson = jsonParser.parse(gson.toJson(units)).getAsJsonArray();
 		JsonArray associateJson = jsonParser.parse(gson.toJson(associates)).getAsJsonArray();
 		
-		
-		/*unitsObj.add(", value);
-		compositeObj.add("complexes", jsonParser.parse(gson.toJson(complexes)));
-		compositeObj.add(compositeObj.getAsJsonObject("complexes").add("units", jsonParser.parse(gson.toJson(units))));
-		compositeObj.add("associates", jsonParser.parse(gson.toJson(associates)));
-		int complexCapacity = 0;
-		int[] unitCapacity = new int[units.length];
-		
-		for (Complex complex : complexes) {
-			for (int i = 0; i < units.length; ++ i) {
-				unitCapacity[i] = 0;
-				for (Associate associate : associates) {
-					if (associate.getUnitId() == units[i].getUnitId()) {
-						unitCapacity[i] +=1;
-						complexCapacity += 1;
-					}
-				}
-			}
-		}*/
 		// get all of the units and store in a map so that way i can use ids as keys
 		Map<String, Integer> unitMap = new HashMap<>();
 		for (JsonElement unitEntry : unitJson) {
@@ -172,7 +142,7 @@ public class ComplexCompositeService {
 		
 		try {
 			//HttpPost post = new HttpPost("http://localhost:8097/notifications/create");
-			HttpPost post = new HttpPost(getRestServiceURI()+"/notifications/create");
+			HttpPost post = new HttpPost(baseurl + "request/notifications/create");
 			post.setHeader("Content-type", "application/json");
 			
 			StringEntity postingString = new StringEntity(new Gson().toJson(notification));
@@ -204,50 +174,4 @@ public class ComplexCompositeService {
 		return null;
 	}
 	
-	//this service was created 
-		private JsonObject getJsonFromService(String endpoint1, String endpoint2) {
-			ClientConfig config = new ClientConfig();
-			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
-			ClientBuilder.newClient(config);
-			WebTarget target = client.target(getRestServiceURI());
-			String associate = null;
-			if(endpoint2.isEmpty()) {
-				associate = target.path(endpoint1).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			}
-			else {
-				associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			}
-			
-			
-			return new JsonParser().parse(associate).getAsJsonObject();
-			
-		}
-		
-		private <T> Object getObject(String endpoint1, String endpoint2, Class<T> objectClass) {
-			Object obj = null;
-			RestTemplate restTemplate = new RestTemplate();
-
-			if(endpoint2.isEmpty()) {
-				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1, objectClass).getBody();
-			}else {
-				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1+"/"+endpoint2, objectClass).getBody();
-			}
-
-			return obj;
-		}
-		
-		private JsonObject jsonReturned(String endpoint1, String endpoint2) {
-			//for consuming a rest service
-			ClientConfig config = new ClientConfig();
-			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
-			WebTarget target = client.target(getRestServiceURI());
-			String associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			return new JsonParser().parse(associate).getAsJsonObject();
-		}
-
-		private static URI getRestServiceURI() {
-			String loc = "http://localhost:8085";
-			String site = "/api";//idk if this is right..?
-			return UriBuilder.fromUri(loc+site).build();
-		}
 }

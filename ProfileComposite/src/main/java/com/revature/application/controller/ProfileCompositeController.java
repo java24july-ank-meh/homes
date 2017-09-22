@@ -8,18 +8,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.revature.application.model.Associate;
+import com.revature.application.service.ProfileCompositeService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 @RestController
 @RequestMapping("profilecomposite")
 public class ProfileCompositeController {
+	
+	@Autowired
+	ProfileCompositeService profileCService;
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getProfileInfo(@PathVariable("id") String id) {
@@ -61,20 +66,5 @@ public class ProfileCompositeController {
 	/*
 	 * maybe this will work? 
 	 */
-	private JsonObject jsonReturned(String endpoint1, String endpoint2) {
-		//for consuming a rest service
-		ClientConfig config = new ClientConfig();
-		javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
-		WebTarget target = client.target(getRestServiceURI());
-		String associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-		return new JsonParser().parse(associate).getAsJsonObject();
-	}
-	
-	private static URI getRestServiceURI() {
 
-		String loc = "http://localhost:8085";
-		String site = "/api";//idk if this is right..?
-
-		return UriBuilder.fromUri(loc+site).build();
-	}
 }

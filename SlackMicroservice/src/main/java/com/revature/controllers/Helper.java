@@ -194,7 +194,6 @@ public class Helper {
 				new LinkedMultiValueMap<String, String>();
 		params.add("token", userToken);
 		params.add("channel", channelId);
-		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
@@ -204,6 +203,7 @@ public class Helper {
 		String responseString = restTemplate.postForObject(requestUrl, request, String.class);
 		JsonNode rootNode, channelNode, memNode = null;
 		List<String> users = new ArrayList<String>();
+		System.out.println(responseString);
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
@@ -213,8 +213,7 @@ public class Helper {
 			Iterator<JsonNode> elements = memNode.elements();
 			while(elements.hasNext()){
 				JsonNode member = elements.next();
-				users.add(member.asText());
-				users.add(getUserName(member.asText(), userToken) );
+				users.add("{ \"name\":  \"" + getUserName(member.asText(), userToken) + "\" , \"id\": \""+member.asText() + "\" }" );
 			}
 			System.out.println(users);
 			return users;
@@ -340,4 +339,29 @@ public class Helper {
 		channelName = channelName.substring(1, channelName.length()-2);
 		return channelName;
 	}
+	
+    //Extracts user ids from json
+    public List<String> getIdList(String ids){
+        
+        JsonNode rootNode= null;
+        List<String> users = new ArrayList<String>();
+        
+        try {
+            rootNode = objectMapper.readTree(ids);
+            
+            Iterator<JsonNode> elements = rootNode.elements();
+            while(elements.hasNext()){
+                JsonNode member = elements.next();
+                users.add(member.asText());
+                
+            }
+            System.out.println(users);
+            return users;
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+	
 }

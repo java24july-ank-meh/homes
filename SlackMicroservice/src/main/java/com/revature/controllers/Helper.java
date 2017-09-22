@@ -64,9 +64,9 @@ public class Helper {
 			
 		while(users.hasNext()) {
 			JsonNode nextUser = users.next();
-			System.out.println(users.next().asText());
+			//System.out.println(users.next().asText());
 			JsonNode nextUserEmail = nextUser.path("profile").path("email");
-			System.out.println(nextUser.path("profile").path("email").asText());
+			//System.out.println(nextUser.path("profile").path("email").asText());
 			if(email.equals(nextUserEmail.asText())) {
 				return nextUser.path("id").asText();
 			}
@@ -203,7 +203,7 @@ public class Helper {
 		String responseString = restTemplate.postForObject(requestUrl, request, String.class);
 		JsonNode rootNode, channelNode, memNode = null;
 		List<String> users = new ArrayList<String>();
-		System.out.println(responseString);
+		//System.out.println(responseString);
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
@@ -215,7 +215,7 @@ public class Helper {
 				JsonNode member = elements.next();
 				users.add("{ \"name\":  \"" + getUserName(member.asText(), userToken) + "\" , \"id\": \""+member.asText() + "\" }" );
 			}
-			System.out.println(users);
+			//System.out.println(users);
 			return users;
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -355,7 +355,7 @@ public class Helper {
                 users.add(member.asText());
                 
             }
-            System.out.println(users);
+            //System.out.println(users);
             return users;
         }catch(IOException e) {
             e.printStackTrace();

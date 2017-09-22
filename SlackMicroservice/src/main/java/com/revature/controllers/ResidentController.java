@@ -148,6 +148,7 @@ public class ResidentController {
 			e.printStackTrace();
 		}
 		
+		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
@@ -390,7 +391,7 @@ public class ResidentController {
 		String token =  details.getTokenValue();
 		
 		id = helper.getSlackId(token, email);
-		
+		System.out.println("id :"+id);
 		String requestUrl = "https://slack.com/api/users.info";
 		
 		MultiValueMap<String, String> params = 

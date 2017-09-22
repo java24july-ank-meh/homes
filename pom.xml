@@ -14,11 +14,9 @@
 	<module>client</module>
 	    	
     	<module>Associate</module>
-	   <!--
-    	<module>Complex</module>
+	<module>Complex</module>
     	<module>RequestService</module>	
-
-	<module>ResidentComposite</module>    
+	   <!--	<module>ResidentComposite</module>    
 	<module>ComplexComposite</module>
 	<module>ProfileComposite</module>
 	<module>RequestComposite</module>-->

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import com.revature.application.*;
@@ -33,15 +35,28 @@ import com.revature.application.model.Unit;
 @RequestMapping("residentcomposite")
 public class ResidentCompositeController {
 	
-	private final String ASSOCIATESERV = "http://localhost:8090/";
-	private final String COMPLEXSERV = "http://localhost:8093/";
+	private final String ASSOCIATESERV = "http://192.168.61.123:8085/api/associates/";
+	private final String COMPLEXSERV = "http://192.168.61.123:8085/api/complex/";
 	
 	public JsonElement getJsonFromService(String url) {
 		Client client = Client.create();
 		WebResource webResource = client.resource(url);
-		String response = webResource.accept(MediaType.APPLICATION_JSON).get(String.class);
-		System.out.println("WEB RESOURCE RESPONSE: "+response);
-		return new JsonParser().parse(response);
+		//String response = webResource.accept(MediaType.APPLICATION_JSON).get(String.class);
+		//System.out.println("WEB RESOURCE RESPONSE: "+response);
+		
+		ClientResponse cr = webResource.get(ClientResponse.class); 
+		if (cr.getStatus() != Response.Status.OK.getStatusCode()) { 
+		    //failure
+		} else { 
+		    // get the entity from the response 
+			return new JsonParser().parse(webResource.accept(MediaType.APPLICATION_JSON).get(String.class));
+		} 
+		return null;
+		
+		
+		
+		
+
 	}
 	
 	@GetMapping(value = "residentinfo")

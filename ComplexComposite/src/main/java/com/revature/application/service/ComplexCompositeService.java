@@ -29,25 +29,47 @@ import com.sun.jersey.api.client.WebResource;
 
 @Service
 public class ComplexCompositeService {
-
+	private String baseurl = "http://192.168.61.123:8085/api/";
+			
 	public JsonObject getAllComplexes() {
 		
-		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
+		/*JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
 		JsonObject associateJson = getJsonFromService("http://localhost:8090/associates");
-		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");
+		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");*/
 		RestTemplate restTemplate = new RestTemplate();
+		JsonParser jsonParser = new JsonParser();
+		Gson gson = new Gson();
 
-		/*Complex[] complexes = restTemplate.getForEntity("http://localhost:8093/complex", Complex[].class).getBody();
-		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();
-		Unit[] units = restTemplate.getForEntity("http://localhost:8093/units", Unit[].class).getBody();*/
+		Complex[] complexes = restTemplate.getForEntity(baseurl + "complex/complex", Complex[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "units/units", Unit[].class).getBody();
 				
 		//counting occupancy
+		JsonObject compositeObj = new JsonObject();
+		compositeObj.add("complexes", jsonParser.parse(gson.toJson(complexes)));
+		compositeObj.get("complexes").add("units", jsonParser.parse(gson.toJson(units)));
+		compositeObj.add("associates", jsonParser.parse(gson.toJson(associates)));
+		int complexCapacity = 0;
+		int[] unitCapacity = new int[units.length];
+		
+		for (Complex complex : complexes) {
+			for (int i = 0; i < units.length; ++ i) {
+				unitCapacity[i] = 0;
+				for (Associate associate : associates) {
+					if (associate.getUnitId() == units[i].getUnitId()) {
+						unitCapacity[i] +=1;
+						complexCapacity += 1;
+					}
+				}
+			}
+		}
 		// get all of the units and store in a map so that way i can use ids as keys
-		Map<String, Integer> unitMap = new HashMap<>();
+		/*Map<String, Integer> unitMap = new HashMap<>();
 		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
 			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
 			unitMap.put(unitEntryJson.get("unitId").getAsString(), 0);
-	    }
+	    }*/
+		
 		//then based on associates unit id add to the units to get occupancy
 		//TODO: combine with bottom for loop so that residents can be added an arryay?
 		for (Map.Entry<String,JsonElement> associateEntry : associateJson.entrySet()) {
@@ -155,10 +177,10 @@ public class ComplexCompositeService {
 
 	public Object assignUnitToAssociate(int unitId, int associateId) {
 		RestTemplate restTemplate = new RestTemplate();
-		Associate associate = restTemplate.getForObject("http://localhost:8090/associates/"+associateId, Associate.class);
+		Associate associate = restTemplate.getForObject(baseurl + "associates/associates/"+associateId, Associate.class);
 		associate.setUnitId((long) unitId);
 		try {
-			HttpPost post = new HttpPost("http://localhost:8090/associates/createOrUpdate");
+			HttpPost post = new HttpPost(baseurl + "associates/associates/createOrUpdate");
 			post.setHeader("Content-type", "application/json");
 			StringEntity postingString = new StringEntity(new Gson().toJson(associate));
 			post.setEntity(postingString);

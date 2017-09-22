@@ -27,6 +27,10 @@ spring:
             ignored-interfaces:
                 - docker0
                 - veth.*
+            preferred-networks:
+                - 52.14.202.179
+                - 18.221.44.217
+                - 13.59.173.242
 
 server:
     port: 8093

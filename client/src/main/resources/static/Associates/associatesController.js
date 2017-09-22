@@ -2,7 +2,15 @@ angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBott
 	
 	$scope.error = false;
 	
-	$http.get("/api/associates/associates").then(function(response) {
+	$http.get("api/resident-composite/residentcomposite/residentinfo/withRoomDetails").then(function(response) {
+		$scope.associatedata = response.data;
+		$scope.residentsTable = new NgTableParams({}, { dataset: $scope.associatedata});
+    }, function(response){
+   	 $scope.error = true;
+	 $mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
+    });
+	
+	/*$http.get("/api/associates/associates").then(function(response) {
 		$scope.associates = response.data;
     }, function(response){
    	 $scope.error = true;
@@ -36,7 +44,7 @@ angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBott
 		console.log($scope.complexes)
 		$scope.residentsTable = new NgTableParams({}, { dataset: $scope.residents});	
 		console.log($scope.residentData);
-	});
+	});*/
 	
 	$scope.showCreateResidentForm = function(ev) {
 		  

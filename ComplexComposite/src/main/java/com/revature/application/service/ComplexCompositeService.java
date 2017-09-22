@@ -1,22 +1,11 @@
 package com.revature.application.service;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.glassfish.jersey.client.ClientConfig;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,99 +21,108 @@ import com.revature.application.model.Unit;
 
 @Service
 public class ComplexCompositeService {
-
+	private String baseurl = "http://192.168.61.123:8085/api/";
+	//TODO current issue is that complexes get ALL units
 	public JsonObject getAllComplexes() {
 		
-		/*JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
-		JsonObject associateJson = getJsonFromService("http://localhost:8090/associates");
-		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");*/
-		JsonObject compositeObj = jsonReturned("complex", "");
-		JsonObject associateJson = jsonReturned("associates", "");
-		JsonObject unitJson = jsonReturned("unit", "");
 		RestTemplate restTemplate = new RestTemplate();
+		JsonParser jsonParser = new JsonParser();
+		Gson gson = new Gson();
 
-		/*Complex[] complexes = restTemplate.getForEntity("http://localhost:8093/complex", Complex[].class).getBody();
-		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();
-		Unit[] units = restTemplate.getForEntity("http://localhost:8093/units", Unit[].class).getBody();*/
-				
-		//counting occupancy
+		Complex[] complexes = restTemplate.getForEntity(baseurl + "complex/complex", Complex[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
+		
+		JsonObject compositeObj = new JsonObject();
+		JsonArray complexJson = jsonParser.parse(gson.toJson(complexes)).getAsJsonArray();
+		JsonArray unitJson = jsonParser.parse(gson.toJson(units)).getAsJsonArray();
+		JsonArray associateJson = jsonParser.parse(gson.toJson(associates)).getAsJsonArray();
+		
 		// get all of the units and store in a map so that way i can use ids as keys
 		Map<String, Integer> unitMap = new HashMap<>();
-		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
-			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
+		for (JsonElement unitEntry : unitJson) {
+			JsonObject unitEntryJson = unitEntry.getAsJsonObject();
 			unitMap.put(unitEntryJson.get("unitId").getAsString(), 0);
 	    }
-		//then based on associates unit id add to the units to get occupancy
+		//then based on associates unit id add to the units to get occupancy	
 		//TODO: combine with bottom for loop so that residents can be added an arryay?
-		for (Map.Entry<String,JsonElement> associateEntry : associateJson.entrySet()) {
-			String associateUnitId = associateEntry.getValue().getAsJsonObject().get("unitId").getAsString();
-		    unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
+		for (JsonElement associateEntry : associateJson) {
+			String associateUnitId = associateEntry.getAsJsonObject().get("unitId").getAsString();
+			if (unitMap.containsKey(associateUnitId))
+				unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
 		}
 		//add an occupancy paramater for each unit
-		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
-			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
+		for (JsonElement unitEntry : unitJson) {
+			JsonObject unitEntryJson = unitEntry.getAsJsonObject();
 			unitEntryJson.addProperty("occupancy", unitMap.get(unitEntryJson.get("unitId").getAsString()));
-			unitEntry.setValue(unitEntryJson);
+			unitEntry = unitEntryJson;
 		}
 		
 		//so now we need to add a total occupancy to the complexes
-		for (Map.Entry<String,JsonElement> complexEntry : compositeObj.entrySet()) {
-			JsonObject complexEntryJson = complexEntry.getValue().getAsJsonObject();
+		for (JsonElement complexEntry : complexJson) {
+			JsonObject complexEntryJson = complexEntry.getAsJsonObject();
 			int complexOccupancy = 0;
 			int complexCapacity = 0;
-			//JsonArray complexUnits = new JsonArray();
-			for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
-				JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
-				if (complexEntryJson.get("complexId").getAsInt() == unitEntryJson.get("complexId").getAsInt()) {
+			JsonArray complexUnits = new JsonArray();
+			for (JsonElement unitEntry : unitJson) {
+				JsonObject unitEntryJson = unitEntry.getAsJsonObject();
+				//System.out.println(unitEntryJson.getAsJsonObject("complex").get("complexId"));
+				if (unitEntryJson.getAsJsonObject("complex") != null && complexEntryJson.get("complexId").getAsInt() == unitEntryJson.getAsJsonObject("complex").get("complexId").getAsInt()) {
 					complexOccupancy += unitEntryJson.get("occupancy").getAsInt();
 					complexCapacity += unitEntryJson.get("capacity").getAsInt();
-					//complexUnits.add(unitJson);
+					complexUnits.add(unitEntry);
 				}
 			}
 			//each complex now has information on its own occupancy and capacity and its units
 			complexEntryJson.addProperty("occupancy", complexOccupancy);
 			complexEntryJson.addProperty("capacity", complexCapacity);
-			//complexEntryJson.add("units", complexUnits);
-			complexEntry.setValue(complexEntryJson);
+			complexEntryJson.add("units", complexUnits);
+			complexEntry = complexEntryJson;
 		}
-		
+		compositeObj.add("complexes", complexJson);
 		return compositeObj;
 	}
 	
 	public JsonObject getComplex(String id) {
-		/*JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex/"+id);
-		JsonObject associateJson = getJsonFromService("http://localhost:8090/associates");
-		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit");*/
 		
-		JsonObject compositeObj = getJsonFromService("complex", id);
-		JsonObject associateJson = getJsonFromService("associates", "");
-		JsonObject unitJson = getJsonFromService("unit", "");
+		RestTemplate restTemplate = new RestTemplate();
+		JsonParser jsonParser = new JsonParser();
+		Gson gson = new Gson();
+
+		Complex complex = restTemplate.getForObject(baseurl + "complex/complex/"+id, Complex.class);
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
+		
+		JsonObject compositeObj = jsonParser.parse(gson.toJson(complex)).getAsJsonObject();
+		JsonArray unitJson = jsonParser.parse(gson.toJson(units)).getAsJsonArray();
+		JsonArray associateJson = jsonParser.parse(gson.toJson(associates)).getAsJsonArray();
 		
 		//unit map so i can assign occupancies based on unitids as keys
 		//exclude units that are not in this complex
 		Map<String, Integer> unitMap = new HashMap<>();
-		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
-			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
-			if (unitEntryJson.get("complexId").getAsInt() == compositeObj.get("complexId").getAsInt())
+		for (JsonElement unitEntry : unitJson) {
+			JsonObject unitEntryJson = unitEntry.getAsJsonObject();
+			if (unitEntryJson.get("complex") != null && unitEntryJson.getAsJsonObject("complex").get("complexId").getAsInt() == compositeObj.get("complexId").getAsInt())
 				unitMap.put(unitEntryJson.get("unitId").getAsString(), 0);
 	    }
 		
 		//then based on associates unit id add to the units to get occupancy
 		//TODO: combine with bottom for loop so that residents can be added an arryay?
-		for (Map.Entry<String,JsonElement> associateEntry : associateJson.entrySet()) {
-			String associateUnitId = associateEntry.getValue().getAsJsonObject().get("unitId").getAsString();
-		    unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
+		for (JsonElement associateEntry : associateJson) {
+			String associateUnitId = associateEntry.getAsJsonObject().get("unitId").getAsString();
+			if (unitMap.containsKey(associateUnitId))
+				unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
 		}
 		
 		//give each unit an occupancy and add a unit to a json array
 		JsonArray complexUnits = new JsonArray();
-		for (Map.Entry<String,JsonElement> unitEntry : unitJson.entrySet()) {
-			JsonObject unitEntryJson = unitEntry.getValue().getAsJsonObject();
-			if (unitEntryJson.get("complexId").getAsInt() == compositeObj.get("complexId").getAsInt()) {
+		for (JsonElement unitEntry : unitJson) {
+			JsonObject unitEntryJson = unitEntry.getAsJsonObject();
+			if (unitEntryJson.get("complex") != null && unitEntryJson.getAsJsonObject("complex").get("complexId").getAsInt() == compositeObj.get("complexId").getAsInt()) {
 				unitEntryJson.addProperty("occupancy", unitMap.get(unitEntryJson.get("unitId").getAsString()));
 				complexUnits.add(unitEntryJson);
 			}
-			unitEntry.setValue(unitEntryJson);
+			unitEntry = unitEntryJson;
 	    }
 		//give array of units to composite obj with the occupancies.
 		//TODO make the array earlier
@@ -144,7 +142,7 @@ public class ComplexCompositeService {
 		
 		try {
 			//HttpPost post = new HttpPost("http://localhost:8097/notifications/create");
-			HttpPost post = new HttpPost(getRestServiceURI()+"/notifications/create");
+			HttpPost post = new HttpPost(baseurl + "request/notifications/create");
 			post.setHeader("Content-type", "application/json");
 			
 			StringEntity postingString = new StringEntity(new Gson().toJson(notification));
@@ -160,11 +158,11 @@ public class ComplexCompositeService {
 
 	public Object assignUnitToAssociate(int unitId, int associateId) {
 		RestTemplate restTemplate = new RestTemplate();
-		Associate associate = restTemplate.getForObject("http://localhost:8090/associates/"+associateId, Associate.class);
+		Associate associate = restTemplate.getForObject(baseurl + "associates/associates/"+associateId, Associate.class);
 		associate.setUnitId((long) unitId);
 		try {
-			//HttpPost post = new HttpPost("http://localhost:8090/associates/createOrUpdate");
-			HttpPost post = new HttpPost(getRestServiceURI()+"/associates/createOrUpdate");
+			HttpPost post = new HttpPost(baseurl + "associates/associates/createOrUpdate");
+
 			post.setHeader("Content-type", "application/json");
 			StringEntity postingString = new StringEntity(new Gson().toJson(associate));
 			post.setEntity(postingString);
@@ -176,50 +174,4 @@ public class ComplexCompositeService {
 		return null;
 	}
 	
-	//this service was created 
-		private JsonObject getJsonFromService(String endpoint1, String endpoint2) {
-			ClientConfig config = new ClientConfig();
-			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
-			ClientBuilder.newClient(config);
-			WebTarget target = client.target(getRestServiceURI());
-			String associate = null;
-			if(endpoint2.isEmpty()) {
-				associate = target.path(endpoint1).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			}
-			else {
-				associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			}
-			
-			
-			return new JsonParser().parse(associate).getAsJsonObject();
-			
-		}
-		
-		private <T> Object getObject(String endpoint1, String endpoint2, Class<T> objectClass) {
-			Object obj = null;
-			RestTemplate restTemplate = new RestTemplate();
-
-			if(endpoint2.isEmpty()) {
-				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1, objectClass).getBody();
-			}else {
-				obj = restTemplate.getForEntity(getRestServiceURI()+"/"+endpoint1+"/"+endpoint2, objectClass).getBody();
-			}
-
-			return obj;
-		}
-		
-		private JsonObject jsonReturned(String endpoint1, String endpoint2) {
-			//for consuming a rest service
-			ClientConfig config = new ClientConfig();
-			javax.ws.rs.client.Client client = ClientBuilder.newClient(config);
-			WebTarget target = client.target(getRestServiceURI());
-			String associate = target.path(endpoint1).path(endpoint2).request().accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-			return new JsonParser().parse(associate).getAsJsonObject();
-		}
-
-		private static URI getRestServiceURI() {
-			String loc = "http://localhost:8085";
-			String site = "/api";//idk if this is right..?
-			return UriBuilder.fromUri(loc+site).build();
-		}
 }

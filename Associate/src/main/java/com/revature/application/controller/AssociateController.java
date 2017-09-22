@@ -22,6 +22,7 @@ import com.revature.application.repository.AssociateRepository;
 import com.revature.application.services.AssociateService;
 
 @RestController
+@RequestMapping("associates")
 public class AssociateController {
 
 	private AssociateService associateService;
@@ -87,6 +88,14 @@ public class AssociateController {
 			e.printStackTrace(); //for testing purposes. Comment out later.
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
+	}
+	
+	@DeleteMapping("{id}/unit")
+	public ResponseEntity<Object> unnassignAssociate(@PathVariable("id") long id) {
+		Associate associate = associateService.findByAssociateId(id);
+		associate.setUnitId(null);
+		associateService.saveOrUpdate(associate);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("{email:.+}/email")

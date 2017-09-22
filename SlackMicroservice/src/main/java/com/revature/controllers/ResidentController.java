@@ -181,7 +181,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			group = json.getString("group");
-			ids = json.getString("ids");
+			ids = json.getString("ids"); 
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

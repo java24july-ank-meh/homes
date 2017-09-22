@@ -46,7 +46,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableOAuth2Client
 @RestController
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class SlackMicroserviceApplication extends WebSecurityConfigurerAdapter{
 
 	

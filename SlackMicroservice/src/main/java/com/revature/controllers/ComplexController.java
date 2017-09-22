@@ -57,7 +57,6 @@ public class ComplexController {
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
 		
-
 		JSONObject json = null;
 		String channelName = null;
 		try{

@@ -342,7 +342,7 @@ public class ResidentController {
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
-		helper.getSlackId(token, email);
+		userId = helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
 		

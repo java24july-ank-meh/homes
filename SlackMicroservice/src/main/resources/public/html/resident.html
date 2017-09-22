@@ -35,8 +35,17 @@
 		<h2>Invite User To Channel</h2>
 		<input type="text" id="emailForInvite" placeholder="email" ng-model="resident.emailForInvite">
 	<input type="text" id="complexForInvite" placeholder="complex" ng-model="resident.complexForInvite">
-	<button class="btn btn-primary" ng-click="resident.inviteUser()">Invite User</button>	
+	<button class="btn btn-primary" ng-click="resident.inviteUser()">Invite User</button>
+			<h2>Invite User To Unit Channel</h2>
+		<input type="text" id="emailForInviteUnit" placeholder="email" ng-model="resident.emailForInviteUnit">
+	<input type="text" id="complexForInviteUnit" placeholder="complex" ng-model="resident.complexForInviteUnit">
+	<input type="text" id="unitForInvite" placeholder="unit" ng-model="resident.unitForInvite">
+	<button class="btn btn-primary" ng-click="resident.inviteUserUnit()">Invite User</button>	
 	
+    <div ng-dropdown-multiselect="" options="data" selected-model="dataModel"            checkboxes="true" extra-settings="dataSettings"></div> 
+        <pre>Selected Model: {{dataModel}} </pre>
+        
+
 	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
 	<script type="text/javascript" src="../js/resident.js"></script>
 </body>

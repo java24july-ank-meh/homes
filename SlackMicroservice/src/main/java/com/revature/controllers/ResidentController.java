@@ -254,11 +254,11 @@ public class ResidentController {
 	}
 	
 	/*send list of [userid1,username1, uid2,un2,...] to front end*/
-	@RequestMapping(value="message/listusers", method=RequestMethod.GET)
+	@RequestMapping(value="message/listusers", method=RequestMethod.POST)
 	public ResponseEntity<Object> listUser(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null;
+		String complex = null; String unit = "";
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
@@ -266,16 +266,15 @@ public class ResidentController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
-		
 		String channelName = complex + unit;
 		List<String> userList = helper.getAllUsersInChannel(channelName, token);
 		//System.out.println(userList);
 		
-		return ResponseEntity.ok(userList);
+		
+		return ResponseEntity.ok(userList.toString());
 		
 	}
 	
@@ -343,7 +342,7 @@ public class ResidentController {
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
-		helper.getSlackId(token, email);
+		userId = helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
 		

@@ -67,6 +67,18 @@ angular.module("app", []).controller("resident", function($http){
 					console.log(response);
 				});
 	};
+		
+		self.inviteUserUnit = function(){
+			alert("u done messed up");
+			let url = "/resident/unitInvite";
+			$http.post(url, {complex:self.complexForInviteUnit, email:self.emailForInviteUnit, unit:self.unitForInvite})
+					.success(function(response){
+						console.log(response);
+					}).error(function(response){
+						console.log(response);
+					});
+	};
+	
 	
 	
 });

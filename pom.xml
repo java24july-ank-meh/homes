@@ -16,9 +16,11 @@
     	<module>Associate</module>
 		<module>Complex</module>
     	<module>RequestService</module>	
-	    
-	<module>ProfileComposite</module>
-	<!--<module>RequestComposite</module> -->
+	
+		<module>RequestComposite</module>
+		
+    <!-- Build #94error-->
+	<!--<module>ProfileComposite</module> -->
 	
 	<!-- Build #91 error-->
 	<!--<module>ResidentComposite</module>-->

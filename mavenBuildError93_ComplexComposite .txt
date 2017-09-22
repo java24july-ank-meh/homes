@@ -1,0 +1,154 @@
+Jenkins build #93
+
+[1;31mCompilation failure[m: Compilation failure: 
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[8,24] package javax.ws.rs.core does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[10,30] package org.apache.http.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[11,38] package org.apache.http.client.methods does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[12,30] package org.apache.http.entity does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[13,35] package org.apache.http.impl.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[18,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[19,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[20,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[21,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[22,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[27,33] package com.sun.jersey.api.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[28,33] package com.sun.jersey.api.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[33,16] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[88,16] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[149,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[6,24] package javax.ws.rs.core does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[13,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[14,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[15,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[16,23] package com.google.gson does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[20,33] package com.sun.jersey.api.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/controller/ComplexCompositeController.java:[21,33] package com.sun.jersey.api.client does not exist
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[35,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[36,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[37,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[47,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[48,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[53,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[58,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[59,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[65,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[66,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[70,47] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[71,33] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[89,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[90,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[91,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[96,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[97,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[104,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[110,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonArray
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[110,46] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonArray
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[111,39] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonElement
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[112,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[127,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonObject
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[127,47] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonParser
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[136,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class HttpPost
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[136,45] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class HttpPost
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[139,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class StringEntity
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[139,58] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class StringEntity
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[139,75] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class Gson
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[141,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   variable HttpClientBuilder
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[150,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class Client
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[150,33] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   variable Client
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[151,17] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class WebResource
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[152,52] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   variable MediaType
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[153,28] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class JsonParser
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[161,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class HttpPost
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[161,45] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class HttpPost
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[163,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class StringEntity
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[163,58] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class StringEntity
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[163,75] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   class Gson
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService
+05:36:44 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ComplexComposite/src/main/java/com/revature/application/service/ComplexCompositeService.java:[165,25] cannot find symbol
+05:36:44 [[1;31mERROR[m]   symbol:   variable HttpClientBuilder
+05:36:44 [[1;31mERROR[m]   location: class com.revature.application.service.ComplexCompositeService

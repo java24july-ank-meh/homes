@@ -10,11 +10,24 @@
     <modules>
         <module>Eureka</module>
     	<module>zuul</module>
-    	
-    	<module>Associate</module>
-    	<module>Complex</module>
-    	<module>RequestService</module>	
     	<module>SlackMicroservice</module>
-    	<module>client</module>
+		<module>client</module>
+	    	
+    	<module>Associate</module>
+		<module>Complex</module>
+    	<module>RequestService</module>	
+	
+	<!-- Build #91 error-->
+	<module>ResidentComposite</module>
+	
+	<!-- Build #93 error-->
+	<!--<module>ComplexComposite</module>-->
+	
+	<!-- Build #94 error-->
+	<!--<module>ProfileComposite</module> -->
+	
+	<!-- Build #95 error-->
+	<!--<module>RequestComposite</module>-->
+	    
     </modules>
 </project>

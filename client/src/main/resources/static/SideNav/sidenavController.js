@@ -59,6 +59,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
             icon: 'bookmark'
         }
     ];
+	/*
     $scope.admin = [
         {
             link : '',
@@ -71,6 +72,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
             icon: 'settings'
         }
     ];
+	*/
     $scope.commonMenu = [{
             link : 'logout',
             title: 'Logout',

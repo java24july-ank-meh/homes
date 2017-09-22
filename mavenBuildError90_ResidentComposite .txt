@@ -1,0 +1,41 @@
+Jenkins build #90
+
+05:18:25 [[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.1:compile[m [1m(default-compile)[m on project [36mResidentComposite[m: [1;31mCompilation failure[m: Compilation failure: 
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[7,24] package javax.ws.rs.core does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[18,23] package com.google.gson does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[19,23] package com.google.gson does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[20,23] package com.google.gson does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[21,23] package com.google.gson does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[22,23] package com.google.gson does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[23,33] package com.sun.jersey.api.client does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[24,33] package com.sun.jersey.api.client does not exist
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[39,16] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class JsonElement
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[40,17] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class Client
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[40,33] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   variable Client
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[41,17] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class WebResource
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[42,54] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   variable MediaType
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[44,28] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class JsonParser
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[49,17] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class Gson
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[49,33] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class Gson
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[58,17] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class Gson
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController
+05:18:25 [[1;31mERROR[m] /home/ec2-user/.jenkins/workspace/HOMES/ResidentComposite/src/main/java/com/revature/application/controllers/ResidentCompositeController.java:[58,33] cannot find symbol
+05:18:25 [[1;31mERROR[m]   symbol:   class Gson
+05:18:25 [[1;31mERROR[m]   location: class com.revature.application.controllers.ResidentCompositeController

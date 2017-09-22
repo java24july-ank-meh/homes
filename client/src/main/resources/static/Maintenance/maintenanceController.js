@@ -2,6 +2,20 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
 
 	$scope.error = false;
 	
+	$scope.showTable = true;
+	
+	$scope.toggleView = function(){
+		$scope.showTable = !$scope.showTable;
+	}
+	
+	 $scope.deleteRowCallback = function(rows){
+	        $mdToast.show(
+	            $mdToast.simple()
+	                .content('Deleted row id(s): '+rows)
+	                .hideDelay(3000)
+	        );
+	    };
+	   
      $http.get("/api/request/maintenance").then(function(response) {
          $scope.maintenanceRequests = response.data;
          
@@ -31,5 +45,14 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
 	      	.error(onSuccess);
 
 	  };
+	  
+	  $scope.getMaintenanceWithId = function(id){
+		  console.log(id);
+		  return $scope.maintenanceRequests;
+		
+          return _.find($scope.maintenanceRequests, function(item){
+             return item.maintenanceId === id;
+          })
+      };
 
 }]);

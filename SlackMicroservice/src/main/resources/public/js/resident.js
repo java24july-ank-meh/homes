@@ -66,6 +66,7 @@ angular.module("app", []).controller("resident", function($http){
 				}).error(function(response){
 					console.log(response);
 				});
+	};
 		
 		self.inviteUserUnit = function(){
 			alert("u done messed up");

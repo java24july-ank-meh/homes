@@ -101,6 +101,7 @@ public class OfficeControllerTest {
 		Gson gson = new Gson();
         String json = gson.toJson(mockOffice4);
 		
+        //when(officeServiceMock.find(mockOffice4.getOfficeId())).thenReturn(mockOffice4);
         when(officeServiceMock.save(any(Office.class))).thenReturn(mockOffice4.getOfficeId());
 	    mockMvc.perform(
 	            post("/office")

@@ -82,7 +82,7 @@
                 <md-divider></md-divider>
                 <md-list flex >
                 	<span  ng-repeat="resident in residents">
-                    <md-list-item class="md-3-line noright" ng-if="!resident.apartment" ui-sref="home.showResident({residentId: resident.residentId})">
+                    <md-list-item class="md-3-line noright" ng-if="rootUser.isManager" ui-sref="home.showResident({residentId: resident.residentId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="person" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
                             <h3> {{resident.firstName}} {{resident.lastName}}</h3>
@@ -102,7 +102,7 @@
 </md-content>
 
 <md-content ng-if="!rootUser.isManager" class="md-padding" style="text-align: center;"  >
-    <div layout="column"><img src="imgs/rhms.png" style="max-width: 120px; margin: 0 auto; "></div>
+    <div layout="column"><img src="imgs/reverserhms.png" style="max-width: 120px; margin: 0 auto; "></div>
 	<h3 class="md-display-1"><span style="color: #FF5722;">REVATURE</span><br> Housing Management System</h3>
 	<br>
 	<div layout layout-wrap layout-gt-sm="row" layout="column">

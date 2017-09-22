@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
@@ -28,10 +29,10 @@ import com.revature.application.model.Unit;
 @RestController
 @RequestMapping("residentcomposite")
 public class ResidentCompositeController {
-
-	private final String ASSOCIATESERV = "http://localhost:8090/";
-	private final String COMPLEXSERV = "http://localhost:8093/";
-
+	
+	private final String ASSOCIATESERV = "http://192.168.61.123:8085/api/associates/";
+	private final String COMPLEXSERV = "http://192.168.61.123:8085/api/complex/";
+	
 	public JsonElement getJsonFromService(String endpoint1, String endpoint2) {
 		/*Client client = Client.create();
 		WebResource webResource = client.resource(url);

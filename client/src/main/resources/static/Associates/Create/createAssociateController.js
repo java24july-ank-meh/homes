@@ -35,7 +35,7 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
     $scope.hide = function() {
         $mdDialog.hide();
       };
-
+ 
       $scope.cancel = function() {
         $mdDialog.cancel();
       };

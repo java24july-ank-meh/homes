@@ -49,6 +49,7 @@ public class ResidentController {
 	@Autowired
 	ObjectMapper objectMapper;
 	
+	
 	/*Sends an email invite to the email and autofills first name and last name for slack registration
 	does not enforce names*/
 	@PostMapping("invite")
@@ -277,6 +278,7 @@ public class ResidentController {
 		
 	}
 	
+
 	/*Add a user to the slack channel for their complex and unit*/
 	@PostMapping("complexInvite")
 	public ResponseEntity<String> complexInvite(@RequestBody String body, HttpSession http){
@@ -368,28 +370,33 @@ public class ResidentController {
 	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String userId = null;
-		String isAdmin = null;
+		String email = null;
+		String id = null;
+		String is_admin = null;
+	
+	
 		try {
 			json = new JSONObject(body);
-			userId = json.getString("userId");
-			isAdmin = json.getString("isAdmin");
-			
+			email = json.getString("email");
+		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
+		
+		
 		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
+		id = helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/users.info";
 		
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
 		params.add("token", token);
-		params.add("user", userId);
+		params.add("user", id);
 			
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType( MediaType.APPLICATION_FORM_URLENCODED);
@@ -398,15 +405,16 @@ public class ResidentController {
 				new HttpEntity<MultiValueMap<String, String>>( params, headers);
 		
 		String responseString = restTemplate.postForObject( requestUrl, request, String.class);
+		
 		JsonNode rootNode, userNode, adminNode = null;
 		
 		try {
 			rootNode = objectMapper.readTree( responseString);
 			userNode = rootNode.path( "user");
 			adminNode = userNode.path( "is_admin");
-			isAdmin = adminNode.asText();
-			
-			ResponseEntity<String> responseEntity =  new ResponseEntity<>("{isAdmin:" + isAdmin + "}", HttpStatus.OK);
+			is_admin = adminNode.asText();
+		
+			ResponseEntity<String> responseEntity =  new ResponseEntity<>(is_admin, HttpStatus.OK);
 			
 			return responseEntity;
 			
@@ -415,5 +423,5 @@ public class ResidentController {
 		}
 		return null;
 	}
-	
+
 }

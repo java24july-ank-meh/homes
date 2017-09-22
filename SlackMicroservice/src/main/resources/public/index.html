@@ -52,11 +52,16 @@
 		<input type="text" id="new-unit" name="new-unit" placeholder="unit" ng-model="home.newUnit">
 		<input type="text" id="new-complex-update" name="new-complex-update" placeholder="complex" ng-model="home.newComplexUpdate">
 		<button class="btn btn-primary" ng-click="home.updateUnit()">Update</button>
-		
+		<br>
+		<button class="btn btn-primary" ng-click="home.checkAdmin()">checkAdmin</button>
+		<input type="text" ng-model="home.email"/>
+		<br>
 	</div>
 	
 	<div class="container">
+	
 		<div>
+			
 			<button ng-click="home.showInfo()" class="btn btn-primary">Get info again</button>
 			<p ng-bind="home.info"></p>
 		</div>

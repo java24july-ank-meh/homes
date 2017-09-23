@@ -29,8 +29,8 @@ public class EurekaClientConfiguration {
                 eurekaBean.setPreferIpAddress(true);
                 eurekaBean.setIpAddress(hostIpAddress);
                 
-                eurekaBean.setSecurePortEnabled(true);
-                eurekaBean.setSecurePort(Integer.parseInt(env.getProperty("SERVICE_PORT")));
+                eurekaBean.setNonSecurePortEnabled(true);
+                eurekaBean.setNonSecurePort(Integer.parseInt(env.getProperty("SERVICE_PORT")));
             } catch (Exception e) {
                 // Connection probably timed out
             }

@@ -13,7 +13,16 @@ slack:
     userInfoUri: https://slack.com/api/users.identity
     tokenType: Bearer
     preferTokenInfo: false
-    
+
+spring:
+  application:
+    name: SLACK-SERVICE
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8086/eureka
+
 slackChannel:
   client:
     clientId: "237895291120.241002501221"

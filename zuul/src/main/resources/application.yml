@@ -35,6 +35,9 @@ zuul:
     profile-composite:
       path: /api/profile-composite/**
       serviceId: PROFILE-COMPOSITE
+    slack-service:
+      path: /api/slack/**
+      serviceId: SLACK-SERVICE
 spring:
   application:
     name: zuul-server

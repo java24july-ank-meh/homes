@@ -6,6 +6,18 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
     if(!$rootScope.rootUser == undefined){
     	$state.go("home.dashboard");
     }
+    
+    $http.get("api/slack/user").success(function(data){
+		console.log(data);
+		let username = getNameFromString(data.name);
+	    self.user = username;
+		self.authenticated = true;
+	}).error(function(response){
+		console.log("error");
+		console.log(response);
+		self.user = "N/A";
+		self.authenticated = false;
+	});
 
 }]);
 

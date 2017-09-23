@@ -27,6 +27,7 @@ public class EurekaClientConfiguration {
             try {
                 String hostIpAddress = restTemplate.getForObject("http://169.254.169.254/latest/meta-data/public-ipv4", String.class);
                 eurekaBean.setIpAddress(hostIpAddress);
+                eurekaBean.setSecurePort(Integer.parseInt(env.getProperty("SERVICE_PORT")));
             } catch (Exception e) {
                 // Connection probably timed out
             }

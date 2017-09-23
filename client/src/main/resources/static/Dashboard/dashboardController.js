@@ -12,7 +12,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
      });
      
 
-     $http.get("/api/associates/associates").then(function(response) {
+     $http.get("/api/associates").then(function(response) {
          $scope.residents = response.data;
          
         

@@ -1,9 +1,15 @@
 package com.revature.application.service;
 
+import static org.mockito.Matchers.anyByte;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
@@ -25,11 +31,50 @@ import com.revature.application.model.Complex;
 import com.revature.application.model.Notification;
 import com.revature.application.model.Unit;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 @Service
 public class ComplexCompositeService {
 
+	
+	public JsonArray allComplexes(){
+		return getJsonArrayFromService("http://localhost:8093/complex");
+	}
+	
+	public JsonArray allUnits() {
+		JsonArray units = getJsonArrayFromService("http://localhost:8093/unit");
+		JsonArray associates = getJsonArrayFromService("http://localhost:8090/");
+		
+		Map<Long, JsonArray> AssociatesForEachUnit = new HashMap<>();
+		for(int i = 0; i < units.size(); i++) {
+			JsonObject unit = units.get(i).getAsJsonObject();
+			Long unitId = unit.get("unitId").getAsLong();
+			AssociatesForEachUnit.put(unitId, new JsonArray());
+		}
+		
+		for(int i = 0; i < associates.size(); i++) {
+			JsonObject associate = associates.get(i).getAsJsonObject();
+			if(associate.get("unitId").isJsonNull()) continue;
+			Long unitId = associate.get("unitId").getAsLong();
+			JsonArray unitAssociates = AssociatesForEachUnit.get(unitId);
+			if(unitAssociates == null) continue;
+			unitAssociates.add(associate);
+		}
+		
+		System.out.println(AssociatesForEachUnit);
+		
+		for(int i = 0; i < units.size(); i++) {
+			JsonObject unit = units.get(i).getAsJsonObject();
+			Long unitId = unit.get("unitId").getAsLong();
+			unit.add("residents", AssociatesForEachUnit.get(unitId));
+		}
+		
+		System.out.println(units);
+		
+		return units;
+	}
+	
 	public JsonObject getAllComplexes() {
 		
 		JsonObject compositeObj = getJsonFromService("http://localhost:8093/complex");
@@ -146,11 +191,43 @@ public class ComplexCompositeService {
 		
 	}
 	
+	private <T> List<T> getListFromService(String url, final Class<T> clazz) {
+		Client client = Client.create();
+		WebResource resource = client.resource(url);
+		
+		ParameterizedType parameterizedGenericType = new ParameterizedType() {
+	        public Type[] getActualTypeArguments() {
+	            return new Type[] { clazz };
+	        }
+
+	        public Type getRawType() {
+	            return List.class;
+	        }
+
+	        public Type getOwnerType() {
+	            return List.class;
+	        }
+	    };
+
+	    GenericType<List<T>> genericType = new GenericType<List<T>>(
+	            parameterizedGenericType) {
+	    };
+		
+		return resource.accept(MediaType.APPLICATION_JSON).get(genericType);
+	}
+	
 	private JsonObject getJsonFromService(String url) {
 		Client client = Client.create();
 		WebResource resource = client.resource(url);
 		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
 		return new JsonParser().parse(associate).getAsJsonObject();
+	}
+	
+	private JsonArray getJsonArrayFromService(String url) {
+		Client client = Client.create();
+		WebResource resource = client.resource(url);
+		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
+		return new JsonParser().parse(associate).getAsJsonArray();
 	}
 
 	public Object assignUnitToAssociate(int unitId, int associateId) {

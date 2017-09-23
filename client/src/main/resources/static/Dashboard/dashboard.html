@@ -57,18 +57,16 @@
                 <md-list flex >
                 
                 	<span  ng-repeat="unit in units">
-                    <!-- <md-list-item class="md-3-line noright" ng-if="unit.residents.length < unit.capacity" ui-sref="home.showApartment({unitId: unit.unitId})"> -->
-					<md-list-item class="md-3-line noright">
+                    <md-list-item class="md-3-line noright" ng-if="unit.residents.length < unit.capacity" ui-sref="home.showApartment({unitId: unit.unitId})">
                      <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
                             <h3> Unit {{unit.unitNumber}}</h3>
                             <p> {{unit.complex.name}} </p>
-                            <p> {{unit.residents.length}} of {{unit.capacity}} Associates</p>
+                            <p> {{unit.residents.length}} of {{unit.capacity}} Residents</p>
                            <!--  <p> {{resident.email}}</p> -->
                         </div>
-                        
+                     </md-list-item>
           			</span>
-                    </md-list-item>
                 </md-list>
             </md-card>
        	</div>   

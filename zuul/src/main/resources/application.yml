@@ -5,8 +5,10 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:8086/eureka
-      
-zuul:    
+
+zuul:
+  host:
+    socket-timeout-millis: 10000    
   routes: 
     client:
       path: /**

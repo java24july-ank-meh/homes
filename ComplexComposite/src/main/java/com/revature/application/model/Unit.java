@@ -1,19 +1,25 @@
-package com.revature.application.model; 
+package com.revature.application.model;
+
+import java.util.List;
+
 public class Unit {
 
 	private long unitId;
 	private String unitNumber;
+	private String buildingNumber;
 	private int capacity;
 	private String gender;
 	private Complex complex;
+	private List<Associate> associates;
 
 	public Unit() {
 	}
 
-	public Unit(long unitId, String unitNumber, int capacity, String gender, Complex complex) {
+	public Unit(long unitId, String unitNumber, String buildingNumber, int capacity, String gender, Complex complex) {
 		super();
 		this.unitId = unitId;
 		this.unitNumber = unitNumber;
+		this.buildingNumber = buildingNumber;
 		this.capacity = capacity;
 		this.gender = gender;
 		this.complex = complex;
@@ -57,6 +63,22 @@ public class Unit {
 
 	public void setComplex(Complex complex) {
 		this.complex = complex;
+	}
+	
+	public String getBuildingNumber() {
+		return buildingNumber;
+	}
+
+	public void setBuildingNumber(String buildingNumber) {
+		this.buildingNumber = buildingNumber;
+	}
+
+	public List<Associate> getAssociates() {
+		return associates;
+	}
+
+	public void setAssociates(List<Associate> associates) {
+		this.associates = associates;
 	}
 
 	@Override

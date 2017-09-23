@@ -20,6 +20,8 @@ import com.revature.application.service.ComplexCompositeService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
+import springfox.documentation.spring.web.json.Json;
+
 @RestController
 @RequestMapping("complexcomposite")
 public class ComplexCompositeController {
@@ -30,8 +32,13 @@ public class ComplexCompositeController {
 	
 	//this is for getting the big list of complexes
 	@GetMapping
-	public ResponseEntity<Object> getComplexes() {
-		return ResponseEntity.ok(compositeService.getAllComplexes().toString());
+	public String getComplexes() {
+		return compositeService.allComplexes().toString();
+	}
+	
+	@GetMapping("units")
+	public String getUnits() {
+		return compositeService.allUnits().toString();
 	}
 	
 	@GetMapping("{id}")

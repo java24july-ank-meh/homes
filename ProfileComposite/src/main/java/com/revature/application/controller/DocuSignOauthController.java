@@ -1,10 +1,16 @@
 package com.revature.application.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +21,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.docusign.esign.api.AuthenticationApi;
+import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.AuthenticationApi.LoginOptions;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.Configuration;
 import com.docusign.esign.client.Pair;
+import com.docusign.esign.client.auth.Authentication;
+import com.docusign.esign.client.auth.OAuth;
+import com.docusign.esign.model.BccEmailAddress;
+import com.docusign.esign.model.EmailSettings;
+import com.docusign.esign.model.Envelope;
+import com.docusign.esign.model.EnvelopesInformation;
 import com.docusign.esign.model.LoginAccount;
 import com.docusign.esign.model.LoginInformation;
+import com.docusign.esign.model.Recipients;
+import com.docusign.esign.model.Signer;
 import com.revature.application.model.MrSingletonState;
 import com.revature.application.util.RandomString;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 import io.swagger.annotations.ApiParam;
 
@@ -83,7 +102,7 @@ public class DocuSignOauthController {
 
 	// The date must be formatted as YYYY-MM-DD
 	@GetMapping(RedirectionUri)
-	public ResponseEntity<Object> updateDocusignTry3Part2(@ApiParam("code") String code) {
+	public String updateDocusignTry3Part2(@ApiParam("code") String code) {
 		// once redirected here, we will have the code (denoted as the code path
 		// variable that we can
 		// then exchange for the actual oauth token that we need to use for sending REST
@@ -125,9 +144,6 @@ public class DocuSignOauthController {
 
 			// ask to exchange the auth code with an access code
 			apiClient.updateAccessToken();
-			// TODO: Try to see if I can get the actual access token personally.
-			// If that is not possible, I might have to move to standard REST calls to
-			// finish all of this
 
 			/********* LEFT OFF HERE ********/
 			/*
@@ -151,10 +167,10 @@ public class DocuSignOauthController {
 			System.out.println("LoginInformation: " + loginInfo);
 
 			// parse first account's baseUrl
-			String[] accountDomain = loginInfo.getLoginAccounts().get(0).getBaseUrl().split("/v2");
+			LoginAccount defaultAccount = loginInfo.getLoginAccounts().get(0);
+			String[] accountDomain = defaultAccount.getBaseUrl().split("/v2");
 
-			// below code required for production, no effect in demo (same
-			// domain)
+			// below code required for production, no effect in demo (same domain)
 			apiClient.setBasePath(accountDomain[0]);
 			Configuration.setDefaultApiClient(apiClient);
 
@@ -164,24 +180,55 @@ public class DocuSignOauthController {
 			/****** Use the service of GET /restapi/v2/accounts/{accountID}/envelopes?from_date={date}
 			 * See the documentation at https://docs.docusign.com/esign/restapi/Envelopes/Envelopes/listStatusChanges/ *******/
 			
-			//Create the query params needed for invocation
-			List<Pair> queryParams = new ArrayList<Pair>();
-			queryParams.add(new Pair("from_date", MrSingletonState.getDate()));
+//			//Create the query params needed for invocation
+//			List<Pair> queryParams = new ArrayList<Pair>();
+//			queryParams.add(new Pair("from_date", MrSingletonState.getDate()));
+//			
+//			//create the header information needed for the call
+//			
+//			String[] authNames = new String[2];
+//			authNames[0] = "docusignAccessCode";
+//			authNames[1] = "IntegratorKey";
+//			Map<String, Authentication> auths = apiClient.getAuthentications();
+//			Set<String> keys = auths.keySet();
+//			for(String key : keys) {
+//				System.out.println(key + ": " + auths.get(key));
+//			}
 			
-			//create the header information needed for the call
+//			String retort = apiClient.invokeAPI("/v2/accounts/" + loginInfo.getLoginAccounts().get(0).getAccountId() + "/envelopes",
+//					"GET", queryParams, null, new HashMap<String, String>(), new HashMap<String, Object>(),
+//					null, "application/json", new String[0], new GenericType<String>(String.class));
+//			
+//			System.out.println(retort);
 			
-			String retort = apiClient.invokeAPI("/v2/accounts/" + loginInfo.getLoginAccounts().get(0).getAccountId() + "/envelopes",
-					"GET", queryParams, null, new HashMap<String, String>(), new HashMap<String, Object>(),
-					null, "Accept", new String[0], new GenericType<String>(String.class));
+			//Now we can use the EnvelopesApi to call the method we need to use to get certain envelopes
+			EnvelopesApi envelopesApi = new EnvelopesApi();
 			
-			System.out.println(retort);
+			//set the options up for filtering out envelopes we do not want
+			EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
+			options.setFromDate(MrSingletonState.getDate());
+			options.setFromToStatus("Completed");
+			
+			EnvelopesInformation eInfo = envelopesApi.listStatusChanges(defaultAccount.getAccountId(), options);
+			//System.out.println(eInfo);
+			for(Envelope e : eInfo.getEnvelopes()) {
+				Envelope e2 = envelopesApi.getEnvelope(defaultAccount.getAccountId(), e.getEnvelopeId());
+				Recipients recipients = e2.getRecipients();//Why is this always null?
+
+				System.out.println(e);
+				System.out.println(e2);
+				System.out.println("NEXT!\n\n");
+				
+				if (recipients == null)
+					System.out.println(CallUriPersonally("redirect:" + BaseUrl + e.getRecipientsUri(), code));
+				//Redirecting to the recipients uri gives me nothing, oddly enough.
+				//It very well may actually be empty for some odd reason
+				 
+			}
 			
 			
 			
-			
-			
-			
-			return ResponseEntity.ok(code.toString());
+			return code.toString();
 
 		} catch (ApiException e) {
 			e.printStackTrace();
@@ -190,9 +237,37 @@ public class DocuSignOauthController {
 		return null;
 	}
 	
+	private String CallUriPersonally(String uri, String code) {
+		Client client = Client.create();
+		WebResource webResource =client.resource(uri);
+
+		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+		//queryParams.add("json", js); //set parametes for request
+		
+		Map<String, Authentication> auths = Configuration.getDefaultApiClient().getAuthentications();
+		OAuth oAuth = (OAuth) auths.get("docusignAccessCode");
+		String appKey = oAuth.getAccessToken();
+		
+		System.out.println("I got the Oauth code and here it is! It's right here! " + appKey);
+		System.out.println(code.equals(appKey));
+
+		appKey = "Bearer " + appKey; // appKey is unique number
+		//TODO: Figure out why making a rest call here is breaking things because it looks like it should be working
+
+		//Get response from RESTful Server get(ClientResponse.class);
+		ClientResponse response = null;
+		response = webResource.queryParams(queryParams)
+		                        .header("Content-Type", "application/json;charset=UTF-8")
+		    .header("Authorization", appKey)
+		    .get(ClientResponse.class);
+
+		String jsonStr = response.getEntity(String.class);
+		return jsonStr;
+	}
+
 	@GetMapping("updateStart")
 	public String updateDocusignTry3PartUno(@ApiParam("code") String code) {
-		return "redirect:/update-docusign-records-request.html";
+		return "forward:/update-docusign-records-request.html";
 	}
 
 }

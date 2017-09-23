@@ -3,6 +3,8 @@ slack:
     clientId: "237895291120.241002501221"
     clientSecret: 79c83d653ca6fb2dcd6b74d79bfa6cfc
     accessTokenUri: https://slack.com/api/oauth.access
+    pre-established-redirect-uri: http://localhost:8085/#/login
+    use-current-uri: false
     userAuthorizationUri: https://slack.com/oauth/authorize
     tokenName: token
     authenticationScheme: query

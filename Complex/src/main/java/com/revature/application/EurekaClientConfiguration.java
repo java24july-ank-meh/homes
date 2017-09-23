@@ -21,12 +21,15 @@ public class EurekaClientConfiguration {
        
         String isWithinContainer = env.getProperty("WITHIN_CONTAINER");
                
-        eurekaBean.setPreferIpAddress(true);
         if (isWithinContainer != null && isWithinContainer.equals("true")) {
             RestTemplate restTemplate = new RestTemplate();
             try {
                 String hostIpAddress = restTemplate.getForObject("http://169.254.169.254/latest/meta-data/public-ipv4", String.class);
+                
+                eurekaBean.setPreferIpAddress(true);
                 eurekaBean.setIpAddress(hostIpAddress);
+                
+                eurekaBean.setSecurePortEnabled(true);
                 eurekaBean.setSecurePort(Integer.parseInt(env.getProperty("SERVICE_PORT")));
             } catch (Exception e) {
                 // Connection probably timed out

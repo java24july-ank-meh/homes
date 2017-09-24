@@ -42,7 +42,7 @@ public class RequestCompositeController {
 	}
 	
 	@GetMapping("supplies")
-	public ResponseEntity<Object> getAllSupplyRequests(@PathVariable("id") int id) {
+	public ResponseEntity<Object> getAllSupplyRequests() {
 		return ResponseEntity.ok(requestService.getAllSupplyRequests());
 	}
 }

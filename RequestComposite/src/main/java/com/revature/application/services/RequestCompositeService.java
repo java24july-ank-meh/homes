@@ -18,10 +18,12 @@ import com.revature.application.models.Unit;
 
 @Service
 public class RequestCompositeService {
-
+	String baseurl = "http://192.168.0.43:8085/api/";
+	
 	public void sendMessage(int associateId, String message) {
-		/*Associate associate = restTemplate.getForObject("http://localhost:8090/associates/" + associateId,Associate.class);*/		
-		Associate associate = (Associate) getObject("associates", ""+associateId, Associate.class);
+		RestTemplate restTemplate = new RestTemplate();
+		Associate associate = restTemplate .getForObject(baseurl + "associates/associates/"+ associateId,Associate.class);		
+		//Associate associate = (Associate) getObject("associates", ""+associateId, Associate.class);
 		
 		// associate.getSlackId();
 		message = "Your supplies have arrived!";
@@ -34,12 +36,13 @@ public class RequestCompositeService {
 		Gson gson = new Gson();
 		//TODO also account for supply
 		
-		/*Maintenance request = restTemplate.getForObject("http://localhost:8097/maintenance/" + id, Maintenance.class);
-		Unit unit = restTemplate.getForObject("http://localhost:8093/unit/" + request.getUnitId(), Unit.class);
-		Associate associate = restTemplate.getForObject("http://localhost:8090/associates/"+request.getSubmittedBy(), Associate.class);*/
-		Maintenance request = (Maintenance) getObject("maintenance", ""+id, Maintenance.class);
+		RestTemplate restTemplate = new RestTemplate();
+		Maintenance request = restTemplate .getForObject(baseurl + "request/maintenance/"+ id, Maintenance.class);
+		Unit unit = restTemplate.getForObject(baseurl + "complex/unit/"+ request.getUnitId(), Unit.class);
+		Associate associate = restTemplate.getForObject(baseurl + "associates/assocaites/"+request.getSubmittedBy(), Associate.class);
+		/*Maintenance request = (Maintenance) getObject("maintenance", ""+id, Maintenance.class);
 		Unit unit = (Unit) getObject("unit", ""+request.getUnitId(), Unit.class);
-		Associate associate = (Associate) getObject("associates", ""+request.getSubmittedBy(), Associate.class);		
+		Associate associate = (Associate) getObject("associates", ""+request.getSubmittedBy(), Associate.class);	*/	
 
 		JsonObject compositeObj = jsonParser.parse(gson.toJson(request)).getAsJsonObject();
 		compositeObj.add("unit", jsonParser.parse(gson.toJson(unit)));
@@ -56,12 +59,13 @@ public class RequestCompositeService {
 		Gson gson = new Gson();
 		//TODO also account for supply
 
-		/*Supply request = restTemplate.getForObject("http://localhost:8097/supply/" + id, Supply.class);
-		Unit unit = restTemplate.getForObject("http://localhost:8093/unit/" + request.getUnitId(), Unit.class);
-		Associate associate = restTemplate.getForObject("http://localhost:8090/associates/"+request.getSubmittedBy(), Associate.class);*/
-		Supply request = (Supply) getObject("supply", ""+id, Supply.class);
+		RestTemplate restTemplate = new RestTemplate();
+		Supply request = restTemplate .getForObject(baseurl + "request/maintenance/"+ id, Supply.class);
+		Unit unit = restTemplate.getForObject(baseurl + "complex/unit" + request.getUnitId(), Unit.class);
+		Associate associate = restTemplate.getForObject(baseurl + "associates/associates"+request.getSubmittedBy(), Associate.class);
+		/*Supply request = (Supply) getObject("supply", ""+id, Supply.class);
 		Unit unit = (Unit) getObject("unit", ""+request.getUnitId(), Unit.class);
-		Associate associate = (Associate) getObject("associates", ""+request.getSubmittedBy(), Associate.class);		
+		Associate associate = (Associate) getObject("associates", ""+request.getSubmittedBy(), Associate.class);		*/
 
 		JsonObject compositeObj = jsonParser.parse(gson.toJson(request)).getAsJsonObject();
 		compositeObj.add("unit", jsonParser.parse(gson.toJson(unit)));
@@ -78,12 +82,13 @@ public class RequestCompositeService {
 		JsonParser jsonParser = new JsonParser();
 		Gson gson = new Gson();
 
-		/*Maintenance[] requests = restTemplate.getForEntity("http://localhost:8097/maintenance", Maintenance[].class).getBody();
-		Unit[] units = restTemplate.getForEntity("http://localhost:8093/unit", Unit[].class).getBody();
-		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();*/
-		Maintenance[] requests = (Maintenance[]) getObject("maintenance", "", Maintenance[].class);
+		RestTemplate restTemplate = new RestTemplate();
+		Maintenance[] requests = restTemplate .getForEntity(baseurl + "request/maintenance", Maintenance[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
+		/*Maintenance[] requests = (Maintenance[]) getObject("maintenance", "", Maintenance[].class);
 		Unit[] units = (Unit[]) getObject("unit", "", Unit[].class);
-		Associate[] associates = (Associate[]) getObject("associates", "", Associate[].class);
+		Associate[] associates = (Associate[]) getObject("associates", "", Associate[].class);*/
 
 		JsonObject compositeObj = new JsonObject();
 		compositeObj.add("requests", jsonParser.parse(gson.toJson(requests)));
@@ -115,12 +120,13 @@ public class RequestCompositeService {
 		JsonParser jsonParser = new JsonParser();
 		Gson gson = new Gson();
 
-		/*Supply[] requests = restTemplate.getForEntity("http://localhost:8097/supply", Supply[].class).getBody();
-		Unit[] units = restTemplate.getForEntity("http://localhost:8093/unit", Unit[].class).getBody();
-		Associate[] associates = restTemplate.getForEntity("http://localhost:8090/associates", Associate[].class).getBody();*/
-		Supply[] requests = (Supply[]) getObject("supply", "", Supply[].class);
+		RestTemplate restTemplate = new RestTemplate();
+		Supply[] requests = restTemplate.getForEntity(baseurl + "supply", Supply[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "unit", Unit[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates", Associate[].class).getBody();
+		/*Supply[] requests = (Supply[]) getObject("supply", "", Supply[].class);
 		Unit[] units = (Unit[]) getObject("unit", "", Unit[].class);
-		Associate[] associates = (Associate[]) getObject("associates", "", Associate[].class);
+		Associate[] associates = (Associate[]) getObject("associates", "", Associate[].class);*/
 
 		JsonObject compositeObj = new JsonObject();
 		compositeObj.add("requests", jsonParser.parse(gson.toJson(requests)));

@@ -31,7 +31,7 @@ import com.revature.application.model.Unit;
 @RequestMapping("residentcomposite")
 public class ResidentCompositeController {
 	
-	private String baseurl = "http://192.168.61.123:8085/api/";
+	private String baseurl = "http://192.168.0.43:8085/api/";
 
 	@GetMapping(value = "residentinfo")
 	public ResponseEntity<Object> getResidentInfo() {
@@ -56,7 +56,7 @@ public class ResidentCompositeController {
 		List<ResidentUnitComplexOffice> residentInfoList = new ArrayList<>();
 
 		for(Associate associate : associates) {
-			Unit unit = restTemplate.getForObject(baseurl + "complex/unit"+associate.getUnitId().toString(), Unit.class);
+			Unit unit = restTemplate.getForObject(baseurl + "complex/unit/"+associate.getUnitId().toString(), Unit.class);
 			ResidentUnitComplexOffice residentInfo = new ResidentUnitComplexOffice();
 			residentInfo.setAssociate(associate);
 			residentInfo.setUnit(

@@ -50,8 +50,7 @@
             </div>
             
             
-            <md-card ng-if="unit.complex">
-            
+            <md-card ng-if="!error">
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text ui-sref="home.editComplex({complexId: unit.complex.complexId})" >
@@ -69,7 +68,7 @@
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
-				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" >
+				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" style=" min-height:400px; background: #eee;"" >
                 <md-card-content layout-gt-md="row" layout="column" >
                     <md-list class="md-dense" flex="50">
                         <md-list-item class="md-2-line" >

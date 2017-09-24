@@ -17,8 +17,12 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
          }
          else
         	 {
-        	 $http.get("/api/request/maintenance/unit/"+$scope.unit.unitId +'/maintenance').then(function(response) {
+        	 $http.get("/api/request/units/"+$scope.unit.unitId +'/maintenance').then(function(response) {
             	 $scope.maintenanceRequests = response.data;
+        	 });
+        	 
+        	 $http.get("/api/request/units/"+$scope.unit.unitId +'/supply').then(function(response) {
+            	 $scope.supplyRequests = response.data;
         	 });
         	 
         	 
@@ -89,7 +93,6 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
 	    });
 	  };
   
-  
 	 $scope.removeResident = function (associateId) {
 
 	      var onSuccess = function (data, status, headers, config) {
@@ -137,9 +140,6 @@ $scope.sendAnnouncementFormSubmit = function(event){
          .success(onSuccess)
          .error(onError);
 
-		  
 	  };
 	  
-  
-
 }]);

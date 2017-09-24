@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class EurekaClientConfiguration {
-	
+    
     // Get the property variable service.ip.address, otherwise localhost
     @Value("${service.ip.address:localhost}")
     private String serviceIpAddress;
@@ -52,4 +52,3 @@ public class EurekaClientConfiguration {
     
 
 }
-

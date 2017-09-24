@@ -121,9 +121,9 @@ public class RequestCompositeService {
 		Gson gson = new Gson();
 
 		RestTemplate restTemplate = new RestTemplate();
-		Supply[] requests = restTemplate.getForEntity(baseurl + "supply", Supply[].class).getBody();
-		Unit[] units = restTemplate.getForEntity(baseurl + "unit", Unit[].class).getBody();
-		Associate[] associates = restTemplate.getForEntity(baseurl + "associates", Associate[].class).getBody();
+		Supply[] requests = restTemplate.getForEntity(baseurl + "request/supply", Supply[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
+		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
 		/*Supply[] requests = (Supply[]) getObject("supply", "", Supply[].class);
 		Unit[] units = (Unit[]) getObject("unit", "", Unit[].class);
 		Associate[] associates = (Associate[]) getObject("associates", "", Associate[].class);*/

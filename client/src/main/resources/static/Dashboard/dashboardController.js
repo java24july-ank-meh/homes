@@ -1,6 +1,8 @@
 angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$rootScope','$q', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $rootScope, $q) {
 	
 	$scope.error = false;
+	
+	
 	///api/complex/unit  <--- units without residents
 	///api/complex-composite/complexcomposite/units  <--- units with residents
 	

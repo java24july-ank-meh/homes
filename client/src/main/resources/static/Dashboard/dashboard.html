@@ -42,7 +42,7 @@
              <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!units && !error">
                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
-             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
+             <div layout="row" layout-sm="column" ng-if="error" layout="center center">
                <h2>Error. Try again later</h2>
             </div>
               <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
@@ -76,19 +76,18 @@
             <md-card layout="column" >
                 <md-card-title>
                     <md-card-title-text >
-                        <span class="md-headline">Residents </span>
-                        <span class="small">Pending Residents</span>
+                        <span class="md-headline">Associates </span>
+                        <span class="small">Pending Associates</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
-                <md-list flex >
-                	<span  ng-repeat="resident in residents">
-                    <md-list-item class="md-3-line noright" ng-if="!resident.apartment" ui-sref="home.showResident({residentId: resident.residentId})">
+                	<span  ng-repeat="associate in associates">
+                    <md-list-item class="md-3-line noright" ng-if="!associate.unitId" ui-sref="home.showAssociate({associateId: associate.associateId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="person" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> {{resident.firstName}} {{resident.lastName}}</h3>
-                            <p> {{resident.phone}}</p>
-                            <p> {{resident.email}}</p>
+                            <h3> {{associate.firstName}} {{associate.lastName}}</h3>
+                            <p> {{associate.phone}}</p>
+                            <p> {{associate.email}}</p>
                         </div>
                         
                     </md-list-item>
@@ -103,7 +102,7 @@
 </md-content>
 
 <md-content ng-if="!rootUser.isManager" class="md-padding" style="text-align: center;"  >
-    <div layout="column"><img src="imgs/rhms.png" style="max-width: 120px; margin: 0 auto; "></div>
+    <div layout="column"><img src="imgs/reverserhms.png" style="max-width: 120px; margin: 0 auto; "></div>
 	<h3 class="md-display-1"><span style="color: #FF5722;">REVATURE</span><br> Housing Management System</h3>
 	<br>
 	<div layout layout-wrap layout-gt-sm="row" layout="column">

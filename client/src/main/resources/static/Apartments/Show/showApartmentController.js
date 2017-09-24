@@ -6,6 +6,10 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
      $http.get("/api/complex/unit/"+$stateParams.apartmentId).then(function(response) {
          $scope.unit = response.data;
          
+         $http.get("/api/associates/associates/"+$stateParams.apartmentId+"/unit").then(function(response){
+        	 $scope.associates = response.data;
+         });
+         
          if($scope.unit === ''){
 
         	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
@@ -75,7 +79,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
   $scope.showRemoveResidentConfirm = function(residentId, removeResident) {
 
 	    var confirm = $mdDialog.confirm()
-	          .title('Do you really want to remove the Resident?')
+	          .title('Do you really want to remove the Associate?')
 	          .targetEvent(event)
 	          .ok('Remove')
 	          .cancel('Cancel');
@@ -86,11 +90,11 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
 	  };
   
   
-	 $scope.removeResident = function (residentId) {
+	 $scope.removeResident = function (associateId) {
 
 	      var onSuccess = function (data, status, headers, config) {
 	    	  $mdToast.show($mdToast.simple().textContent("Resident Removed").position('top right'));
-	          $state.go('home.showApartment', { apartmentId: $scope.apartment.apartmentId});
+	          $state.go('home.showApartment', { apartmentId: $scope.unit.unitId});
 	          $state.reload();
 	      };
 
@@ -98,7 +102,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
 	    	  $mdToast.show($mdToast.simple().textContent(data));
 	      };
 
-	      $http.delete('/api/Residents/'+residentId+'/Apartment')
+	      $http.delete('api/associates/associates/'+associateId+'/unit')
 	      	.success(onSuccess)
 	      	.error(onSuccess);
 

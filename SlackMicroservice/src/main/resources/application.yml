@@ -16,15 +16,6 @@ slack:
     tokenType: Bearer
     preferTokenInfo: false
 
-spring:
-  application:
-    name: SLACK-SERVICE
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8086/eureka
-
 slackChannel:
   client:
     clientId: "237895291120.241002501221"
@@ -55,6 +46,15 @@ slackClient:
     tokenType: Bearer
     preferTokenInfo: false
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
+      
+spring:
+  application:
+    name: SLACK-SERVICE
+    
 server:
   port: 8088
   

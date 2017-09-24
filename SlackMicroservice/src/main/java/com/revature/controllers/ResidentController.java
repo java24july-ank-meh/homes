@@ -148,11 +148,12 @@ public class ResidentController {
 			e.printStackTrace();
 		}
 		
+		
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
+		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
 		
@@ -180,7 +181,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			group = json.getString("group");
-			ids = json.getString("ids");
+			ids = json.getString("ids"); 
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -189,7 +190,7 @@ public class ResidentController {
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
 		
-		List<String>userIds = new ArrayList<String>(Arrays.asList(ids.split(",")));
+		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		System.out.println(userIds);
 		
 		String channelName = complex + unit;
@@ -390,7 +391,7 @@ public class ResidentController {
 		String token =  details.getTokenValue();
 		
 		id = helper.getSlackId(token, email);
-		
+		System.out.println("id :"+id);
 		String requestUrl = "https://slack.com/api/users.info";
 		
 		MultiValueMap<String, String> params = 

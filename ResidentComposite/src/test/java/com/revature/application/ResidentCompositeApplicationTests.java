@@ -1,4 +1,4 @@
-package com.revature.dockerdemo;
+package com.revature.application;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ResidentViewApplicationTests {
+public class ResidentCompositeApplicationTests {
 
 	@Test
 	public void contextLoads() {

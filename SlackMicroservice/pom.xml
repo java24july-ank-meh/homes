@@ -127,6 +127,14 @@
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/net.minidev/json-smart -->
+		<dependency>
+    		<groupId>net.minidev</groupId>
+    		<artifactId>json-smart</artifactId>
+    		<version>1.0.9</version>
+		</dependency>
+		
+		
 	</dependencies>
 	
 	<dependencyManagement>

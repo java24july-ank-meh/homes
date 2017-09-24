@@ -63,3 +63,7 @@ md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-ico
 	background: #FF5722;
 }
 
+mdt-table ._md{
+	background: #fff !important;
+}
+

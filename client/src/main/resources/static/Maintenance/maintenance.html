@@ -56,7 +56,8 @@
          </div>
       </md-card>
       <md-card flex="100" ng-if="showTable" >
-         <mdt-table table-card="{visible: true, title: 'Maintenance Requests'}"
+         <mdt-table paginated-rows="{isEnabled: true, rowsPerPageValues: [10,20,100]}"
+         	table-card="{visible: true, title: 'Maintenance Requests'}"
             selectable-rows="false"
             sortable-columns="true"
             alternate-headers="'contextual'"

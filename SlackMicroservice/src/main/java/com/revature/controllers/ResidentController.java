@@ -264,11 +264,15 @@ public class ResidentController {
 	
 	/*send list of channels to front end*/
 	@RequestMapping(value="message/listchannels", method=RequestMethod.POST)
-	public ResponseEntity<Object> listChannels( HttpSession http){
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
+	public ResponseEntity<Object> listChannels( @RequestBody String body){
+		JSONObject json = null;
+		String token = null;
+		try {
+			json = new JSONObject(body);
+			json.getString("token");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
 		
 		List<String> channelList = helper.getAllChannels(token);
 		

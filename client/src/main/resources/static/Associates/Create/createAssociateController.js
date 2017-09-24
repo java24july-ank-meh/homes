@@ -1,17 +1,22 @@
 angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
 
-
+	$scope.selected = {};
     $http.get("/api/associates/associates/")
     .then(function(response) {
         $scope.associates = response.data;
     });
-    /*$http.get("/api/Apartments/1").then(function(response) {
-    	$scope.unnassignedApartment = response.data; //assign to the unnassigned complex
-    	console.log($scope.unnassignedApartment)
-    });*/
-	
+   
+	$http.get('/api/complex/office')
+	.then(function(response){
+		$scope.offices = response.data;
+	}, function(response){
+		$mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
+	});
 	
     $scope.createResidentFormSubmit = function () {
+    	
+
+    	$scope.associate.officeId = JSON.parse($scope.selected).officeId;
 
         var onSuccess = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("Associate Created").position('top right'));
@@ -23,10 +28,8 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
         var onError = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
-        
-        //$scope.resident.apartment = $scope.unnassignedApartment;
-        //console.log($scope.resident);
-        $http.post('/api/associates/associates/', $scope.associate)
+
+        $http.post('/api/associates/associates/createOrUpdate/', $scope.associate)
             .success(onSuccess)
             .error(onError);
 

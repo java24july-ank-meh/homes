@@ -152,7 +152,6 @@ public class ResidentController {
 		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
 		String token =  details.getTokenValue();
-		
 		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
@@ -162,6 +161,7 @@ public class ResidentController {
 		for(int i = 0; i<userIds.size(); i++) {
 			requestUrl += " <@" + userIds.get(i) + ">";
 		}
+		
 		
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
 		return ResponseEntity.ok(responseString);
@@ -272,10 +272,22 @@ public class ResidentController {
 		String token =  details.getTokenValue();
 		String channelName = complex + unit;
 		List<String> userList = helper.getAllUsersInChannel(channelName, token);
-		//System.out.println(userList);
-		
 		
 		return ResponseEntity.ok(userList.toString());
+		
+	}
+	
+	/*send list of channels to front end*/
+	@RequestMapping(value="message/listchannels", method=RequestMethod.POST)
+	public ResponseEntity<Object> listChannels( HttpSession http){
+		
+		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
+		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
+		String token =  details.getTokenValue();
+		
+		List<String> channelList = helper.getAllChannels(token);
+		
+		return ResponseEntity.ok(channelList.toString());
 		
 	}
 	

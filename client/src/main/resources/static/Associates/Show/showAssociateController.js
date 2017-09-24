@@ -33,7 +33,8 @@ angular.module('rhmsApp').controller('showAssociateController', ['$scope', '$mdB
      $http.get("/api/associates/associates/"+$stateParams.associateId).then(function(response) {
 
          $scope.associate = response.data;
-         console.log(response.data);
+         $scope.associate.moveInString = $scope.associate.moveInDate.month+" "+$scope.associate.moveInDate.dayOfMonth+", "+$scope.associate.moveInDate.year+" "+$scope.associate.moveInDate.hour+":"+$scope.associate.moveInDate.minute;
+         $scope.associate.housingAgreedString = $scope.associate.housingAgreed != null ? "Signed on " + $scope.associate.housingAgreed.month+" "+$scope.associate.housingAgreed.dayOfMonth+", "+$scope.associate.housingAgreed.year : "Not Signed";
      });
      
      $scope.showEditResidentForm = function(ev){

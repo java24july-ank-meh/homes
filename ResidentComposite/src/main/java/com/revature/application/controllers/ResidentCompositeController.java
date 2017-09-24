@@ -60,11 +60,9 @@ public class ResidentCompositeController {
 			ResidentUnitComplexOffice residentInfo = new ResidentUnitComplexOffice();
 			residentInfo.setAssociate(associate);
 			for (Unit unit : units) {			
-				if (associate.getUnitId() == unit.getUnitId()) {
+				if (associate.getUnitId() != null && associate.getUnitId() == unit.getUnitId()) {
 					residentInfo.setUnit(unit);
-					residentInfo.setComplex(residentInfo.getUnit().getComplex());
-					if (residentInfo.getComplex() != null)
-						residentInfo.setOffice(residentInfo.getUnit().getComplex().getOffice());
+					break;
 				}
 			}
 			residentInfoList.add(residentInfo);

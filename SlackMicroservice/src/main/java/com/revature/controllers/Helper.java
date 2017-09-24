@@ -137,6 +137,22 @@ public class Helper {
 	    return scopes.toString();
 	}
 	
+	public List<String> getAllChannels(String token){
+		List<String>chanList = new ArrayList<String>();
+		
+		JsonNode channelList = getChannelList(token);
+		Iterator<JsonNode> channels = channelList.elements();
+		
+		while(channels.hasNext()) {
+			String name = channels.next().path("name").asText();
+			String id = channels.next().path("id").asText();
+			
+			chanList.add("{ \"name\":  \"" + name + "\" , \"id\": \""+ id + "\" }" );
+		}
+		
+		return chanList;
+	}
+	
 	public boolean channelNameIsUnique(String name, String userToken) {
 		JsonNode channelList = getChannelList(userToken);
 		Iterator<JsonNode> channels = channelList.elements();
@@ -343,7 +359,7 @@ public class Helper {
     //Extracts user ids from json
     public List<String> getIdList(String ids){
         
-        JsonNode rootNode= null;
+        JsonNode rootNode = null;
         List<String> users = new ArrayList<String>();
         
         try {
@@ -352,10 +368,10 @@ public class Helper {
             Iterator<JsonNode> elements = rootNode.elements();
             while(elements.hasNext()){
                 JsonNode member = elements.next();
-                users.add(member.asText());
+                users.add(member.findValue("id").asText());
                 
             }
-            //System.out.println(users);
+           // System.out.println(users);
             return users;
         }catch(IOException e) {
             e.printStackTrace();

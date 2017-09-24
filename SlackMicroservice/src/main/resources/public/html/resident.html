@@ -13,40 +13,60 @@
 </head>
 <body ng-app="app" ng-controller="resident as resident">
 	
+	<div data-ng-init="resident.onload()"></div>
+	
 	<h1>Welcome <span ng-bind="resident.user"></span></h1>
 
-	<h2>Send Message</h2>
+	<h2>Send Message to channel</h2>
 	<input type="text" id="messageToSend" placeholder="message" ng-model="resident.messageToSend">
-	<input type="text" id="messageUnit" placeholder="unit" ng-model="resident.messageUnit">
 	<input type="text" id="messageComplex" placeholder="complex" ng-model="resident.messageComplex">
+	<input type="text" id="messageUnit" placeholder="unit" ng-model="resident.messageUnit">
 	<button class="btn btn-primary" ng-click="resident.sendMessage()">Send Message</button>
 	
-	<h2>Message Users</h2>
-	<input type="text" id="userMessageToSend" placeholder="message" ng-model="resident.userMessageToSend">
-	<input type="text" id="userMessageUnit" placeholder="unit" ng-model="resident.userMessageUnit">
-	<input type="text" id="userMessageComplex" placeholder="complex" ng-model="resident.userMessageComplex">
-	<input type="text" id="ids" placeholder="ids" ng-model="resident.ids">
+<h2>Message Users with @name notification</h2>
 	
-	<h2>List Users</h2>
+    <div ng-dropdown-multiselect="" options="data" selected-model="dataModel"           
+     checkboxes="true" extra-settings="dataSettings"></div> 
+    
+	<input type="text" id="userMessageToSend" placeholder="message" ng-model="resident.userMessageToSend">
+	<input type="text" id="userMessageComplex" placeholder="complex" ng-model="resident.userMessageComplex">
+	<input type="text" id="userMessageUnit" placeholder="unit" ng-model="resident.userMessageUnit">
+	<button class="btn btn-primary" ng-click="resident.messageUser()">Send Message</button>
+	
+<h2>Direct Message Users</h2>	 
+	 <div ng-dropdown-multiselect="" options="data2" selected-model="directModel"           
+     checkboxes="true" extra-settings="dataSettings"   ></div> 
+    
+     <input type="radio" name="dirRadio" data-ng-model="group" data-ng-value="1" />Group Message<br>
+     <input type="radio" name="dirRadio" data-ng-model="group" data-ng-value="0" />Individual Message/s<br>
+	<input type="text" id="DirectMessageToSend" placeholder="message" ng-model="resident.DirectMessageToSend">
+	<input type="text" id="DirectMessageComplex" placeholder="complex" ng-model="resident.DirectMessageComplex">
+	<input type="text" id="DirectMessageUnit" placeholder="unit" ng-model="resident.DirectMessageUnit">
+	<button class="btn btn-primary" ng-click="resident.DirectMessageUser()">Send Message</button>
+
+<h2>List Users (probably take this out)</h2>
 	<input type="text" id="unitForList" placeholder="unit" ng-model="resident.unitForList">
 	<input type="text" id="complexForList" placeholder="complex" ng-model="resident.complexForList">
 	<button class="btn btn-primary" ng-click="resident.listUsers()">List Users</button>
 	
-		<h2>Invite User To Channel</h2>
-		<input type="text" id="emailForInvite" placeholder="email" ng-model="resident.emailForInvite">
+<h2>Invite User To Channel</h2>
+	<input type="text" id="emailForInvite" placeholder="email" ng-model="resident.emailForInvite">
 	<input type="text" id="complexForInvite" placeholder="complex" ng-model="resident.complexForInvite">
 	<button class="btn btn-primary" ng-click="resident.inviteUser()">Invite User</button>
-			<h2>Invite User To Unit Channel</h2>
-		<input type="text" id="emailForInviteUnit" placeholder="email" ng-model="resident.emailForInviteUnit">
+	
+<h2>Invite User To Unit Channel</h2>
+	<input type="text" id="emailForInviteUnit" placeholder="email" ng-model="resident.emailForInviteUnit">
 	<input type="text" id="complexForInviteUnit" placeholder="complex" ng-model="resident.complexForInviteUnit">
 	<input type="text" id="unitForInvite" placeholder="unit" ng-model="resident.unitForInvite">
 	<button class="btn btn-primary" ng-click="resident.inviteUserUnit()">Invite User</button>	
 	
-    <div ng-dropdown-multiselect="" options="data" selected-model="dataModel"            checkboxes="true" extra-settings="dataSettings"></div> 
-        <pre>Selected Model: {{dataModel}} </pre>
+
         
 
 	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
 	<script type="text/javascript" src="../js/resident.js"></script>
+	<script type="text/javascript" src="../js/message.js"></script>
 </body>
 </html>

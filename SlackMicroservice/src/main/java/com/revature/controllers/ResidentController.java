@@ -17,9 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,18 +54,16 @@ public class ResidentController {
 		
 		JSONObject json = null;
 		String email = null; String firstName = null; String lastName = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
 			firstName = json.getString("fname");
 			lastName = json.getString("lname");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 	
 		String requestUrl = "https://slack.com/api/users.admin.invite";
 	
@@ -94,19 +89,16 @@ public class ResidentController {
 	public ResponseEntity<String> messageChannel(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null;
+		String complex = null; String unit = null; String message = null; String token = null;
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
@@ -136,10 +128,11 @@ public class ResidentController {
 	public ResponseEntity<Object> messageUser(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null; 
+		String complex = null; String unit = null; String message = null; String token = null;
 		String ids = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -147,11 +140,6 @@ public class ResidentController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		String channelName = complex + unit;
@@ -162,6 +150,7 @@ public class ResidentController {
 		for(int i = 0; i<userIds.size(); i++) {
 			requestUrl += " <@" + userIds.get(i) + ">";
 		}
+		
 		
 		String responseString = restTemplate.getForObject(requestUrl, String.class);
 		return ResponseEntity.ok(responseString);
@@ -175,8 +164,10 @@ public class ResidentController {
 		JSONObject json = null;
 		String complex = null; String unit = null; String message = null; 
 		String group = null; String ids = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -185,10 +176,6 @@ public class ResidentController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		List<String>userIds = new ArrayList<String>(helper.getIdList(ids));
 		System.out.println(userIds);
@@ -218,8 +205,10 @@ public class ResidentController {
 		JSONObject json = null;
 		String complex = null; String unit = null; String message = null; 
 		String userId = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -227,10 +216,6 @@ public class ResidentController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
@@ -260,22 +245,38 @@ public class ResidentController {
 		
 		JSONObject json = null;
 		String complex = null; String unit = "";
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
+
 		String channelName = complex + unit;
 		List<String> userList = helper.getAllUsersInChannel(channelName, token);
-		//System.out.println(userList);
-		
 		
 		return ResponseEntity.ok(userList.toString());
+		
+	}
+	
+	/*send list of channels to front end*/
+	@RequestMapping(value="message/listchannels", method=RequestMethod.POST)
+	public ResponseEntity<Object> listChannels( @RequestBody String body){
+		JSONObject json = null;
+		String token = null;
+		try {
+			json = new JSONObject(body);
+			json.getString("token");
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		List<String> channelList = helper.getAllChannels(token);
+		
+		return ResponseEntity.ok(channelList.toString());
 		
 	}
 	
@@ -288,17 +289,16 @@ public class ResidentController {
 		String complex = null;
 		String userId = null;
 		String email = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			email = json.getString("email");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		userId = helper.getSlackId(token, email);
 		System.out.println("userid = "+userId);
 		String requestUrl = "https://slack.com/api/channels.invite";
@@ -331,18 +331,16 @@ public class ResidentController {
 		String complex = null; String unit = null;
 		String userId = null;
 		String email = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		userId = helper.getSlackId(token, email);
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
@@ -374,21 +372,18 @@ public class ResidentController {
 		String email = null;
 		String id = null;
 		String is_admin = null;
+		String token = null;
 	
 	
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
+			token = json.getString("token");
 		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		id = helper.getSlackId(token, email);
 		System.out.println("id :"+id);

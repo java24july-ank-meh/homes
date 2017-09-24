@@ -20,9 +20,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -57,17 +54,15 @@ public class UnitController {
 		
 		JSONObject json = null;
 		String complex = null; String unit = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
@@ -112,8 +107,10 @@ public class UnitController {
 		JSONObject json = null;
 		String complex = null; String unit = null; 
 		String newComplex = null; String newUnit = null;
+		String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			newComplex = json.getString("newComplex");
@@ -121,10 +118,6 @@ public class UnitController {
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		String oldName = complex + unit;
 		String newName = newComplex + newUnit;
@@ -154,18 +147,15 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; 
+		String complex = null; String unit = null; String token = null;
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);

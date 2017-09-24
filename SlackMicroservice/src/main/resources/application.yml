@@ -56,5 +56,5 @@ spring:
     name: SLACK-SERVICE
     
 server:
-  port: 8088
+  port: ${service.port:9999}
   

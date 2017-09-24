@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: ${service.port:9999}
   
 eureka:
   client:

@@ -33,7 +33,11 @@ angular.module('rhmsApp').controller('showAssociateController', ['$scope', '$mdB
      $http.get("/api/associates/associates/"+$stateParams.associateId).then(function(response) {
 
          $scope.associate = response.data;
-         console.log(response.data);
+         
+         $http.get("/api/complex/unit/"+$scope.associate.unitId+"").then(function(response){
+        	 $scope.associate.unit = response.data;
+         });
+         
      });
      
      $scope.showEditResidentForm = function(ev){

@@ -54,5 +54,5 @@ spring:
     name: slack-microservice
     
 server:
-  port: 8088
+  port: ${service.port:9999}
   

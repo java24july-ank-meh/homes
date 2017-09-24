@@ -10,8 +10,8 @@ angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSh
 	
 	$scope.error = false;
 	
-     $http.get("/api/request/supply").then(function(response) {
-         $scope.supplyRequests = response.data;
+     $http.get("/api/request-composite/requestcomposite/supplies").then(function(response) {
+         $scope.supplyRequests = response.data.requests;
 
      }, function(response){
         $scope.error = true;

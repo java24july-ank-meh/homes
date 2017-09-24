@@ -52,25 +52,39 @@ public class ResidentCompositeController {
 //		Associate[] associates = gson.fromJson(getJsonFromService(ASSOCIATESERV+"associates"), Associate[].class);
 		//Associate[] associates = gson.fromJson(jsonReturned("associates", ""), Associate[].class);
 		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
+		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
 		
 		List<ResidentUnitComplexOffice> residentInfoList = new ArrayList<>();
 
 		for(Associate associate : associates) {
-			Unit unit = restTemplate.getForObject(baseurl + "complex/unit/"+associate.getUnitId().toString(), Unit.class);
 			ResidentUnitComplexOffice residentInfo = new ResidentUnitComplexOffice();
 			residentInfo.setAssociate(associate);
-			residentInfo.setUnit(
-					//gson.fromJson(getJsonFromService(COMPLEXSERV+"unit/"+associate.getUnitId().toString()), Unit.class)
-					//gson.fromJson(getJsonFromService(("unit/" + associate.getUnitId().toString()), ""), Unit.class)
-					unit
-					);
-			if (residentInfo.getUnit() != null) {
-				residentInfo.setComplex(residentInfo.getUnit().getComplex());
-				if (residentInfo.getComplex() != null)
-					residentInfo.setOffice(residentInfo.getUnit().getComplex().getOffice());
+			for (Unit unit : units) {			
+				if (associate.getUnitId() == unit.getUnitId()) {
+					residentInfo.setUnit(unit);
+					residentInfo.setComplex(residentInfo.getUnit().getComplex());
+					if (residentInfo.getComplex() != null)
+						residentInfo.setOffice(residentInfo.getUnit().getComplex().getOffice());
+				}
 			}
-
 			residentInfoList.add(residentInfo);
+			/*if (associate.getUnitId() != null) {
+				Unit unit = restTemplate.getForObject(baseurl + "complex/unit/"+associate.getUnitId(), Unit.class);
+				ResidentUnitComplexOffice residentInfo = new ResidentUnitComplexOffice();
+				residentInfo.setAssociate(associate);
+				residentInfo.setUnit(
+						//gson.fromJson(getJsonFromService(COMPLEXSERV+"unit/"+associate.getUnitId().toString()), Unit.class)
+						//gson.fromJson(getJsonFromService(("unit/" + associate.getUnitId().toString()), ""), Unit.class)
+						unit
+						);
+				if (residentInfo.getUnit() != null) {
+					residentInfo.setComplex(residentInfo.getUnit().getComplex());
+					if (residentInfo.getComplex() != null)
+						residentInfo.setOffice(residentInfo.getUnit().getComplex().getOffice());
+				}
+	
+				residentInfoList.add(residentInfo);
+			}*/
 		}
 
 		return ResponseEntity.ok(residentInfoList);

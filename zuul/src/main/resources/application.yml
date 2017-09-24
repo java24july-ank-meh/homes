@@ -6,10 +6,12 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URL}
       #defaultZone: http://127.0.0.1:8086/eureka  
-      
+
+
 zuul:
   host:
     socket-timeout-millis: 10000
+    connect-timeout-millis: 10000
   routes: 
     client:
       path: /**

@@ -34,7 +34,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @SpringBootApplication
 @RestController
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class SlackMicroserviceApplication{
 
 

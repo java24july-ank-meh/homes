@@ -2,6 +2,9 @@ package com.revature.application.service;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.ws.rs.core.MediaType;
+
 import java.util.List;
 
 import org.apache.http.client.methods.HttpPost;

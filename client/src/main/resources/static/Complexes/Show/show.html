@@ -138,7 +138,7 @@
                     <md-list-item class="md-2-line noright" ng-repeat="unit in complex.units" ui-sref="home.showApartment({apartmentId: unit.unitId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> {{unit.unitNumber}}</h3>
+                            <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
                             <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
                         </div>
                     </md-list-item>

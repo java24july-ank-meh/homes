@@ -12,6 +12,9 @@ public interface AssociateService {
 	
 	public List<Associate> findByUnitId(Long id); //because a unit can have more than one person in it
 	
+	public void assign(Long associateId, Long unitId);
+	public void unassign(Long associateId);
+	
 	public Associate findByEmail(String email);
 	
 	public void delete(Long id);

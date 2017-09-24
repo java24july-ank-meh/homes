@@ -25,7 +25,7 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	    	  $mdToast.show($mdToast.simple().textContent(data));
  	      };
 
- 	      $http.post('api/complex-composite/complexcomposite/'+$stateParams.apartmentId +'/assign/'+associateId)
+ 	      $http.post('api/associates/associates/'+associateId+'/assign/'+$stateParams.apartmentId)
  	      	.success(onSuccess)
  	      	.error(onSuccess);
  	  };

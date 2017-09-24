@@ -60,6 +60,18 @@ public class AssociateServiceImpl implements AssociateService {
 		 * That is what another service is for.*/
 		return associateRepository.findByUnitId(id);
 	}
+	
+	public void assign(Long associateId, Long unitId) {
+		Associate a = associateRepository.findByAssociateId(associateId);
+		a.setUnitId(unitId);
+		associateRepository.save(a);
+	}
+	
+	public void unassign(Long associateId) {
+		Associate a = associateRepository.findByAssociateId(associateId);
+		a.setUnitId(null);
+		associateRepository.save(a);
+	}
 
 	@Override
 	public Associate findByEmail(String email) {

@@ -16,10 +16,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -52,22 +48,20 @@ public class ComplexController {
 	
 	@HystrixCommand(fallbackMethod="createFallback")
 	@PostMapping("create")
-	public ResponseEntity<String> createComplex(@RequestBody String complex, HttpSession http) {
+	public ResponseEntity<String> createComplex(@RequestBody String complex) {
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
 		
 		JSONObject json = null;
 		String channelName = null;
+		String token = null;
 		try{
 			json = new JSONObject(complex);
-			channelName = json.getString("name"); System.out.println(channelName);
+			channelName = json.getString("name");
+			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
 		
 		String url = null;
 		String channelId = null;
@@ -106,17 +100,16 @@ public class ComplexController {
 	public ResponseEntity<String> updateComplex(@RequestBody String complex, 
 			HttpSession http) {
 		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
+		String token =  null;
 		
 		System.out.println(complex);
 		JSONObject json = null;
 		String oldName = null; String newName = null;
 		try{
 			json = new JSONObject(complex);
-			oldName = json.getString("oldName"); System.out.println(oldName);
-			newName = json.getString("newName"); System.out.println(newName);
+			token = json.getString("token");
+			oldName = json.getString("oldName");
+			newName = json.getString("newName");
 		}
 		catch(JSONException e) {e.printStackTrace();}
 		
@@ -146,16 +139,15 @@ public class ComplexController {
 		
 		JSONObject json = null;
 		String name = null;
+		String token = null;
 		try {
 			json = new JSONObject(complex);
+			token = json.getString("token");
 			name = json.getString("name");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SecurityContext sc = (SecurityContextImpl) http.getAttribute("SPRING_SECURITY_CONTEXT");
-		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) sc.getAuthentication().getDetails();
-		String token =  details.getTokenValue();
+
 		
 		String channelId = helper.getChannelId(name, token);
 		

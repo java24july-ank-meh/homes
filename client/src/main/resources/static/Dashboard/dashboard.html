@@ -63,7 +63,6 @@
                             <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
                             <p> {{unit.complex.name}} </p>
                             <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
-                           <!--  <p> {{resident.email}}</p> -->
                         </div>
                      </md-list-item>
           			</span>
@@ -105,7 +104,7 @@
     <div layout="column"><img src="imgs/reverserhms.png" style="max-width: 120px; margin: 0 auto; "></div>
 	<h3 class="md-display-1"><span style="color: #FF5722;">REVATURE</span><br> Housing Management System</h3>
 	<br>
-	<div layout layout-wrap layout-gt-sm="row" layout="column">
+	<div layout layout-wrap layout-gt-sm="row" layout="column" ng-if="rootAssociate.unitId">
 		<div flex-sm="100" flex-xs="100" class="container" flex="50">
 			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
 				<md-card layout="column"> <md-card-title ui-sref="home.showApartment({apartmentId: rootAssociate.unitId})">
@@ -143,6 +142,48 @@
 			</div>
 		</div>
 	</div>
+	<md-card flex-gt-md="60" ng-if="!associate.unitId && !associate.moveInDate" style="text-align: left; margin: 0 auto;">
+                <md-card-content layout-padding>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <md-title class="md-title">New Associate Registration</md-title>
+                            <md-subhead class="md-subhead">Must be submitted before Associate can be placed in Revature Housing.</md-subhead>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <form name="newAssociateForm" ng-submit="newAssociateFormSubmit(moveInDate)">
+                    
+                        <div layout-gt-sm="row" style="margin-left: 16px;">
+                            <md-input-container class="md-block" flex-gt-sm>
+	                            <md-checkbox name="hasCar" ng-model="associate.hasCar" >
+						          I will have a car with me during training period.
+						        </md-checkbox>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Move in Date</label>
+                                <md-datepicker ng-model="moveInDate" md-placeholder="Enter date" required></md-datepicker>
+                            </md-input-container>
+                        </div>
+                       
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button type="submit" ng-disabled="!moveInDate" class="md-raised md-primary">SUBMIT</md-button>
+                        </md-card-actions>
+                    </form>
+             </md-card-content>
+        </md-card>
+        <md-card flex-gt-md="60" ng-if="!associate.unitId && associate.moveInDate" style="text-align: left; margin: 0 auto;">
+                <md-card-content layout-padding>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <md-title class="md-title">New Associate Status</md-title>
+                            <md-subhead class="md-subhead">Pending</md-subhead>
+                        </md-card-title-text>
+                    </md-card-title>
+                   
+             </md-card-content>
+        </md-card>
 	<br>
 	<br>
 	<div class="md-block md-paddding" >

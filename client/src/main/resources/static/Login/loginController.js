@@ -18,8 +18,7 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
 	    		
 	    	}else{
 	    		$rootScope.rootUser = response.data;
-	    		alert(response.data);
-	    		console.log(response.data);
+
 	    		$location.path("/home/dashboard");
 	    	}
 	    });

@@ -60,7 +60,7 @@ public class ResidentController {
 			email = json.getString("email");
 			firstName = json.getString("fname");
 			lastName = json.getString("lname");
-			token = json.getString("token");
+			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +95,7 @@ public class ResidentController {
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
-			token = json.getString("token");
+			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -132,7 +132,7 @@ public class ResidentController {
 		String ids = null;
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
+			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -167,7 +167,7 @@ public class ResidentController {
 		String token = null;
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
+			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -208,7 +208,7 @@ public class ResidentController {
 		String token = null;
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
+			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -294,7 +294,7 @@ public class ResidentController {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			email = json.getString("email");
-			token = json.getString("token");
+			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -334,7 +334,7 @@ public class ResidentController {
 		String token = null;
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
+			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");

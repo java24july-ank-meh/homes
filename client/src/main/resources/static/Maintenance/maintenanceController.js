@@ -28,7 +28,6 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
      
  	 $scope.resolveMaintenance = function (id) {
 
- 		 console.log("MAINTENANCE" + id);
 	      var onSuccess = function (data, status, headers, config) {
 	    	  $mdToast.show($mdToast.simple().textContent("Maintenance Resolved").position('top right'));
 	          $scope.hide();

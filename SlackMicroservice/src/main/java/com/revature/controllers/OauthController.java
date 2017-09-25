@@ -36,7 +36,7 @@ public class OauthController {
 	Helper helper;
 	
 	@PostMapping("scopes/basic")
-	public Object getBasicScopes(@RequestBody String body) throws IOException {
+	public Object getBasicScopes(@RequestBody String body, HttpSession session) throws IOException {
 		String code =  "";
 		JsonObject jobj = new JsonObject();
 		JSONObject json = null;
@@ -82,10 +82,10 @@ public class OauthController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		//check if user is admin
 		if(!helper.isAdmin(token, email)) {
 			jobj.addProperty("scope", "all");
+			session.setAttribute("token", token);
 			return ResponseEntity.ok(jobj.toString());
 		}
 		
@@ -102,6 +102,7 @@ public class OauthController {
 		}
 		//send manager to application
 		jobj.addProperty("scope", "all");
+		session.setAttribute("token", token);
 		return ResponseEntity.ok(jobj.toString());
 		
 	}

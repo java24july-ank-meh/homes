@@ -16,10 +16,10 @@ public class Associate {
 	private String gender;
 	private Long unitId;
 	private int hasCar = 0; // fake boolean
-	private LocalDateTime moveInDate;
-	private LocalDateTime moveOutDate;
-	private LocalDateTime housingAgreed;// if not null then its agreed
-	private LocalDateTime hasKeys; // if null currently does not have keys
+	//private LocalDateTime moveInDate;
+	//private LocalDateTime moveOutDate;
+	//private LocalDateTime housingAgreed;// if not null then its agreed
+	//private LocalDateTime hasKeys; // if null currently does not have keys
 
 	public Associate() {
 		super();
@@ -41,10 +41,10 @@ public class Associate {
 		this.gender = gender;
 		this.unitId = unitId;
 		this.hasCar = hasCar;
-		this.moveInDate = moveInDate;
+		/*this.moveInDate = moveInDate;
 		this.moveOutDate = moveOutDate;
 		this.housingAgreed = housingAgreed;
-		this.hasKeys = hasKeys;
+		this.hasKeys = hasKeys;*/
 	}
 
 	public Long getAssociateId() {
@@ -143,7 +143,7 @@ public class Associate {
 		this.hasCar = hasCar;
 	}
 
-	public LocalDateTime getMoveInDate() {
+	/*public LocalDateTime getMoveInDate() {
 		return moveInDate;
 	}
 
@@ -173,15 +173,15 @@ public class Associate {
 
 	public void setHasKeys(LocalDateTime hasKeys) {
 		this.hasKeys = hasKeys;
-	}
+	}*/
 
 	@Override
 	public String toString() {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
-				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", hasCar=" + hasCar
-				+ ", moveInDate=" + moveInDate + ", moveOutDate=" + moveOutDate + ", housingAgreed=" + housingAgreed
-				+ ", hasKeys=" + hasKeys + "]";
+				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", hasCar=" + hasCar;
+				/*+ ", moveInDate=" + moveInDate + ", moveOutDate=" + moveOutDate + ", housingAgreed=" + housingAgreed
+				+ ", hasKeys=" + hasKeys + "]";*/
 	}
 
 	

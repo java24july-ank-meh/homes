@@ -21,8 +21,8 @@ import com.revature.application.model.Unit;
 
 @Service
 public class ComplexCompositeService {
-	private String baseurl = "http://192.168.61.123:8085/api/";
-	//TODO current issue is that complexes get ALL units
+	private String baseurl = "http://192.168.0.43:8085/api/";
+	
 	public JsonObject getAllComplexes() {
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -47,9 +47,11 @@ public class ComplexCompositeService {
 		//then based on associates unit id add to the units to get occupancy	
 		//TODO: combine with bottom for loop so that residents can be added an arryay?
 		for (JsonElement associateEntry : associateJson) {
-			String associateUnitId = associateEntry.getAsJsonObject().get("unitId").getAsString();
-			if (unitMap.containsKey(associateUnitId))
-				unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
+			if (associateEntry.getAsJsonObject().get("unitId") != null) {
+				String associateUnitId = associateEntry.getAsJsonObject().get("unitId").getAsString();
+				if (unitMap.containsKey(associateUnitId))
+					unitMap.put(associateUnitId, unitMap.get(associateUnitId) +1);
+			}
 		}
 		//add an occupancy paramater for each unit
 		for (JsonElement unitEntry : unitJson) {

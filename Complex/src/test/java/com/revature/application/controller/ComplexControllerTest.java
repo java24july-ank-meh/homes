@@ -5,11 +5,15 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -158,53 +162,42 @@ public class ComplexControllerTest {
 
 	@Test
 	public void testCreateComplex() throws Exception {
-		Office o3 = new Office("address3", "skype only", "no website", "timezone3");
-		o3.setOfficeId(2);
-		offices.add(o3);
-		
-		Complex c3 = new Complex(o3.getWebsite(), "email2", o3.getPhone(), "name2", "abbr2", o3.getAddress(), "parking2", "photoUrl2", o3);
+				
+		Complex c3 = new Complex("websit", "email2", "phone", "name2", "abbr2", "address", "parking2", "photoUrl2", null);
 		c3.setComplexId(2);
-		complexes.add(c3);
-		
-		when(mockCS.save(complexes.get(2))).thenReturn(complexes.get(2).getComplexId());
-	
 		Gson gson = new Gson();
-		String json = gson.toJson(complexes.get(2));
+		String json = gson.toJson(c3);
 		
-		RequestBuilder rb = post("/complex")
-			.content(json)
-//			.param("abbreviation", "cua") 
-//			.param("complexId", "2") 
-//			.param("webiste", "string") 
-//			.param("email", "string") 
-//			.param("phone", "string") 
-//			.param("name", "string") 
-//			.param("address", "string") 
-//			.param("parking", "string")
-//			.param("photoUrl", "string")
-//			
-//			.param("office.officeId", "0")
-//			.param("office.address", "string") 
-//			.param("office.phone", "string") 
-//			.param("office.timezone", "string") 
-//			.param("office.website", "string") 
-			;
-		
-		mockMvc.perform(rb)
-//		.andExpect(status().is2xxSuccessful())
-//		.andExpect(status().isOk())
-//		.andExpect(jsonPath(""))
-//		.andExpect(jsonPath("$.complexId",Matchers.is(complexes.get(2).getComplexId())))
-//		.andExpect(jsonPath("$.name",Matchers.is(complexes.get(2).getName())))
-//		.andExpect(jsonPath("$.website",Matchers.is(complexes.get(2).getWebsite())))
-//		.andExpect(jsonPath("$.photoUrl",Matchers.is(complexes.get(2).getPhotoUrl())))
-//		.andExpect(jsonPath("$.office.officeId",Matchers.is(complexes.get(2).getOffice().getOfficeId())))
-		.andDo(print())
-		;
+		when(mockCS.save(c3)).thenReturn(c3.getComplexId());
+		 mockMvc.perform(
+		            post("/complex")
+		                    .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+		                    .content(json))
+		            .andExpect(status().isOk())
+//		            .andDo(print())
+		            .andReturn();
+		    verify(mockCS, times(1)).save(any(Complex.class));
+		    verifyNoMoreInteractions(mockCS);
 	}
 
 //	@Test
 	public void testUpdateComplex() throws Exception {
+		Complex c1 = new Complex("website1","email","phone","name","abbr","address","parking","photo",null);
+		c1.setComplexId(1);
+		Gson gson = new Gson();
+        String json = gson.toJson(c1);
+        
+        when(mockCS.findByComplexId(c1.getComplexId())).thenReturn(c1);
+		when(mockCS.save(c1)).thenReturn(c1.getComplexId());
+		mockMvc.perform(put("/unit/{id}", c1.getComplexId())
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+		        .content(json))
+				.andExpect(status().isOk())
+				.andDo(print())
+				.andReturn();
+		verify(mockCS, times(1)).findByComplexId(c1.getComplexId());
+	    verify(mockCS, times(1)).save(c1);
+	    verifyNoMoreInteractions(mockCS);
 		
 		
 		
@@ -214,11 +207,11 @@ public class ComplexControllerTest {
 	public void testDeleteComplex() throws Exception {
 		when(mockCS.delete(complexes.get(1).getComplexId())).thenReturn(true);
 		
-//		RequestBuilder rb = post("/complex").param(name, values) 
-		
 		mockMvc.perform(delete("/complex/1"))
-		.andExpect(jsonPath("$", Matchers.is(true)))
+		.andExpect(status().isOk());
 //		.andDo(print())
+		verify(mockCS, times(1)).delete(complexes.get(1).getComplexId());
+	    verifyNoMoreInteractions(mockCS);
 		;
 	}
 

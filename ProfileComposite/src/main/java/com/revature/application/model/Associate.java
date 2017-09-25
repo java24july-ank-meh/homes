@@ -1,12 +1,7 @@
 package com.revature.application.model;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Associate {
 	private Long associateId;
 	private String firstName;
@@ -19,9 +14,11 @@ public class Associate {
 	private String email;
 	private String gender;
 	private Long unitId;
-	private int hasCar = 0; //fake boolean
+	private int hasCar = 0; // fake boolean
 	private LocalDateTime moveInDate;
-	private int housingAgreed = 0; //fake boolean
+	private LocalDateTime moveOutDate;
+	private LocalDateTime housingAgreed;// if not null then its agreed
+	private LocalDateTime hasKeys; // if null currently does not have keys
 
 	public Associate() {
 		super();
@@ -29,7 +26,7 @@ public class Associate {
 
 	public Associate(Long associateId, String firstName, String lastName, String slackId, String role, Long officeId,
 			String phone, String about, String email, String gender, Long unitId, int hasCar, LocalDateTime moveInDate,
-			int housingAgreed) {
+			LocalDateTime moveOutDate, LocalDateTime housingAgreed, LocalDateTime hasKeys) {
 		super();
 		this.associateId = associateId;
 		this.firstName = firstName;
@@ -44,7 +41,9 @@ public class Associate {
 		this.unitId = unitId;
 		this.hasCar = hasCar;
 		this.moveInDate = moveInDate;
+		this.moveOutDate = moveOutDate;
 		this.housingAgreed = housingAgreed;
+		this.hasKeys = hasKeys;
 	}
 
 	public Long getAssociateId() {
@@ -151,12 +150,28 @@ public class Associate {
 		this.moveInDate = moveInDate;
 	}
 
-	public int getHousingAgreed() {
+	public LocalDateTime getMoveOutDate() {
+		return moveOutDate;
+	}
+
+	public void setMoveOutDate(LocalDateTime moveOutDate) {
+		this.moveOutDate = moveOutDate;
+	}
+
+	public LocalDateTime getHousingAgreed() {
 		return housingAgreed;
 	}
 
-	public void setHousingAgreed(int housingAgreed) {
+	public void setHousingAgreed(LocalDateTime housingAgreed) {
 		this.housingAgreed = housingAgreed;
+	}
+
+	public LocalDateTime getHasKeys() {
+		return hasKeys;
+	}
+
+	public void setHasKeys(LocalDateTime hasKeys) {
+		this.hasKeys = hasKeys;
 	}
 
 	@Override
@@ -164,10 +179,10 @@ public class Associate {
 		return "Associate [associateId=" + associateId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", slackId=" + slackId + ", role=" + role + ", officeId=" + officeId + ", phone=" + phone + ", about="
 				+ about + ", email=" + email + ", gender=" + gender + ", unitId=" + unitId + ", hasCar=" + hasCar
-				+ ", moveInDate=" + moveInDate + ", housingAgreed=" + housingAgreed + "]";
+				+ ", moveInDate=" + moveInDate + ", moveOutDate=" + moveOutDate + ", housingAgreed=" + housingAgreed
+				+ ", hasKeys=" + hasKeys + "]";
 	}
 
 	
-	
-	
+
 }

@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -93,6 +94,20 @@ public class Helper {
 				e.printStackTrace();
 			}
 		return false;
+	}
+	
+	public String getToken() {
+		Properties prop = new Properties();
+		InputStream in;
+		try {
+			in = new FileInputStream("slack.properties");
+
+			prop.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return prop.getProperty("client_token");
 	}
 	
 	//get a user's slack id from their email

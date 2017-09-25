@@ -369,22 +369,21 @@ public class ResidentController {
 	public ResponseEntity<String> isAdmin(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String email = null;
+		String email = "";
 		String id = null;
 		String is_admin = null;
 		String token = null;
-	
+		
 	
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
-			token = json.getString("token");
 		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
-		
-		
+		token = helper.getToken();
+
 		id = helper.getSlackId(token, email);
 		System.out.println("id :"+id);
 		String requestUrl = "https://slack.com/api/users.info";

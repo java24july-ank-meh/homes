@@ -1,10 +1,7 @@
 package com.revature.application.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,12 +9,15 @@ import java.util.Set;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.docusign.esign.api.AuthenticationApi;
@@ -26,19 +26,16 @@ import com.docusign.esign.api.AuthenticationApi.LoginOptions;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.Configuration;
-import com.docusign.esign.client.Pair;
 import com.docusign.esign.client.auth.Authentication;
 import com.docusign.esign.client.auth.OAuth;
-import com.docusign.esign.model.BccEmailAddress;
-import com.docusign.esign.model.EmailSettings;
 import com.docusign.esign.model.Envelope;
 import com.docusign.esign.model.EnvelopesInformation;
 import com.docusign.esign.model.LoginAccount;
 import com.docusign.esign.model.LoginInformation;
 import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Signer;
+import com.google.gson.Gson;
+import com.revature.application.model.Associate;
 import com.revature.application.model.MrSingletonState;
-import com.revature.application.util.RandomString;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -169,6 +166,7 @@ public class DocuSignOauthController {
 			// parse first account's baseUrl
 			LoginAccount defaultAccount = loginInfo.getLoginAccounts().get(0);
 			String[] accountDomain = defaultAccount.getBaseUrl().split("/v2");
+			BaseUrl = defaultAccount.getBaseUrl();
 
 			// below code required for production, no effect in demo (same domain)
 			apiClient.setBasePath(accountDomain[0]);
@@ -210,17 +208,25 @@ public class DocuSignOauthController {
 			options.setFromToStatus("Completed");
 			
 			EnvelopesInformation eInfo = envelopesApi.listStatusChanges(defaultAccount.getAccountId(), options);
-			//System.out.println(eInfo);
+			System.out.println(eInfo);
 			for(Envelope e : eInfo.getEnvelopes()) {
 				Envelope e2 = envelopesApi.getEnvelope(defaultAccount.getAccountId(), e.getEnvelopeId());
 				Recipients recipients = e2.getRecipients();//Why is this always null?
 
 				System.out.println(e);
-				System.out.println(e2);
+				//System.out.println(e2);
 				System.out.println("NEXT!\n\n");
 				
-				if (recipients == null)
-					System.out.println(CallUriPersonally("redirect:" + BaseUrl + e.getRecipientsUri(), code));
+				if (recipients == null) {
+					String changedDate = e.getStatusChangedDateTime();
+					
+					
+					Recipients r = CallUriPersonally(BaseUrl + e.getRecipientsUri(), Recipients.class);
+					String email = r.getSigners().get(0).getEmail();
+					Associate a = CallUriPersonally("http://localhost:8085/api/associates/" + email + "/email", Associate.class);
+					a.setHousingAgreed(1);//TODO: change to changedDate once up to date with dev
+					updateAssociate(a);
+				}
 				//Redirecting to the recipients uri gives me nothing, oddly enough.
 				//It very well may actually be empty for some odd reason
 				 
@@ -237,7 +243,33 @@ public class DocuSignOauthController {
 		return null;
 	}
 	
-	private String CallUriPersonally(String uri, String code) {
+	private void updateAssociate(Associate a) {
+		Client client = Client.create();
+		WebResource webResource =client.resource("http://localhost:8085/api/associates/createOrUpdate");
+
+
+		try {
+			// Turn a into a JSON object
+			HttpPost post = new HttpPost("http://localhost:8085/api/associates/createOrUpdate");
+			post.setHeader("Content-Type", "application/json");
+			Gson gson = new Gson();
+			StringEntity entity = new StringEntity(gson.toJson(a));
+			post.setEntity(entity);
+			HttpClientBuilder.create().build().execute(post);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private <T> T CallUriPersonally(String uri, Object returnType) {
 		Client client = Client.create();
 		WebResource webResource =client.resource(uri);
 
@@ -249,20 +281,20 @@ public class DocuSignOauthController {
 		String appKey = oAuth.getAccessToken();
 		
 		System.out.println("I got the Oauth code and here it is! It's right here! " + appKey);
-		System.out.println(code.equals(appKey));
+		//System.out.println(code.equals(appKey));
 
 		appKey = "Bearer " + appKey; // appKey is unique number
 		//TODO: Figure out why making a rest call here is breaking things because it looks like it should be working
 
 		//Get response from RESTful Server get(ClientResponse.class);
-		ClientResponse response = null;
-		response = webResource.queryParams(queryParams)
+		T response = null;
+		response = (T) webResource.queryParams(queryParams)
 		                        .header("Content-Type", "application/json;charset=UTF-8")
 		    .header("Authorization", appKey)
-		    .get(ClientResponse.class);
+		    .get(returnType.getClass());
 
-		String jsonStr = response.getEntity(String.class);
-		return jsonStr;
+		//String jsonStr = response.getEntity(String.class);
+		return response;
 	}
 
 	@GetMapping("updateStart")

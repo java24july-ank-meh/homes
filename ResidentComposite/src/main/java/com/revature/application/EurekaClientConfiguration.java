@@ -31,7 +31,6 @@ public class EurekaClientConfiguration {
                 
                 eurekaBean.setNonSecurePortEnabled(true);
                 eurekaBean.setNonSecurePort(Integer.parseInt(env.getProperty("SERVICE_PORT")));
-                
             } catch (Exception e) {
                 // Connection probably timed out
             }

@@ -23,7 +23,7 @@
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text>
-                            <span class="md-headline">{{associate.firstName}} {{associate.lastName}}</span>
+                            <span class="md-headline">{{associate.firstName}} {{associate.lastName}} <ng-md-icon ng-hide="entry.associate.hasCar==1" icon="directions_car"></ng-md-icon></span>
                         </md-card-title-text>
                         <md-input-container md-theme="input" flex>	
                             <label>&nbsp;</label>
@@ -36,8 +36,8 @@
                         </md-button>
                     </div>
                 </md-toolbar>
-                <md-card-content layout="column" >
-                	<div layout="row">	
+                <md-card-content layout="row" >
+                	<div layout="column">	
 	                    <md-list class="md-dense" flex="50" >
 	                        <md-list-item class="md-2-line" >
 	                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
@@ -54,6 +54,8 @@
 	                            </div>
 	                        </md-list-item>
 	                    </md-list>
+	                    </div>
+	                    <div layout="column">
 	                    <md-list class="md-dense" flex >
 	                        <md-list-item class="md-2-line" ng-if="associate.unitId">
 	                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
@@ -63,16 +65,26 @@
 	                            </div>
 	                        </md-list-item>
 	                    </md-list>
-                   </div>
+                   
                    <md-list class="md-dense">
                     	<md-list-item class="md-2-line" >
-                            <md-icon> <ng-md-icon icon="person"></ng-md-icon></md-icon>
+                            <md-icon> <ng-md-icon icon="local_shipping"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-                                <p> ABOUT</p>
-                                <h3>{{associate.about}} </h3>
+                                <p> Move-in Date</p>
+                                <h3>{{associate.moveInString}}</h3>
                             </div>
                         </md-list-item>
                     </md-list>
+                    <md-list class="md-dense">
+                    	<md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="description"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <p> Housing Agreement</p>
+                                <h3>{{associate.housingAgreedString}}</h3>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    </div>
                 </md-card-content>
             </md-card>
         </div>

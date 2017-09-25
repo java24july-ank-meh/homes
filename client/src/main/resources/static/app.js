@@ -53,6 +53,11 @@ app.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         	templateUrl:'Associates/Edit/edit.html',
         	controller: 'editAssociateController'
         })
+        .state('home.importAssociate',{
+        	url:'/associates/import',
+        	templateUrl:'Associates/Import/importAssociate.html',
+        	controller: 'importAssociateController'
+        })
         .state('home.createComplex', {
             url: '/complexes/create',
             templateUrl: 'Complexes/Create/create.html',

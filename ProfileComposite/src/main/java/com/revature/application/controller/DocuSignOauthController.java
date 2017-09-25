@@ -52,8 +52,6 @@ public class DocuSignOauthController {
 	private final String RedirectionUri = "atItAgainTheRedirection";
 
 	// The date must be formatted as YYYY-MM-DD
-	//TODO: Possibly turn this into a POST with the QueryParam turned into a RequestAttribute instead
-	//Might not work for testing since I can't set the date in the url at that point.
 	@GetMapping("atItAgain")
 	public String updateDocusignTry3(@QueryParam("date") String date) {
 		/*
@@ -142,9 +140,9 @@ public class DocuSignOauthController {
 			// ask to exchange the auth code with an access code
 			apiClient.updateAccessToken();
 
-			/********* LEFT OFF HERE ********/
+			
 			/*
-			 * References for picking back up on work:
+			 * References for things used:
 			 * https://docs.docusign.com/esign/restapi/Envelopes/Envelopes/listStatusChanges/
 			 * https://docs.docusign.com/esign/guide/authentication/oa2_auth_code.html
 			 * https://docs.docusign.com/esign/guide/authentication/auth_server.html#using-the-state-parameter
@@ -171,33 +169,11 @@ public class DocuSignOauthController {
 			// below code required for production, no effect in demo (same domain)
 			apiClient.setBasePath(accountDomain[0]);
 			Configuration.setDefaultApiClient(apiClient);
-
-			// TODO: Actually implement the business logic finally. Yep. Still not done with that.
 			
 			
 			/****** Use the service of GET /restapi/v2/accounts/{accountID}/envelopes?from_date={date}
 			 * See the documentation at https://docs.docusign.com/esign/restapi/Envelopes/Envelopes/listStatusChanges/ *******/
 			
-//			//Create the query params needed for invocation
-//			List<Pair> queryParams = new ArrayList<Pair>();
-//			queryParams.add(new Pair("from_date", MrSingletonState.getDate()));
-//			
-//			//create the header information needed for the call
-//			
-//			String[] authNames = new String[2];
-//			authNames[0] = "docusignAccessCode";
-//			authNames[1] = "IntegratorKey";
-//			Map<String, Authentication> auths = apiClient.getAuthentications();
-//			Set<String> keys = auths.keySet();
-//			for(String key : keys) {
-//				System.out.println(key + ": " + auths.get(key));
-//			}
-			
-//			String retort = apiClient.invokeAPI("/v2/accounts/" + loginInfo.getLoginAccounts().get(0).getAccountId() + "/envelopes",
-//					"GET", queryParams, null, new HashMap<String, String>(), new HashMap<String, Object>(),
-//					null, "application/json", new String[0], new GenericType<String>(String.class));
-//			
-//			System.out.println(retort);
 			
 			//Now we can use the EnvelopesApi to call the method we need to use to get certain envelopes
 			EnvelopesApi envelopesApi = new EnvelopesApi();

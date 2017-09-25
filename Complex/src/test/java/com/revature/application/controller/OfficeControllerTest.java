@@ -111,8 +111,10 @@ public class OfficeControllerTest {
 	            //.andExpect(header().string("location", containsString("http://localhost/office/")))
 	            .andDo(print())
 	            .andReturn();
-	    //verify(officeServiceMock, times(1)).save(mockOffice4);
-	    //verifyNoMoreInteractions(officeServiceMock);
+	    verify(officeServiceMock, times(1)).save(any(Office.class));
+	    verifyNoMoreInteractions(officeServiceMock);
+
+
 		
 	}
 	

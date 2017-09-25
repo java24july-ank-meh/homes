@@ -36,15 +36,15 @@
 	<tr ng-repeat="associate in $data"> <!-- ui-sref="home.showResident({residentId: resident.residentId})"> -->
 
 		<td data-title="'First Name'" filter="{ firstName: 'text'}" sortable="'firstName'">
-			{{associate.firstName}}</td>	
+			{{associate.associate.firstName}}</td>	
 		<td data-title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
-			{{associate.lastName}}</td>
+			{{associate.associate.lastName}}</td>
 		<td data-title="'Email'" filter="{ email: 'text'}" sortable="'email'">
-			{{associate.email}}</td>
+			{{associate.associate.email}}</td>
 		<td data-title="'Room'" filter="{ unitNumber: 'number'}" sortable="'unitNumber'">
-			{{associate.unitNumber}}</td>
+			{{associate.associate.unit.unitNumber}}</td>
 		<td data-title="'Complex'" filter="{ complexName: 'text'}" sortable="'complex'">
-			{{associate.complexName}}</td>
+			{{associate.associate.complex.name}}</td>
 		<td>
 			<md-button class="md-flat md-primary" data-title="'Associate Id'" ui-sref="home.showAssociate({associateId: associate.associateId})">Profile</md-button>
 		</td>

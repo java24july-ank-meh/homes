@@ -1,14 +1,17 @@
 server:
-  port: 8085
+  port: ${service.port:8085}
   
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8086/eureka
+      defaultZone: ${EUREKA_URL}
+      #defaultZone: http://127.0.0.1:8086/eureka  
+
 
 zuul:
   host:
-    socket-timeout-millis: 10000    
+    socket-timeout-millis: 10000
+    connect-timeout-millis: 10000
   routes: 
     client:
       path: /**

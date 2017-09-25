@@ -22,6 +22,7 @@ import com.revature.application.repository.AssociateRepository;
 import com.revature.application.services.AssociateService;
 
 @RestController
+@RequestMapping("associates")
 public class AssociateController {
 
 	private AssociateService associateService;
@@ -65,6 +66,16 @@ public class AssociateController {
 		return ResponseEntity.ok(people);
 	}
 
+	@PostMapping("{associateId}/assign/{unitId}")
+	public void assign(@PathVariable("associateId") Long associateId, @PathVariable("unitId") Long unitId, HttpSession session) {
+		associateService.assign(associateId, unitId);
+	}
+	
+	@PostMapping("{associateId}/unassign")
+	public void unassign(@PathVariable("associateId") Long associateId, HttpSession session) {
+		associateService.unassign(associateId);
+	}
+	
 	/**
 	 * Gets you an associate from the database
 	 * @param associate the associate you want
@@ -87,6 +98,14 @@ public class AssociateController {
 			e.printStackTrace(); //for testing purposes. Comment out later.
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
+	}
+	
+	@DeleteMapping("{id}/unit")
+	public ResponseEntity<Object> unnassignAssociate(@PathVariable("id") long id) {
+		Associate associate = associateService.findByAssociateId(id);
+		associate.setUnitId(null);
+		associateService.saveOrUpdate(associate);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("{email:.+}/email")

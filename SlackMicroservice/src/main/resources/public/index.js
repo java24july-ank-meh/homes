@@ -3,18 +3,6 @@
  */
 
 angular.module("app", []).controller("home", function($http,$window){
-			var self = this;
-			$http.get("/user").success(function(data){
-				console.log(data);
-				let username = getNameFromString(data.name);
-			    self.user = username;
-				self.authenticated = true;
-			}).error(function(response){
-				console.log("error");
-				console.log(response);
-				self.user = "N/A";
-				self.authenticated = false;
-			});
 			
 			 self.onload = function() {
 				 $http.get("/manager/scopes/basic").then(function(response){
@@ -52,14 +40,6 @@ angular.module("app", []).controller("home", function($http,$window){
 					self.authenticated = false;
 				});
 			};
-			
-			self.showInfo = function(){
-				$http.get("/user").success(function(data){
-					console.log(data);
-				}).error(function(data){
-					console.log(data);
-				});
-			}
 			
 			self.createComplex = function(){
 				console.log("user typed: " + self.complexName);
@@ -121,12 +101,4 @@ angular.module("app", []).controller("home", function($http,$window){
 			};
 			
 			
-			/*Slack returns the user info object as a string. This method retrieves the value of the 
-			name attribute (between the string 'name=' and the following comma) */
-			let getNameFromString = function(input){
-				
-				let splitOnName = input.split('name=');
-				let splitOnComma = splitOnName[1].split(',');
-				return splitOnComma[0];
-			}
 });

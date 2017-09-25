@@ -1,11 +1,13 @@
 server:
-  port: 8097
+  port: ${service.port:8097}
   
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8086/eureka
-      
+      defaultZone: ${EUREKA_URL}
+  instance:
+    preferIpAddress: true
+
 spring:
   application:
     name: request-service

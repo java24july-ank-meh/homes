@@ -1,60 +1,13 @@
-slack:
-  client:
-    clientId: "237895291120.241002501221"
-    clientSecret: 79c83d653ca6fb2dcd6b74d79bfa6cfc
-    accessTokenUri: https://slack.com/api/oauth.access
-    pre-established-redirect-uri: http://localhost:8085/#/login
-    use-current-uri: false
-    userAuthorizationUri: https://slack.com/oauth/authorize
-    tokenName: token
-    authenticationScheme: query
-    clientAuthenticationScheme: form
-#   scope: channels:write,channels:read,chat:write:user,users:read,groups:write,im:write,mpim:write
-    scope: identity.basic,identity.team,identity.email,identity.avatar
-  resource:
-    userInfoUri: https://slack.com/api/users.identity
-    tokenType: Bearer
-    preferTokenInfo: false
-
-spring:
-  application:
-    name: SLACK-SERVICE
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8086/eureka
-
-slackChannel:
-  client:
-    clientId: "237895291120.241002501221"
-    clientSecret: 79c83d653ca6fb2dcd6b74d79bfa6cfc
-    accessTokenUri: https://slack.com/api/oauth.access
-    userAuthorizationUri: https://slack.com/oauth/authorize
-    tokenName: token
-    authenticationScheme: query
-    clientAuthenticationScheme: form
-    scope: channels:write,channels:read,chat:write:user,users:read,groups:write,im:write,mpim:write
-  resource:
-    userInfoUri: https://slack.com/api/users.identity
-    tokenType: Bearer
-    preferTokenInfo: false
-
-slackClient:
-  client:
-    clientId: "237895291120.241002501221"
-    clientSecret: 79c83d653ca6fb2dcd6b74d79bfa6cfc
-    accessTokenUri: https://slack.com/api/oauth.access
-    userAuthorizationUri: https://slack.com/oauth/authorize
-    tokenName: token
-    authenticationScheme: query
-    clientAuthenticationScheme: form
-    scope: client
-  resource:
-    userInfoUri: https://slack.com/api/users.identity
-    tokenType: Bearer
-    preferTokenInfo: false
-
+      defaultZone: ${EUREKA_URL}
+      
+spring:
+  application:
+    name: SLACK-SERVICE
+    
 server:
-  port: 8088
+  port: ${service.port:8088}
   

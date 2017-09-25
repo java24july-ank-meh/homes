@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="AppCtrl">
+<div data-ng-init="AppCtrl.onload()"></div>
+    <div ng-dropdown-multiselect="" options="data" selected-model="dataModel"            checkboxes="true" extra-settings="dataSettings"></div> 
+    <pre>Selected Model: {{dataModel}} </pre>
+
+</div>
+	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+	<script type="text/javascript" src="../js/message.js"></script>
+	<script async src="//jsfiddle.net/22et6sao/1627/embed/"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+</body>
+</html>

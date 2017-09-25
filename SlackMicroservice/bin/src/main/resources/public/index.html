@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Demo</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="home as home">
+	<h1>Demo</h1>
+	<div data-ng-init="home.onload()">
+	<div class="container" ng-show="!home.authenticated">
+	
+		Login with: <a href="/login/slack" class="btn btn-primary">Slack</a>
+	</div>
+	<div class="container" ng-show="home.authenticated">
+		Logged in as: <span ng-bind="home.user"></span>
+		<br>
+		<div>
+			<button ng-click="home.logout()" class="btn btn-primary">Logout</button>
+		</div>
+		
+		<h2>Complex Channel Tests</h2>
+		<input type="text" id="create-complex" name="create-complex" placeholder="complex" ng-model="home.complexName">
+		<button class="btn btn-primary" ng-click="home.createComplex()">Create</button>
+		
+		<input type="text" id="delete-complex" name="delete-complex" placeholder="complex" ng-model="home.toDelete">
+		<button class="btn btn-primary" ng-click="home.deleteComplex()">Delete</button>
+		
+		<input type="text" id="old-complex" name="old-complex" placeholder="complex" ng-model="home.oldComplex">
+		<input type="text" id="new-complex" name="new-complex" placeholder="complex" ng-model="home.newComplex">
+		<button class="btn btn-primary" ng-click="home.updateComplex()">Update</button>
+		
+		<br>
+		
+		<h2>Unit Channel Tests</h2>
+		<input type="text" id="create-unit" name="create-unit" placeholder="unit" ng-model="home.unitName">
+		<input type="text" id="add-complex-create" name="add-complex-create" placeholder="Complex" ng-model="home.addComplexCreate">
+		<button class="btn btn-primary" ng-click="home.createUnit()">Create</button>
+		
+		<input type="text" id="delete-unit" name="delete-unit" placeholder="unit" ng-model="home.unitToDelete">
+		<input type="text" id="add-complex-delete" name="delete-unit" placeholder="unit" ng-model="home.addComplexDelete">
+		<button class="btn btn-primary" ng-click="home.deleteUnit()">Delete</button>
+		
+		<input type="text" id="old-unit" name="old-unit" placeholder="unit" ng-model="home.oldUnit">
+		<input type="text" id="old-complex-update" name="old-complex-update" placeholder="complex" ng-model="home.oldComplexUpdate">
+		<input type="text" id="new-unit" name="new-unit" placeholder="unit" ng-model="home.newUnit">
+		<input type="text" id="new-complex-update" name="new-complex-update" placeholder="complex" ng-model="home.newComplexUpdate">
+		<button class="btn btn-primary" ng-click="home.updateUnit()">Update</button>
+		<br>
+		<button class="btn btn-primary" ng-click="home.checkAdmin()">checkAdmin</button>
+		<input type="text" ng-model="home.email"/>
+		<br>
+	</div>
+	
+	<div class="container">
+	
+		<div>
+			
+			<button ng-click="home.showInfo()" class="btn btn-primary">Get info again</button>
+			<p ng-bind="home.info"></p>
+		</div>
+		
+		<br>
+		
+		<div>
+			<a class="btn btn-primary" href="html/resident.html">Resident Controller</a>
+		</div>
+				<div>
+			<a class="btn btn-primary" href="html/message.html">Resident Controller</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

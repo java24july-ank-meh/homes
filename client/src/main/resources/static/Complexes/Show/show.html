@@ -48,7 +48,7 @@
              <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
                 <h2>404 - Complex not found.</h2> 
             </div>
-            <md-card ng-if="complex">
+            <md-card ng-if="!error">
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text >
@@ -138,8 +138,8 @@
                     <md-list-item class="md-2-line noright" ng-repeat="unit in complex.units" ui-sref="home.showApartment({apartmentId: unit.unitId})">
                         <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> {{unit.apartmentNumber}}</h3>
-                            <p> {{unit.residents.length}} of {{unit.capacity}} residents</p>
+                            <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
+                            <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
                         </div>
                     </md-list-item>
                 </md-list>

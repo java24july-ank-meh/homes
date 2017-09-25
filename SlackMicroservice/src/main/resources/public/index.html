@@ -13,10 +13,10 @@
 </head>
 <body ng-app="app" ng-controller="home as home">
 	<h1>Demo</h1>
-	<div data-ng-init="home.onload()">
-	<div class="container" ng-show="!home.authenticated">
+	<a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=237895291120.241002501221"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
 	
-		Login with: <a href="/login/slack" class="btn btn-primary">Slack</a>
+	<div data-ng-init="home.onload()">
+	
 	</div>
 	<div class="container" ng-show="home.authenticated">
 		Logged in as: <span ng-bind="home.user"></span>

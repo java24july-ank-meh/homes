@@ -40,6 +40,20 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
         	 
         	 $scope.complex.units = response.data;
         	 
+        	 $http.get("/api/associates/associates").then(function(response) {
+        		 $scope.associates = response.data;
+        		 
+        		 for(var i = 0; i < $scope.complex.units.length; i++){
+            		 $scope.complex.units[i].associates = [];
+            		 
+            		 for(var j = 0; j < $scope.associates.length; j++){
+            			 if($scope.complex.units[i].unitId == $scope.associates[j].unitId){
+            				 $scope.complex.units[i].associates.push($scope.associates[j])
+            			 }
+            		 }
+            	 }
+        	 });
+        	 
          });
          
          if($scope.complex === ''){

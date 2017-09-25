@@ -57,6 +57,44 @@ public class Helper {
 		return null;
 	}
 	
+	public boolean isAdmin(String token, String email) {
+		String id = getSlackId(token, email);
+		System.out.println("id :"+id);
+		String requestUrl = "https://slack.com/api/users.info";
+		String is_admin = "";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", token);
+		params.add("user", id);
+			
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType( MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>( params, headers);
+		
+		String responseString = restTemplate.postForObject( requestUrl, request, String.class);
+		
+		JsonNode rootNode, userNode, adminNode = null;
+		
+			try {
+				rootNode = objectMapper.readTree( responseString);
+			userNode = rootNode.path( "user");
+			adminNode = userNode.path( "is_admin");
+			is_admin = adminNode.asText();
+			if(is_admin.equals("true"))
+				return true;
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return false;
+	}
+	
 	//get a user's slack id from their email
 	public String getSlackId(String token, String email) {
 		JsonNode usersList = getUserList(token);
@@ -64,9 +102,9 @@ public class Helper {
 			
 		while(users.hasNext()) {
 			JsonNode nextUser = users.next();
-			System.out.println(users.next().asText());
+			//System.out.println(users.next().asText());
 			JsonNode nextUserEmail = nextUser.path("profile").path("email");
-			System.out.println(nextUser.path("profile").path("email").asText());
+			//System.out.println(nextUser.path("profile").path("email").asText());
 			if(email.equals(nextUserEmail.asText())) {
 				return nextUser.path("id").asText();
 			}
@@ -137,6 +175,22 @@ public class Helper {
 	    return scopes.toString();
 	}
 	
+	public List<String> getAllChannels(String token){
+		List<String>chanList = new ArrayList<String>();
+		
+		JsonNode channelList = getChannelList(token);
+		Iterator<JsonNode> channels = channelList.elements();
+		
+		while(channels.hasNext()) {
+			String name = channels.next().path("name").asText();
+			String id = channels.next().path("id").asText();
+			
+			chanList.add("{ \"name\":  \"" + name + "\" , \"id\": \""+ id + "\" }" );
+		}
+		
+		return chanList;
+	}
+	
 	public boolean channelNameIsUnique(String name, String userToken) {
 		JsonNode channelList = getChannelList(userToken);
 		Iterator<JsonNode> channels = channelList.elements();
@@ -203,7 +257,7 @@ public class Helper {
 		String responseString = restTemplate.postForObject(requestUrl, request, String.class);
 		JsonNode rootNode, channelNode, memNode = null;
 		List<String> users = new ArrayList<String>();
-		System.out.println(responseString);
+		//System.out.println(responseString);
 		
 		try {
 			rootNode = objectMapper.readTree(responseString);
@@ -215,7 +269,7 @@ public class Helper {
 				JsonNode member = elements.next();
 				users.add("{ \"name\":  \"" + getUserName(member.asText(), userToken) + "\" , \"id\": \""+member.asText() + "\" }" );
 			}
-			System.out.println(users);
+			//System.out.println(users);
 			return users;
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -343,7 +397,7 @@ public class Helper {
     //Extracts user ids from json
     public List<String> getIdList(String ids){
         
-        JsonNode rootNode= null;
+        JsonNode rootNode = null;
         List<String> users = new ArrayList<String>();
         
         try {
@@ -352,10 +406,10 @@ public class Helper {
             Iterator<JsonNode> elements = rootNode.elements();
             while(elements.hasNext()){
                 JsonNode member = elements.next();
-                users.add(member.asText());
+                users.add(member.findValue("id").asText());
                 
             }
-            System.out.println(users);
+           // System.out.println(users);
             return users;
         }catch(IOException e) {
             e.printStackTrace();

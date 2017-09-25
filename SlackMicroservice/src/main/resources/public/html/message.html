@@ -4,19 +4,30 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
+<body >
 
-<div ng-app="myApp" ng-controller="AppCtrl">
+<div ng-app="app" ng-controller="resident">
 <div data-ng-init="AppCtrl.onload()"></div>
+<h2>Message Users</h2>
+	
     <div ng-dropdown-multiselect="" options="data" selected-model="dataModel"            checkboxes="true" extra-settings="dataSettings"></div> 
-    <pre>Selected Model: {{dataModel}} </pre>
+    
+    <pre>Selected Model:  {{dataModel}} </pre>
+	
 
-</div>
+	<input type="text" id="userMessageToSend" placeholder="message" ng-model="resident.MessageToSend">
+	<input type="text" id="userMessageUnit" placeholder="unit" ng-model="resident.MessageUnit">
+	<input type="text" id="userMessageComplex" placeholder="complex" ng-model="resident.MessageComplex">
+	<button class="btn btn-primary" ng-click="resident.messageUser()">Send Message</button>
+</div>	
+	
 	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
-	<script type="text/javascript" src="../js/message.js"></script>
-	<script async src="//jsfiddle.net/22et6sao/1627/embed/"></script>
+	<!-- <script type="text/javascript" src="../js/message.js"></script> -->
+	<!-- <script async src="//jsfiddle.net/22et6sao/1627/embed/"></script> -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
+	<script type="text/javascript" src="../js/resident.js"></script>
 </body>
 </html>

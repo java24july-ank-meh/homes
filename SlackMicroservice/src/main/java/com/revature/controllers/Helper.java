@@ -114,7 +114,7 @@ public class Helper {
 	public String getSlackId(String token, String email) {
 		JsonNode usersList = getUserList(token);
 		Iterator<JsonNode> users = usersList.elements();
-			
+			System.out.println("user list: " +usersList);
 		while(users.hasNext()) {
 			JsonNode nextUser = users.next();
 			//System.out.println(users.next().asText());
@@ -145,7 +145,6 @@ public class Helper {
 		
 		String responseString = 
 				restTemplate.postForObject(url, request, String.class);
-	
 		//String responseString = restTemplate.getForObject(url, String.class);
 		JsonNode root, channelElement = null;
 		Iterator<JsonNode> channels = null;

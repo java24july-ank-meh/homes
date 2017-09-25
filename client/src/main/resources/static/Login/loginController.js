@@ -18,7 +18,7 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
 				$window.location.href = "https://slack.com/oauth/authorize?scope=client";
     	}  else if(response.data.scope === ""){
     	}else{
-    		$rootScope.user = response.data;
+    		$rootScope.rootUser = response.data;
     		$location.path("/home/dashboard");
     	}
     });

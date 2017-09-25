@@ -18,7 +18,7 @@ import com.revature.application.models.Unit;
 
 @Service
 public class RequestCompositeService {
-	String baseurl = "http://192.168.0.43:8085/api/";
+	String baseurl = "http://192.168.61.123:8085/api/";
 	
 	public void sendMessage(int associateId, String message) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -83,7 +83,7 @@ public class RequestCompositeService {
 		Gson gson = new Gson();
 
 		RestTemplate restTemplate = new RestTemplate();
-		Maintenance[] requests = restTemplate .getForEntity(baseurl + "request/maintenance", Maintenance[].class).getBody();
+		Maintenance[] requests = restTemplate.getForEntity(baseurl + "request/maintenance", Maintenance[].class).getBody();
 		Unit[] units = restTemplate.getForEntity(baseurl + "complex/unit", Unit[].class).getBody();
 		Associate[] associates = restTemplate.getForEntity(baseurl + "associates/associates", Associate[].class).getBody();
 		/*Maintenance[] requests = (Maintenance[]) getObject("maintenance", "", Maintenance[].class);

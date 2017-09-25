@@ -47,7 +47,7 @@ public class OauthController {
 			e.printStackTrace();
 		} finally {
 			if(code.equals("")) {
-				jobj.addProperty("scope", "none");
+				jobj.addProperty("scope", "");
 				return ResponseEntity.ok(jobj.toString());
 			}
 		}
@@ -74,10 +74,12 @@ public class OauthController {
 		
 		String token = "";
 		String email ="";
+		String user = "";
 		try {
 			json = new JSONObject(response.getBody());
 			token = json.getString("access_token");
 			email = json.getJSONObject("user").getString("email");
+			user = json.getString("user");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,8 +87,7 @@ public class OauthController {
 		//check if user is admin
 		if(!helper.isAdmin(token, email)) {
 			jobj.addProperty("scope", "all");
-			session.setAttribute("token", token);
-			return ResponseEntity.ok(jobj.toString());
+			return ResponseEntity.ok(user);
 		}
 		
 		//send user to authorize channel and im scopes
@@ -101,9 +102,8 @@ public class OauthController {
 			return ResponseEntity.ok(jobj.toString());
 		}
 		//send manager to application
-		jobj.addProperty("scope", "all");
 		session.setAttribute("token", token);
-		return ResponseEntity.ok(jobj.toString());
+		return ResponseEntity.ok(user);
 		
 	}
 

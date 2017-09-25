@@ -15,7 +15,7 @@ public class EurekaClientConfiguration {
     private String serviceIpAddress;
     
     // Get the property variable service.port, else set it to 9999.
-    @Value("${service.port:8102}")
+    @Value("${service.port:8105}")
     private Integer serverPort;
     
     // Get the property variable within.ec2, else set it to false.

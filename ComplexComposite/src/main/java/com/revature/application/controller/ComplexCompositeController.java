@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.service.ComplexCompositeService;
 
+import springfox.documentation.spring.web.json.Json;
+
 @RestController
 @RequestMapping("complexcomposite")
 public class ComplexCompositeController {
@@ -23,6 +25,11 @@ public class ComplexCompositeController {
 	@GetMapping
 	public ResponseEntity<Object> getComplexes() {
 		return ResponseEntity.ok(compositeService.getAllComplexes().toString());
+	}
+	
+	@GetMapping("units")
+	public String getUnits() {
+		return compositeService.allUnits().toString();
 	}
 	
 	@GetMapping("{id}")

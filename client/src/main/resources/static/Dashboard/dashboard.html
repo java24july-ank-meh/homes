@@ -55,17 +55,18 @@
                 </md-card-title>
                 <md-divider></md-divider>
                 <md-list flex >
-                	<span  ng-repeat="apartment in apartments">
-                    <md-list-item class="md-3-line noright" ng-if="apartment.residents.length < apartment.capacity" ui-sref="home.showApartment({apartmentId: apartment.apartmentId})">
-                        <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
+                
+                	<span  ng-repeat="unit in units">
+                    <md-list-item class="md-3-line noright" ng-if="unit.associates.length < unit.capacity" ui-sref="home.showApartment({apartmentId: unit.unitId})">
+                     <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
-                            <h3> Unit {{unit.unitNumber}}</h3>
-                            <p> {{unit.residents.length}} of {{unit.capacity}} Associates</p>
+                            <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
+                            <p> {{unit.complex.name}} </p>
+                            <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
                            <!--  <p> {{resident.email}}</p> -->
                         </div>
-                        
+                     </md-list-item>
           			</span>
-                    </md-list-item>
                 </md-list>
             </md-card>
        	</div>   

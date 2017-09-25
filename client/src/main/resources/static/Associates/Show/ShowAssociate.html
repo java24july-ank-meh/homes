@@ -42,15 +42,15 @@
 	                        <md-list-item class="md-2-line" >
 	                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
 	                            <div class="md-list-item-text" >
-	                                <h3> {{associate.phone}}</h3>
 	                                <p> PHONE</p>
+	                                <h3> {{associate.phone}}</h3>
 	                            </div>
 	                        </md-list-item>
 	                        <md-list-item class="md-2-line" >
 	                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
 	                            <div class="md-list-item-text" >
-	                                <h3>{{associate.email}}</h3>
 	                                <p> EMAIL</p>
+	                                <h3>{{associate.email}}</h3>
 	                            </div>
 	                        </md-list-item>
 	                    </md-list>
@@ -60,8 +60,10 @@
 	                        <md-list-item class="md-2-line" ng-if="associate.unitId">
 	                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
 	                            <div class="md-list-item-text" >
-	                                <h3><a ui-sref='home.showApartment({apartmentId: associate.unitId})' > {{associate.unitId}}</a></h3>
-	                                <p> Unit</p>
+	                                <p>Apartment</p>
+	                                <h3>Complex: <a ui-sref='home.showComplex({complexId: associate.unit.complex.complexId})' >{{associate.unit.complex.name}} </a></h3>
+	                                <h3>Building: {{associate.unit.buildingNumber}}</h3>
+	                                <h3>Unit: <a ui-sref='home.showApartment({apartmentId: associate.unitId})'> {{associate.unit.unitNumber}}</a></h3>
 	                            </div>
 	                        </md-list-item>
 	                    </md-list>

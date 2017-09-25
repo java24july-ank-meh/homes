@@ -24,19 +24,19 @@ public class UnitService {
 		return unitRepository.findAll();
 	}
 	
-	public Unit findByUnitId(long id) {
-		return unitRepository.findByUnitId(id);
+	public Unit findByUnitId(int id) {
+		return unitRepository.findOne(id);
 	}
 	
-	public long save(Unit unit) {
+	public int save(Unit unit) {
 		return unitRepository.saveAndFlush(unit).getUnitId();
 	}
 	
-	public long update(Unit unit) {
-		return unitRepository.saveAndFlush(unit).getUnitId();
-	}
+//	public int update(Unit unit) {
+//		return unitRepository.saveAndFlush(unit).getUnitId();
+//	}
 	
-	public boolean delete(long id){
+	public boolean delete(int id){
 		unitRepository.delete(id);
 		return true;
 	}

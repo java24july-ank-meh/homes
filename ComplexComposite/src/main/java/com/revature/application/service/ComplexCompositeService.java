@@ -3,6 +3,10 @@ package com.revature.application.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.core.MediaType;
+
+import java.util.List;
+
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -18,10 +22,51 @@ import com.revature.application.model.Associate;
 import com.revature.application.model.Complex;
 import com.revature.application.model.Notification;
 import com.revature.application.model.Unit;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
 
 @Service
 public class ComplexCompositeService {
-	private String baseurl = "http://192.168.0.43:8085/api/";
+
+	private String baseurl = "http://192.168.61.123:8085/api/";
+	
+	public JsonArray allComplexes(){
+		return getJsonArrayFromService("http://localhost:8093/complex");
+	}
+	
+	public JsonArray allUnits() {
+		JsonArray units = getJsonArrayFromService("http://localhost:8093/unit");
+		JsonArray associates = getJsonArrayFromService("http://localhost:8090/");
+		
+		Map<Long, JsonArray> AssociatesForEachUnit = new HashMap<>();
+		for(int i = 0; i < units.size(); i++) {
+			JsonObject unit = units.get(i).getAsJsonObject();
+			Long unitId = unit.get("unitId").getAsLong();
+			AssociatesForEachUnit.put(unitId, new JsonArray());
+		}
+		
+		for(int i = 0; i < associates.size(); i++) {
+			JsonObject associate = associates.get(i).getAsJsonObject();
+			if(associate.get("unitId").isJsonNull()) continue;
+			Long unitId = associate.get("unitId").getAsLong();
+			JsonArray unitAssociates = AssociatesForEachUnit.get(unitId);
+			if(unitAssociates == null) continue;
+			unitAssociates.add(associate);
+		}
+		
+		System.out.println(AssociatesForEachUnit);
+		
+		for(int i = 0; i < units.size(); i++) {
+			JsonObject unit = units.get(i).getAsJsonObject();
+			Long unitId = unit.get("unitId").getAsLong();
+			unit.add("residents", AssociatesForEachUnit.get(unitId));
+		}
+		
+		System.out.println(units);
+		
+		return units;
+	}
 	
 	public JsonObject getAllComplexes() {
 		
@@ -157,6 +202,19 @@ public class ComplexCompositeService {
 		
 	}
 	
+	private JsonObject getJsonFromService(String url) {
+		Client client = Client.create();
+		WebResource resource = client.resource(url);
+		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
+		return new JsonParser().parse(associate).getAsJsonObject();
+	}
+	
+	private JsonArray getJsonArrayFromService(String url) {
+		Client client = Client.create();
+		WebResource resource = client.resource(url);
+		String associate = resource.accept(MediaType.APPLICATION_JSON).get(String.class);
+		return new JsonParser().parse(associate).getAsJsonArray();
+	}
 
 	public Object assignUnitToAssociate(int unitId, int associateId) {
 		RestTemplate restTemplate = new RestTemplate();

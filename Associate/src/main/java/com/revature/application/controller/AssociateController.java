@@ -66,6 +66,16 @@ public class AssociateController {
 		return ResponseEntity.ok(people);
 	}
 
+	@PostMapping("{associateId}/assign/{unitId}")
+	public void assign(@PathVariable("associateId") Long associateId, @PathVariable("unitId") Long unitId, HttpSession session) {
+		associateService.assign(associateId, unitId);
+	}
+	
+	@PostMapping("{associateId}/unassign")
+	public void unassign(@PathVariable("associateId") Long associateId, HttpSession session) {
+		associateService.unassign(associateId);
+	}
+	
 	/**
 	 * Gets you an associate from the database
 	 * @param associate the associate you want

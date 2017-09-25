@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="homepage as homepage">
+	<h1>Homes homepage</h1>
+	<h3>Welcome <span ng-bind="homepage.user"></span></h3>
+	
+	<form action="complex/create" method="post">
+		<input type="text" id="complex" name="complex" placeholder="complex">
+		<input type="submit" class="btn btn-primary" value="Submit">
+	</form>
+	
+	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+	<script type="text/javascript" src="../js/home.js"></script>
+</body>
+</html>

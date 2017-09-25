@@ -16,7 +16,7 @@ public class Unit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long unitId;
+	private int unitId;
 	private String unitNumber;
 	private String buildingNumber;
 	private int capacity;
@@ -38,11 +38,11 @@ public class Unit {
 		this.complex = complex;
 	}
 
-	public long getUnitId() {
+	public int getUnitId() {
 		return unitId;
 	}
 
-	public void setUnitId(long unitId) {
+	public void setUnitId(int unitId) {
 		this.unitId = unitId;
 	}
 

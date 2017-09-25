@@ -23,30 +23,34 @@
     <div layout layout-wrap layout-sm="column" layout-xs="column" >
    
         <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
-             <h2>No Maintenance Requests Found</h2>
+             <h2>No Supply Requests Found</h2>
         </div>
          <md-card flex="100">
          	<div layout-gt-md="row">
 	            <md-input-container style="margin:15px;" flex>
 	                <label></label>
-	                <input type="text" ng-model="filterName.$" placeholder="filter">
-	            </md-input-container>
-	            <md-input-container style="margin:15px;" flex>
-	                <label></label>
-	                <input type="text" ng-model="calorieSearch" placeholder="Filter calories">
-	            </md-input-container>
-	            <md-input-container style="margin:15px;" flex>
-	                <label></label>
-	                <input type="text" ng-model="filterName" placeholder="filter">
+	                <input type="text" ng-model="filterName.$" placeholder="Filter">
 	            </md-input-container>
 			</div>
             <div ng-hide="true">
-                {{(filteredItems = (nutritionList | filter: filterName))}}
+                {{(filteredItems = (supplyRequests | filter: filterName))}}
             </div>
         </md-card>
+        <md-card flex="100">
+     
+           <md-card-content layout-gt-sm="row" layout="column" class="md-padding">
+                        <div flex>Detergent Pods: {{ (filteredItems | filter:"Detergent Pods").length }}</div>
+                        <div flex>Dish Soap: {{ (filteredItems | filter:"Dish Soap").length }}</div>
+                        <div flex>Paper Towels: {{ (filteredItems | filter:"Paper Towels").length }}</div>
+                        <div flex>Sponge: {{ (filteredItems | filter:"Sponge").length }}</div>
+                        <div flex>Toilet Paper: {{ (filteredItems | filter:"Toilet Paper").length }}</div>
+                        <div flex>Trash Bags: {{ (filteredItems | filter:"Trash Bags").length }}</div>
+            </md-card-content>
+        </md-card>
          <md-card flex>         
-	           <mdt-table table-card="{visible: true, title: 'Supply Requests'}"
-			             selectable-rows="true"
+	           <mdt-table paginated-rows="{isEnabled: true, rowsPerPageValues: [10,20,100]}"
+	           			 table-card="{visible: true, title: 'Supply Requests'}"
+			             selectable-rows="false"
 			             sortable-columns="true"
 			             alternate-headers="'contextual'"
 			             delete-row-callback="deleteRowCallback(rows)"
@@ -58,8 +62,8 @@
                           'submittedBy',
                           'unitId',
                           'resolved',
-                          'resolvedDate',
-                          'action'
+                          'resolveDate',
+                          'suppliesId'
                       ]
                       }">
 				    <mdt-header-row>
@@ -74,18 +78,29 @@
 				      <mdt-column align-rule="right"
 				                  column-sort="true">Unit</mdt-column>
 				      <mdt-column align-rule="right"
-				                  column-sort="true">Delivered</mdt-column>
+				                  column-sort="true">Picked up</mdt-column>
 				      <mdt-column align-rule="right"
-				                  column-sort="true">Delivered Date</mdt-column>
+				                  column-sort="true">Picked Up Date</mdt-column>
 				      <mdt-column align-rule="right" column-sort="false">Action</mdt-column>
 				    </mdt-header-row>
 				    	<mdt-custom-cell column-key="submitDate">
 					          <span>{{value | date:formatted }}</span>
 					    </mdt-custom-cell>
-				    
-				        <mdt-custom-cell column-key="action">
-					          <a ui-sref="home.complexes" class="md-button md-primary">VIEW</a>
+					    <mdt-custom-cell column-key="resolvedDate">
+					          <span>{{value | date:formatted }}</span>
 					    </mdt-custom-cell>
+				    <mdt-custom-cell column-key="suppliesId"> 
+				    	<button class="md-button md-primary" ng-click="clientScope.resolveSupply(value)" ng-disabled="clientScope.isResolved(value).resolved">DELIVERED</button>
+				    	</span>
+				    </mdt-custom-cell>
+		            <mdt-custom-cell column-key="submittedBy">
+		               <a class="md-button md-primary" ui-sref="home.showAssociate({associateId: value})">{{clientScope.getAssociate(value)}}</a>
+		            </mdt-custom-cell>
+		            <mdt-custom-cell column-key="unitId">
+		               <span style="display:none;">{{unit = clientScope.getUnit(value)}}</span>
+		               <a class="md-button md-primary" ui-sref="home.showApartment({apartmentId: value})" >{{unit}}</a>
+		            </mdt-custom-cell>
+		        
 				  </mdt-table>
  		 </md-card>
     </div>

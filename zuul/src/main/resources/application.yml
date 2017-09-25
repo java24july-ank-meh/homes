@@ -1,12 +1,17 @@
 server:
-  port: 8085
+  port: ${service.port:8085}
   
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL}
-      
-zuul:    
+      #defaultZone: http://127.0.0.1:8086/eureka  
+
+
+zuul:
+  host:
+    socket-timeout-millis: 10000
+    connect-timeout-millis: 10000
   routes: 
     client:
       path: /**
@@ -33,6 +38,9 @@ zuul:
     profile-composite:
       path: /api/profile-composite/**
       serviceId: PROFILE-COMPOSITE
+    slack-service:
+      path: /api/slack/**
+      serviceId: SLACK-SERVICE
 spring:
   application:
     name: zuul-server

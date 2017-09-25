@@ -50,8 +50,7 @@
             </div>
             
             
-            <md-card ng-if="unit.complex">
-            
+            <md-card ng-if="!error">
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text ui-sref="home.editComplex({complexId: unit.complex.complexId})" >
@@ -69,7 +68,7 @@
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
-				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" >
+				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" style=" min-height:400px; background: #eee;"" >
                 <md-card-content layout-gt-md="row" layout="column" >
                     <md-list class="md-dense" flex="50">
                         <md-list-item class="md-2-line" >
@@ -137,19 +136,37 @@
                 <md-list flex >
                     <md-list-item class="md-3-line noright" ng-repeat="maintenance in maintenanceRequests" >
                         <md-icon class="md-avatar"> <ng-md-icon icon="build" ></ng-md-icon></md-icon>
-                        <div class="md-list-item-text" >
-                            <h3><strong>{{maintenance.type}}</strong> {{maintenance.submitDate | date}} {{maintenance.status}}</h3>
-                            <p> {{maintenance.location}}</p>
+                        <div class="md-list-item-text"  >
+                            <h3 ><strong>{{maintenance.type}}</strong> {{maintenance.location}}</h3>
                             <p> {{maintenance.description}}</p>
+                            <p>{{maintenance.submitDate | date}} Resolved: {{maintenance.resolveDate | date:formatted}}</p>
                         </div>
-                        <md-button class="md-secondary ng-icon-button" ng-click="showRemoveResidentConfirm(resident.residentId)"  ng-if="rootUser.isManager">
-            				<ng-md-icon icon="delete"></ng-md-icon>
-          				</md-button>
                     </md-list-item>
                 </md-list>
             </md-card>
-    
+            <md-card layout="column" ng-if="supplyRequests">
+                <md-card-title>
+                    <md-card-title-text >
+                        <span class="md-headline">Supply Requests </span>
+                        
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-list flex >
+                    <md-list-item class="md-3-line noright" ng-repeat="supply in supplyRequests" >
+                        <md-icon class="md-avatar"> <ng-md-icon icon="shopping_cart" ></ng-md-icon></md-icon>
+                        <div class="md-list-item-text"  >
+                            <h3 ><strong>{{supply.name}}</strong> </h3>
+                            <p>Requested on: {{supply.submitDate| date}}</p>
+                            <p>Delivered: {{suppl.resolveDate | date}} </p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-card>
         </div>
+        <br>
+        
+        
         <br>
         <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
             <md-card layout="column" >
@@ -174,7 +191,6 @@
                     </md-list-item>
                 </md-list>
             </md-card>
-            
                     
              <md-card layout="column">
             	<iframe width="100%" height="450" id="complexMap" frameborder="0" style="border:0" src="" allowfullscreen></iframe>

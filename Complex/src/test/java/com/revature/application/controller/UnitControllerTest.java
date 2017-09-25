@@ -128,29 +128,16 @@ public class UnitControllerTest {
 	            .andExpect(status().isOk())
 	            .andDo(print())
 	            .andReturn();
-	    //verify(unitService, times(1)).save(u3);
-	    //verifyNoMoreInteractions(u3);
-        
-		
-		/*when(unitService.save()).thenReturn(u3.getUnitId());
-		
-		mockMvc.perform(post("/unit"))
-		.andExpect(jsonPath("$[0].unitId", Matchers.is(u3.getUnitId())))
-		.andExpect(jsonPath("$[0].unitNumber",Matchers.is(u3.getUnitNumber())))
-		.andExpect(jsonPath("$[0].buildingNumber",Matchers.is(u3.getBuildingNumber())))
-		.andExpect(jsonPath("$[0].capacity",Matchers.is(u3.getCapacity())))
-		.andExpect(jsonPath("$[0].gender",Matchers.is(u3.getGender())))
-		.andDo(print());*/
 
-	} 
+	    verify(unitService, times(1)).save(any(Unit.class));
+	    verifyNoMoreInteractions(unitService);
+
+        
+		} 
 
 	@Test
 	public void testUpdateUnit() throws Exception {
-		/*Office o1 = new Office("address2", "phone2", "website2", "timezone2");
-		Complex c1 = new Complex("website.com", "email1", "407-090-9878", "name1", "abbr1", "2333 NW tin street", "parking1", "photoUrl1", o1);*/
 		Unit u1 = new Unit("asdf", "asdfg",5,"male",null);
-		/*o1.setOfficeId(2);
-		c1.setComplexId(7);*/
 		u1.setUnitId(1);
 		Gson gson = new Gson();
         String json = gson.toJson(u1);
@@ -175,12 +162,9 @@ public class UnitControllerTest {
 		when(unitService.delete(units.get(0).getUnitId())).thenReturn(true);
 		
 		mockMvc.perform(delete("/unit/0"))
-//		.andExpect(jsonPath("$.unitId", Matchers.is(units.get(0))))
-//		.andExpect(jsonPath("$.unitNumber",Matchers.is(units.get(0).getUnitNumber())))
-//		.andExpect(jsonPath("$.buildingNumber",Matchers.is(units.get(0).getBuildingNumber())))
-//		.andExpect(jsonPath("$.capacity",Matchers.is(units.get(0).getCapacity())))
-//		.andExpect(jsonPath("$.gender",Matchers.is(units.get(0).getGender())))
-		;
+		.andExpect(status().isOk());
+		verify(unitService, times(1)).delete(units.get(0).getUnitId());
+	    verifyNoMoreInteractions(unitService);
 		}
 
 }

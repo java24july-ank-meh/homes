@@ -21,12 +21,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.application.model.Associate;
+import com.revature.application.repository.AssociateRepository;
 
 @Service
 public class FileServiceImpl implements FileService {
+	@Autowired AssociateRepository associateRepository;
 
 	@Override
 	public boolean importExcel(File file, int officeId) {
@@ -74,8 +77,7 @@ public class FileServiceImpl implements FileService {
 				Cell haCell = curRow.getCell(haCol);
 
 				int row = 0;
-
-				if(haCell.toString().equals("signed")||haCell.toString().equals("(checkmarked)")) {
+				if(haCell != null && (haCell.toString().equals("signed")||haCell.toString().equals("(checkmarked)"))) {
 					agreed = true;
 					tempA.setHousingAgreed(LocalDateTime.now());
 					row = haCell.getRowIndex();
@@ -146,9 +148,10 @@ public class FileServiceImpl implements FileService {
 					LocalDateTime ldt = LocalDateTime.of(ld, LocalTime.NOON);
 
 					tempA.setMoveInDate(ldt);
-
-					associates.add(tempA);
-
+					
+					//associates.add(tempA);
+					if(associateRepository.findByEmail(tempA.getEmail()) == null)
+						associateRepository.saveAndFlush(tempA);
 				}
 			}
 

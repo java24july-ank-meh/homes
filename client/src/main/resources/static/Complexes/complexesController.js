@@ -10,8 +10,8 @@ angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBotto
 		$scope.filtered = $scope.offices;
 	});
 
-     $http.get("/api/complex/complex").then(function(response) {
-         $scope.complexes = response.data;
+     $http.get("/api/complex-composite/complexcomposite").then(function(response) {
+         $scope.complexes = response.data.complexes;
          
          if($scope.complexes === '')
         	 $scope.error = true;

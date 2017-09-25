@@ -16,22 +16,11 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
 	        	$window.location.href = "https://slack.com/oauth/authorize?scope=channels:write,Channels:read,Chat:write,Users:read,Groups:write,Im:write,mpim:write";	
     	}else if(response.data.scope === "client"){
 				$window.location.href = "https://slack.com/oauth/authorize?scope=client";
-    	}  else if(response.data.scope === "all"){
-    		console.log("you in bro!");
+    	}  else if(response.data.scope === ""){
+    	}else{
+    		$rootScope.user = response.data;
     		$location.path("/home/dashboard");
     	}
     });
-    
-    $http.get("api/slack/user").success(function(data){
-		console.log(data);
-		let username = getNameFromString(data.name);
-	    self.user = username;
-		self.authenticated = true;
-	}).error(function(response){
-		console.log("error");
-		console.log(response);
-		self.user = "N/A";
-		self.authenticated = false;
-	});
 
 }]);

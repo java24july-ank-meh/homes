@@ -107,11 +107,11 @@ public class OfficeControllerTest {
 	            post("/office")
 	                    .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 	                    .content(json)) //Include the 
-	            .andExpect(status().isCreated())
+	            .andExpect(status().isOk())
 	            //.andExpect(header().string("location", containsString("http://localhost/office/")))
 	            .andDo(print())
 	            .andReturn();
-	    verify(officeServiceMock, times(1)).save(mockOffice4);
+	    verify(officeServiceMock, times(1)).save(any(Office.class));
 	    verifyNoMoreInteractions(officeServiceMock);
 		
 	}

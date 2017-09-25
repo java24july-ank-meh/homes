@@ -135,11 +135,7 @@ public class UnitControllerTest {
 
 	@Test
 	public void testUpdateUnit() throws Exception {
-		/*Office o1 = new Office("address2", "phone2", "website2", "timezone2");
-		Complex c1 = new Complex("website.com", "email1", "407-090-9878", "name1", "abbr1", "2333 NW tin street", "parking1", "photoUrl1", o1);*/
 		Unit u1 = new Unit("asdf", "asdfg",5,"male",null);
-		/*o1.setOfficeId(2);
-		c1.setComplexId(7);*/
 		u1.setUnitId(1);
 		Gson gson = new Gson();
         String json = gson.toJson(u1);
@@ -165,6 +161,8 @@ public class UnitControllerTest {
 		
 		mockMvc.perform(delete("/unit/0"))
 		.andExpect(status().isOk());
+		verify(unitService, times(1)).delete(units.get(0).getUnitId());
+	    verifyNoMoreInteractions(unitService);
 		}
 
 }

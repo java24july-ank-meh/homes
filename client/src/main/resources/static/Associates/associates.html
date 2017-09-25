@@ -6,7 +6,7 @@
     <ng-md-icon icon="insert_drive_file" class="md-icon"></ng-md-icon>
 </md-button> -->
 
- <div class="lock-size md-fab md-fab-bottom-right" layout="row" layout-align="center center">
+ <div class="lock-size md-fab" layout="row" layout-align="center center">
       <md-fab-speed-dial md-open="false" md-direction="up"
                          ng-class="md-scale">
         <md-fab-trigger>
@@ -63,15 +63,15 @@
 <table ng-table="residentsTable" class="table table-condensed table-bordered table-striped" show-filter="true">
 	<tr ng-repeat="entry in $data"> <!-- ui-sref="home.showResident({residentId: resident.residentId})"> -->
 
-		<td data-title="'First Name'" filter="{ firstName: 'text'}" sortable="'associate.firstName'">
+		<td data-title="'First Name'" filter="{ 'associate.firstName': 'text'}" sortable="'associate.firstName'">
 			{{entry.associate.firstName}}</td>	
-		<td data-title="'Last Name'" filter="{ lastName: 'text'}" sortable="'associate.lastName'">
+		<td data-title="'Last Name'" filter="{ 'associate.lastName': 'text'}" sortable="'associate.lastName'">
 			{{entry.associate.lastName}}</td>
-		<td data-title="'Email'" filter="{ email: 'text'}" sortable="'associate.email'">
+		<td data-title="'Email'" filter="{ 'associate.email': 'text'}" sortable="'associate.email'">
 			{{entry.associate.email}}</td>
-		<td data-title="'Room'" filter="{ unitNumber: 'number'}" sortable="'unit.unitNumber'">
+		<td data-title="'Room'" filter="{ 'unit.unitNumber': 'number'}" sortable="'unit.unitNumber'">
 			{{entry.unit.unitNumber}}</td>
-		<td data-title="'Complex'" filter="{ complexName: 'text'}" sortable="'unit.complex.name'">
+		<td data-title="'Complex'" filter="{ 'unit.complex.name': 'text'}" sortable="'unit.complex.name'">
 			{{entry.unit.complex.name}}</td>
 		<td> <ng-md-icon ng-hide="entry.associate.hasCar==1" icon="directions_car"></ng-md-icon></td>
 		<td>

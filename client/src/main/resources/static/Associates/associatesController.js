@@ -10,7 +10,7 @@ angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBott
 	 $mdToast.show($mdToast.simple().textContent("An Error Occured. Error " + response.status).position('top right'));
     });
 	
-	
+
 	$scope.showCreateResidentForm = function(ev) {
 		  
 		  $mdDialog.show({

@@ -57,6 +57,44 @@ public class Helper {
 		return null;
 	}
 	
+	public boolean isAdmin(String token, String email) {
+		String id = getSlackId(token, email);
+		System.out.println("id :"+id);
+		String requestUrl = "https://slack.com/api/users.info";
+		String is_admin = "";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", token);
+		params.add("user", id);
+			
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType( MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>( params, headers);
+		
+		String responseString = restTemplate.postForObject( requestUrl, request, String.class);
+		
+		JsonNode rootNode, userNode, adminNode = null;
+		
+			try {
+				rootNode = objectMapper.readTree( responseString);
+			userNode = rootNode.path( "user");
+			adminNode = userNode.path( "is_admin");
+			is_admin = adminNode.asText();
+			if(is_admin.equals("true"))
+				return true;
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return false;
+	}
+	
 	//get a user's slack id from their email
 	public String getSlackId(String token, String email) {
 		JsonNode usersList = getUserList(token);

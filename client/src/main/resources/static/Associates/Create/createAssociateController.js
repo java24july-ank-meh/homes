@@ -14,7 +14,6 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
 	});
 	
     $scope.createResidentFormSubmit = function () {
-    	
 
     	$scope.associate.officeId = JSON.parse($scope.selected).officeId;
 
@@ -32,7 +31,6 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
         $http.post('/api/associates/associates/createOrUpdate/', $scope.associate)
             .success(onSuccess)
             .error(onError);
-
     };
     
     $scope.hide = function() {
@@ -43,27 +41,6 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
         $mdDialog.cancel();
       };
       
-      
- 	 /*$scope.assignResident = function (residentId) {
-
- 	      var onSuccess = function (data, status, headers, config) {
- 	    	  $mdToast.show($mdToast.simple().textContent("Resident Assigned").position('top right'));
- 	          $scope.hide();
- 	         $state.reload();
- 	      };
-
- 	      var onError = function (data, status, headers, config) {
- 	    	  $mdToast.show($mdToast.simple().textContent(data));
- 	      };
-
- 	      $http.post('/api/Apartments/'+$stateParams.apartmentId+'/Resident/'+residentId)
- 	      	.success(onSuccess)
- 	      	.error(onSuccess);
-
- 	  };*/
-
-
-    //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {
         $scope.associate = "";
     };

@@ -1,6 +1,34 @@
-<md-button class="md-fab md-fab-bottom-right" aria-label="FAB" ng-click="showCreateResidentForm()" >
+
+<!-- <md-button class="md-fab md-fab-bottom-right" aria-label="FAB" ng-click="showCreateResidentForm()" >
     <ng-md-icon icon="add" class="md-icon"></ng-md-icon>
 </md-button>
+<md-button class="md-fab md-fab-bottom-left" aria-label="FAB" ng-click="showImportResidentForm()" >
+    <ng-md-icon icon="insert_drive_file" class="md-icon"></ng-md-icon>
+</md-button> -->
+
+ <div class="lock-size md-fab md-fab-bottom-right" layout="row" layout-align="center center">
+      <md-fab-speed-dial md-open="false" md-direction="up"
+                         ng-class="md-scale">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-warn">
+            <ng-md-icon icon="menu" class="md-icon"></ng-md-icon>
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          	<md-button class="md-fab md-raised md-mini" aria-label="FAB" ng-click="showCreateResidentForm()" >
+   		 		<ng-md-icon icon="add" class="md-icon"></ng-md-icon>
+			</md-button>
+          	<md-button class="md-fab md-raised md-mini" aria-label="FAB" ng-click="showImportResidentForm()" >
+    			<ng-md-icon icon="insert_drive_file" class="md-icon"></ng-md-icon>
+			</md-button>
+          <!-- <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+            <md-icon md-svg-src="img/icons/hangout.svg" aria-label="Google Hangout"></md-icon>
+          </md-button> -->
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+
 <md-toolbar ng-show="!showSearch">
 <div class="md-toolbar-tools">
 	<md-button ng-click="toggleSidenav('left')" hide-gt-md

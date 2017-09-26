@@ -56,7 +56,7 @@ public class ProfileCompositeController {
 	@Autowired
 	ProfileCompositeService profileCService;
 	
-	private static final String service_url = "http://107.22.129.162";
+	public static final String service_url = "http://107.22.129.162";
 
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getProfileInfo(@PathVariable("id") String id) {

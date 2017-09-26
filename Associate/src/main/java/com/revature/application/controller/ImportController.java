@@ -41,13 +41,13 @@ public class ImportController {
 					fos.write(file.getBytes());
 					fos.close(); 
 					System.out.println(fs.importExcel(xlsx, office));
-
-					return ResponseEntity.ok("Imported successfully.");
+					
+					return ResponseEntity.ok().build();
 				} catch (IOException e) {
-					return ResponseEntity.ok("Failed to upload file for Import.");
+					return ResponseEntity.ok().build();
 				}
 			} else {
-				return ResponseEntity.ok("No file to Import.");
+				return ResponseEntity.badRequest().build();
 			}
 
 	}
@@ -63,12 +63,12 @@ public class ImportController {
 				fos.close(); 
 				System.out.println(fs.sysoutExcelInfo(xlsx));
 
-				return ResponseEntity.ok("Imported successfully.");
+				return ResponseEntity.ok().build();
 			} catch (IOException e) {
-				return ResponseEntity.ok("Failed to upload file for Import.");
+				return ResponseEntity.ok().build();
 			}
 		} else {
-			return ResponseEntity.ok("No file to Import.");
+			return ResponseEntity.badRequest().build();
 		}
 
 	}

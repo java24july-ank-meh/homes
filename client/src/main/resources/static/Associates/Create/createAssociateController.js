@@ -16,8 +16,11 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
     $scope.createResidentFormSubmit = function () {
 
     	$scope.associate.officeId = JSON.parse($scope.selected).officeId;
-
+    	
+    	$http.post("/api/slack/resident/invite",{email:$scope.associate.email});
+    	
         var onSuccess = function (data, status, headers, config) {
+        	$http.post("/api/slack/resident/invite",{email:$scope.associate.email});
         	$mdToast.show($mdToast.simple().textContent("Associate Created").position('top right'));
             $state.go('home.showAssociate', { residentId: data});
             $scope.hide();

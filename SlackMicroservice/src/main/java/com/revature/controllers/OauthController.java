@@ -92,7 +92,7 @@ public class OauthController {
 		
 		//send user to authorize channel and im scopes
 		String scopes = helper.scopes(token);
-		if(!scopes.contains("channels:write")) {
+		if(!scopes.contains("channels:write")&&!scopes.contains("users:read.email")) {
 			jobj.addProperty("scope", "basic");
 			return ResponseEntity.ok(jobj.toString());
 		}

@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -33,6 +34,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class Helper {
 
+	@Value("${client_token}")
+	private String clientToken;
+	
 	@Autowired
 	RestTemplate restTemplate;
 	
@@ -97,7 +101,7 @@ public class Helper {
 	}
 	
 	public String getToken() {
-		Properties prop = new Properties();
+/*		Properties prop = new Properties();
 		InputStream in;
 		try {
 			in = new FileInputStream("slack.properties");
@@ -107,7 +111,8 @@ public class Helper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return prop.getProperty("client_token");
+		return prop.getProperty("client_token");*/
+		return clientToken;
 	}
 	
 	//get a user's slack id from their email

@@ -18,7 +18,7 @@ import com.revature.application.models.Unit;
 
 @Service
 public class RequestCompositeService {
-	String baseurl = "http://192.168.61.123:8085/api/";
+	String baseurl = "http://107.22.129.162:8085/api/";
 	
 	public void sendMessage(int associateId, String message) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -153,7 +153,7 @@ public class RequestCompositeService {
 		return compositeObj.toString();
 	}
 
-	private <T> Object getObject(String endpoint1, String endpoint2, Class<T> objectClass) {
+/*	private <T> Object getObject(String endpoint1, String endpoint2, Class<T> objectClass) {
 		Object obj = null;
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -167,8 +167,8 @@ public class RequestCompositeService {
 	}
 
 	private static URI getRestServiceURI() {
-		String loc = "http://localhost:8085";
+		String loc = "http://107.22.129.162";
 		String site = "/api";//idk if this is right..?
 		return UriBuilder.fromUri(loc+site).build();
-	}
+	}*/
 }

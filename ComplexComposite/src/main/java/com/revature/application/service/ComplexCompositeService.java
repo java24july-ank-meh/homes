@@ -29,15 +29,15 @@ import com.sun.jersey.api.client.WebResource;
 @Service
 public class ComplexCompositeService {
 
-	private String baseurl = "http://192.168.61.123:8085/api/";
+	private String baseurl = "http://107.22.129.162:8085/api/";
 	
-	public JsonArray allComplexes(){
-		return getJsonArrayFromService("http://localhost:8093/complex");
-	}
+	/*public JsonArray allComplexes(){
+		return getJsonArrayFromService("http://107.22.129.162:8093/complex");
+	}*/
 	
 	public JsonArray allUnits() {
-		JsonArray units = getJsonArrayFromService("http://localhost:8093/unit");
-		JsonArray associates = getJsonArrayFromService("http://localhost:8090/");
+		JsonArray units = getJsonArrayFromService(baseurl + "complex/unit");
+		JsonArray associates = getJsonArrayFromService(baseurl + "associates/associates");
 		
 		Map<Long, JsonArray> AssociatesForEachUnit = new HashMap<>();
 		for(int i = 0; i < units.size(); i++) {

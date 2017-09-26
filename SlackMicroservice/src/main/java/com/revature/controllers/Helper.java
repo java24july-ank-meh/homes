@@ -112,7 +112,7 @@ public class Helper {
 			e.printStackTrace();
 		}
 		return prop.getProperty("client_token");*/
-		return clientToken;
+		return "xoxp-237895291120-238602608212-247012098498-7381cd5976e980ab129d601b39035775";
 	}
 	
 	//get a user's slack id from their email

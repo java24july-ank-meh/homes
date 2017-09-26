@@ -7,9 +7,12 @@ import javax.ws.rs.core.UriBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static com.revature.application.controller.ProfileCompositeController.service_url;
+
 @Service
 public class ProfileCompositeService {
 	
+    
 	public String getProfile() {
 						
 		return null;
@@ -29,7 +32,7 @@ public class ProfileCompositeService {
 	}
 
 	private static URI getRestServiceURI() {
-		String loc = "http://localhost:8085";
+		String loc = service_url;
 		String site = "/api";//idk if this is right..?
 		return UriBuilder.fromUri(loc+site).build();
 	}

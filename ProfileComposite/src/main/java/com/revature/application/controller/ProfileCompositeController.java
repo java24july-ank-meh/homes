@@ -55,12 +55,14 @@ public class ProfileCompositeController {
 
 	@Autowired
 	ProfileCompositeService profileCService;
+	
+	public static final String service_url = "http://107.22.129.162";
 
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getProfileInfo(@PathVariable("id") String id) {
-	/*	JsonObject compositeObj = getJsonFromService("http://localhost:8090/associates/" +id);		
-		JsonObject unitJson = getJsonFromService("http://localhost:8093/unit/" +compositeObj.get("unitId").getAsString());
-		JsonObject complexJson = getJsonFromService("http://localhost:8093/complex/" +compositeObj.get("complexId").getAsString());*/	
+	/*	JsonObject compositeObj = getJsonFromService(service_url + ":8090/associates/" +id);		
+		JsonObject unitJson = getJsonFromService(service_url + ":8093/unit/" +compositeObj.get("unitId").getAsString());
+		JsonObject complexJson = getJsonFromService(service_url + ":8093/complex/" +compositeObj.get("complexId").getAsString());*/	
 		
 		JsonObject obj1 = jsonReturned("associates", id);
 		JsonObject unitJson = jsonReturned("unit", obj1.get("unitId").getAsString());
@@ -105,17 +107,17 @@ public class ProfileCompositeController {
 
 	private static URI getRestServiceURI() {
 
-		String loc = "http://localhost:8085";
+		String loc = service_url + ":8085";
 		String site = "/api";//idk if this is right..?
 
 		return UriBuilder.fromUri(loc+site).build();
 	}
 
 	// Important stuff! Do not delete.... Feel free to edit this URI to make it more professional though
-		private final String RedirectionUri = "atItAgainTheRedirection";
+		private final String RedirectionUri = "docusignRedirection";
 
 		// The date must be formatted as YYYY-MM-DD
-		@GetMapping("atItAgain")
+		@GetMapping("docusign")//TODO: change the mapping to something more appropriate now that testing is done
 		public String updateDocusignTry3(@QueryParam("date") String date) {
 			/*
 			 * Most of this entire method is taken from the DocuSign example page:
@@ -123,7 +125,7 @@ public class ProfileCompositeController {
 			 * Actually, it was taken from the test found there but more information on that in the other method
 			 * riiiiight below here that gets called after the user is redirected.
 			 */
-
+ 
 			MrSingletonState.setDate(date);
 			
 			
@@ -133,7 +135,7 @@ public class ProfileCompositeController {
 			String IntegratorKey = "6b512969-dc6a-4a85-b522-3094833f0373";
 			String ClientSecret = "40342a64-f8d8-44ca-b57a-43804ffd8248";// set up with integrator key setup
 			String BaseUrl = "https://demo.docusign.net/restapi"; // Only for sandbox/ demo use.
-			String fullRedirectUri = "http://localhost:8105/profilecomposite/" + RedirectionUri;
+			String fullRedirectUri = service_url + ":8105/profilecomposite/" + RedirectionUri;
 
 			try {
 				ApiClient apiClient = new ApiClient("https://" + OAuthBaseUrl, "docusignAccessCode", IntegratorKey,
@@ -247,14 +249,14 @@ public class ProfileCompositeController {
 				options.setFromToStatus("Completed");
 				
 				EnvelopesInformation eInfo = envelopesApi.listStatusChanges(defaultAccount.getAccountId(), options);
-				System.out.println(eInfo);
+				//System.out.println(eInfo);
 				for(Envelope e : eInfo.getEnvelopes()) {
 					Envelope e2 = envelopesApi.getEnvelope(defaultAccount.getAccountId(), e.getEnvelopeId());
 					Recipients recipients = e2.getRecipients();//Why is this always null?
 
-					System.out.println(e);
+					//System.out.println(e);
 					//System.out.println(e2);
-					System.out.println("NEXT!\n\n");
+					//System.out.println("NEXT!\n\n");
 					
 					if (recipients == null) {
 						String changedDate = e.getStatusChangedDateTime();
@@ -263,7 +265,7 @@ public class ProfileCompositeController {
 						
 						Recipients r = CallUriPersonally(BaseUrl + e.getRecipientsUri(), Recipients.class);
 						String email = r.getSigners().get(0).getEmail();
-						Associate a = CallUriPersonally("http://localhost:8085/api/associates/" + email + "/email", Associate.class);
+						Associate a = CallUriPersonally(service_url + ":8085/api/associates/" + email + "/email", Associate.class);
 						a.setHousingAgreed(time);//TODO: change to changedDate once up to date with dev
 						updateAssociate(a);
 					}
@@ -285,12 +287,12 @@ public class ProfileCompositeController {
 		
 		private void updateAssociate(Associate a) {
 			Client client = Client.create();
-			WebResource webResource =client.resource("http://localhost:8085/api/associates/createOrUpdate");
+			WebResource webResource =client.resource(service_url + ":8085/api/associates/createOrUpdate");
 
 
 			try {
 				// Turn a into a JSON object
-				HttpPost post = new HttpPost("http://localhost:8085/api/associates/createOrUpdate");
+				HttpPost post = new HttpPost(service_url + ":8085/api/associates/createOrUpdate");
 				post.setHeader("Content-Type", "application/json");
 				Gson gson = new Gson();
 				StringEntity entity = new StringEntity(gson.toJson(a));
@@ -330,7 +332,7 @@ public class ProfileCompositeController {
 			response = (T) webResource.queryParams(queryParams)
 			                        .header("Content-Type", "application/json;charset=UTF-8")
 			    .header("Authorization", appKey)
-			    .get(returnType.getClass());
+			    .get((Class<T>) returnType);
 
 			//String jsonStr = response.getEntity(String.class);
 			return response;

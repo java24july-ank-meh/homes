@@ -1,5 +1,5 @@
 angular.module('rhmsApp').controller('importAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
-	$scope.file = "";
+	$scope.formData = {};
 
     /*$http.get("/api/associates/associates/")
     .then(function(response) {
@@ -7,7 +7,7 @@ angular.module('rhmsApp').controller('importAssociateController', ['$scope', '$h
     });*/
 	
 	
-    $scope.importResidentFormSubmit = function () {
+    $scope.importResidentFormSubmit = function (formData) {
 
         var onSuccess = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("Associates Created").position('top right'));
@@ -22,7 +22,7 @@ angular.module('rhmsApp').controller('importAssociateController', ['$scope', '$h
         
         //$scope.resident.apartment = $scope.unnassignedApartment;
         //console.log($scope.resident);
-        $http.post('/api/associates/import/excel/', $scope.file)
+        $http.post('/api/associates/import/excel/', formData)
             .success(onSuccess)
             .error(onError);
 

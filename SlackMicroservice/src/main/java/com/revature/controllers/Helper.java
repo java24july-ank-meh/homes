@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -97,7 +98,7 @@ public class Helper {
 	}
 	
 	public String getToken() {
-		Properties prop = new Properties();
+/*		Properties prop = new Properties();
 		InputStream in;
 		try {
 			in = new FileInputStream("slack.properties");
@@ -107,7 +108,8 @@ public class Helper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return prop.getProperty("client_token");
+		return prop.getProperty("client_token");*/
+		return "xoxp-237895291120-238602608212-247012098498-7381cd5976e980ab129d601b39035775";
 	}
 	
 	//get a user's slack id from their email

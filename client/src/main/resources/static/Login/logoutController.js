@@ -2,9 +2,8 @@ angular.module('rhmsApp').controller('logoutController', ['$scope', '$state', '$
 	delete $rootScope.rootUser;
 	delete $rootScope.rootResident;
 
-	$http.get('api/logout1').then(function(response){
-	$state.go("login", {}, {reload: true});
-	});
+	$state.go("login");
+
 
 }]);
 

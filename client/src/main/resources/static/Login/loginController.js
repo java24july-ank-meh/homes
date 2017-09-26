@@ -2,11 +2,6 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
 /*    $http.get("/HousingOnlineManagementSystem/api/login").then(function(response) {
         $scope.code = response.data;
     });*/
-	
-    if(!$rootScope.rootUser == undefined){
-    	$state.go("home.dashboard");
-    }
-    
     var paramValue = $location.search().code;
 	$http.post("/api/slack/manager/scopes/basic",{code : paramValue}).then(function(response) {
 		

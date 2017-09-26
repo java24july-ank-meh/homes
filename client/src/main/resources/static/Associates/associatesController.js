@@ -2,7 +2,6 @@ angular.module('rhmsApp').controller('associatesController', ['$scope', '$mdBott
 	
 	$scope.error = false;
 	
-
 	$http.get("/api/resident-composite/residentcomposite/residentinfo/withRoomDetails").then(function(response) {
 		$scope.associatedata = response.data;
 		$scope.residentsTable = new NgTableParams({}, { dataset: $scope.associatedata});

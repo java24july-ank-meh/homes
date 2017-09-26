@@ -149,7 +149,7 @@ public class FileServiceImpl implements FileService {
 
 					tempA.setMoveInDate(ldt);
 					
-					//associates.add(tempA);
+					associates.add(tempA);
 					if(associateRepository.findByEmail(tempA.getEmail()) == null)
 						associateRepository.saveAndFlush(tempA);
 				}

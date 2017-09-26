@@ -22,10 +22,6 @@ angular.module('rhmsApp').controller('importAssociateController', ['$scope', '$h
         
         //$scope.resident.apartment = $scope.unnassignedApartment;
         //console.log($scope.resident);
-        let fd = new FormData();
-        fd.append("file", fileInputElement.files[0]);
-        console.log(formData);
-        console.log(fd);
         $http.post('/api/associates/import/excel/', formData)
             .success(onSuccess)
             .error(onError);

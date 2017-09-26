@@ -112,10 +112,10 @@ public class ProfileCompositeController {
 	}
 
 	// Important stuff! Do not delete.... Feel free to edit this URI to make it more professional though
-		private final String RedirectionUri = "atItAgainTheRedirection";
+		private final String RedirectionUri = "docusignRedirection";
 
 		// The date must be formatted as YYYY-MM-DD
-		@GetMapping("atItAgain")//TODO: change the mapping to something more appropriate now that testing is done
+		@GetMapping("docusign")//TODO: change the mapping to something more appropriate now that testing is done
 		public String updateDocusignTry3(@QueryParam("date") String date) {
 			/*
 			 * Most of this entire method is taken from the DocuSign example page:
@@ -123,7 +123,7 @@ public class ProfileCompositeController {
 			 * Actually, it was taken from the test found there but more information on that in the other method
 			 * riiiiight below here that gets called after the user is redirected.
 			 */
-
+ 
 			MrSingletonState.setDate(date);
 			
 			

@@ -34,9 +34,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class Helper {
 
-	@Value("${client_token}")
-	private String clientToken;
-	
 	@Autowired
 	RestTemplate restTemplate;
 	

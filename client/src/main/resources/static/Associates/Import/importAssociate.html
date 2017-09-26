@@ -1,6 +1,6 @@
 <md-dialog aria-label="">
-<form name="importResidentForm" ng-submit="importResidentFormSubmit()"
-	ng-cloak>
+<form name="importResidentForm" ng-submit="importResidentFormSubmit(formData)"
+	ng-cloak enctype="multipart/form-data">
 	<md-toolbar>
 	<div class="md-toolbar-tools">
 		<h2>Create Associate</h2>
@@ -15,7 +15,7 @@
 	<div class="md-dialog-content">
 		<div layout-gt-sm="row">
 			<md-input-container class="md-block" flex-gt-sm>
-				<input ng-model='file' type="file"/>
+				<input ng-model='file' type="file" ng-model="formData.file"/>
 			</md-input-container>
 		</div>
 	</md-dialog-content>

@@ -115,7 +115,7 @@ public class ProfileCompositeController {
 		private final String RedirectionUri = "atItAgainTheRedirection";
 
 		// The date must be formatted as YYYY-MM-DD
-		@GetMapping("atItAgain")
+		@GetMapping("atItAgain")//TODO: change the mapping to something more appropriate now that testing is done
 		public String updateDocusignTry3(@QueryParam("date") String date) {
 			/*
 			 * Most of this entire method is taken from the DocuSign example page:
@@ -247,14 +247,14 @@ public class ProfileCompositeController {
 				options.setFromToStatus("Completed");
 				
 				EnvelopesInformation eInfo = envelopesApi.listStatusChanges(defaultAccount.getAccountId(), options);
-				System.out.println(eInfo);
+				//System.out.println(eInfo);
 				for(Envelope e : eInfo.getEnvelopes()) {
 					Envelope e2 = envelopesApi.getEnvelope(defaultAccount.getAccountId(), e.getEnvelopeId());
 					Recipients recipients = e2.getRecipients();//Why is this always null?
 
-					System.out.println(e);
+					//System.out.println(e);
 					//System.out.println(e2);
-					System.out.println("NEXT!\n\n");
+					//System.out.println("NEXT!\n\n");
 					
 					if (recipients == null) {
 						String changedDate = e.getStatusChangedDateTime();
@@ -263,8 +263,9 @@ public class ProfileCompositeController {
 						
 						Recipients r = CallUriPersonally(BaseUrl + e.getRecipientsUri(), Recipients.class);
 						String email = r.getSigners().get(0).getEmail();
-						Associate a = CallUriPersonally("http://localhost:8085/api/associates/" + email + "/email", Associate.class);
-						a.setHousingAgreed(time);//TODO: change to changedDate once up to date with dev
+						//TODO: Set correct path for this call to Accociate Service
+						Associate a = CallUriPersonally("http://192.168.61.123:8085/api/associates/associates/" + email + "/email", Associate.class);
+						a.setHousingAgreed(time);
 						updateAssociate(a);
 					}
 					//Redirecting to the recipients uri gives me nothing, oddly enough.
@@ -330,7 +331,7 @@ public class ProfileCompositeController {
 			response = (T) webResource.queryParams(queryParams)
 			                        .header("Content-Type", "application/json;charset=UTF-8")
 			    .header("Authorization", appKey)
-			    .get(returnType.getClass());
+			    .get((Class<T>) returnType);
 
 			//String jsonStr = response.getEntity(String.class);
 			return response;

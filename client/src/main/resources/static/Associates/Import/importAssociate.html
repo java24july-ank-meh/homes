@@ -1,9 +1,9 @@
 <md-dialog aria-label="">
-<form name="importResidentForm" action="api/associates/associates/import/excel" enctype="multipart/form-data"
+<form name="importResidentForm" ng-submit=importResidentFormSubmit() enctype="multipart/form-data"
 	ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Create Associate</h2>
+		<h2>Import Associates</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel()"> <ng-icon
 			icon="close" aria-label="Close dialog">
@@ -15,7 +15,7 @@
 	<div class="md-dialog-content">
 		<div layout-gt-sm="row">
 			<md-input-container class="md-block" flex-gt-sm>
-				<input ng-model='file' type="file" ng-model="formData.file"/>
+				<input ng-model='file' id="file" type="file" ng-model="formData.file"/>
 			</md-input-container>
 		</div>
 	</md-dialog-content>
@@ -26,11 +26,7 @@
 </md-dialog>
 
 
-<!-- <form enctype="multipart/form-data" action="http://localhost:3000/upload?upload_progress_id=12344" method="POST">
-<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-Choose a file to upload: <input name="uploadedfile" type="file" /><br />
-<input type="submit" value="Upload File" />
-</form>
+<!-- <form name="importResidentForm" action="api/associates/import/excel" enctype="multipart/form-data" method="post"
  -->
 
 

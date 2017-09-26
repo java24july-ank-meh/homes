@@ -54,10 +54,9 @@ public class UnitController {
 		
 		JSONObject json = null;
 		String complex = null; String unit = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {
@@ -107,10 +106,9 @@ public class UnitController {
 		JSONObject json = null;
 		String complex = null; String unit = null; 
 		String newComplex = null; String newUnit = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			newComplex = json.getString("newComplex");
@@ -147,10 +145,9 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String token = null;
+		String complex = null; String unit = null; String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {

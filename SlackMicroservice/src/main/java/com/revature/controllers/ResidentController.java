@@ -54,13 +54,12 @@ public class ResidentController {
 		
 		JSONObject json = null;
 		String email = null; String firstName = null; String lastName = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
 			firstName = json.getString("fname");
 			lastName = json.getString("lname");
-			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -89,13 +88,12 @@ public class ResidentController {
 	public ResponseEntity<String> messageChannel(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null; String token = null;
+		String complex = null; String unit = null; String message = null; String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
-			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -128,11 +126,10 @@ public class ResidentController {
 	public ResponseEntity<Object> messageUser(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null; String token = null;
+		String complex = null; String unit = null; String message = null; String token = helper.getToken();
 		String ids = null;
 		try {
 			json = new JSONObject(body);
-			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -164,10 +161,9 @@ public class ResidentController {
 		JSONObject json = null;
 		String complex = null; String unit = null; String message = null; 
 		String group = null; String ids = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -205,10 +201,9 @@ public class ResidentController {
 		JSONObject json = null;
 		String complex = null; String unit = null; String message = null; 
 		String userId = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
@@ -245,10 +240,9 @@ public class ResidentController {
 		
 		JSONObject json = null;
 		String complex = null; String unit = "";
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			json.getString("token");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 		}catch(JSONException e) {
@@ -266,10 +260,9 @@ public class ResidentController {
 	@RequestMapping(value="message/listchannels", method=RequestMethod.POST)
 	public ResponseEntity<Object> listChannels( @RequestBody String body){
 		JSONObject json = null;
-		String token = null;
+		String token =helper.getToken();
 		try {
 			json = new JSONObject(body);
-			json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -289,12 +282,11 @@ public class ResidentController {
 		String complex = null;
 		String userId = null;
 		String email = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			email = json.getString("email");
-			token = helper.getToken();
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -331,10 +323,9 @@ public class ResidentController {
 		String complex = null; String unit = null;
 		String userId = null;
 		String email = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			token = helper.getToken();
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");

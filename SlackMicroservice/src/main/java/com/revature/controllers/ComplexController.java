@@ -55,11 +55,10 @@ public class ComplexController {
 		
 		JSONObject json = null;
 		String channelName = null;
-		String token = null;
+		String token = helper.getToken();
 		try{
 			json = new JSONObject(complex);
 			channelName = json.getString("name");
-			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
 		
@@ -100,14 +99,13 @@ public class ComplexController {
 	public ResponseEntity<String> updateComplex(@RequestBody String complex, 
 			HttpSession http) {
 		
-		String token =  null;
+		String token =  helper.getToken();
 		
 		System.out.println(complex);
 		JSONObject json = null;
 		String oldName = null; String newName = null;
 		try{
 			json = new JSONObject(complex);
-			token = json.getString("token");
 			oldName = json.getString("oldName");
 			newName = json.getString("newName");
 		}
@@ -139,10 +137,9 @@ public class ComplexController {
 		
 		JSONObject json = null;
 		String name = null;
-		String token = null;
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(complex);
-			token = json.getString("token");
 			name = json.getString("name");
 		}catch(JSONException e) {
 			e.printStackTrace();

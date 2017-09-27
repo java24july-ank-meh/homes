@@ -110,7 +110,7 @@ public class Helper {
 		}
 		return prop.getProperty("client_token");*/
 		//should be in a file at the very least, realy should be handled through spring security
-		return "xoxp-237895291120-239988622849-247244211330-58b547730faa890f410d24923440f9fc";
+		return "xoxp-237895291120-239988622849-248458371015-f7fee108b13bfcf807d1a54a91fa07e0";
 	}
 	
 	//get a user's slack id from their email
@@ -433,6 +433,25 @@ public class Helper {
         }
         
         return null;
+    }
+    
+    public String truncate(String complexName) {
+    	String shortenedComplexName;
+    	if(complexName.length() > 10) {
+			shortenedComplexName =complexName.replaceAll("\\s","").substring(0, 10);
+		} else {
+			shortenedComplexName = complexName.replaceAll("\\s","");
+		}
+    	
+    	return shortenedComplexName;
+    }
+    
+    public String complexChannelName(String complex) {
+    	return truncate(complex);
+    }
+    
+    public String unitChannelName(String complex, String building, String unit) {
+    	return truncate(complex) + building + "-" + unit;
     }
 	
 }

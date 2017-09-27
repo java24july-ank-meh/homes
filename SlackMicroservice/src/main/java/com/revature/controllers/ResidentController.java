@@ -88,7 +88,7 @@ public class ResidentController {
 	public ResponseEntity<String> messageChannel(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null; String token = helper.getToken();
+		String complex = null; String unit = ""; String message = null; String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");

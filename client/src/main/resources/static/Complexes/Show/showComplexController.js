@@ -1,6 +1,7 @@
-angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog','$http', '$stateParams', '$state','$mdToast', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $stateParams, $state, $mdToast) {
+angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog','$http', '$stateParams', '$state','$mdToast', "$rootScope", function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $stateParams, $state, $mdToast, $rootScope) {
 	$scope.error = false;
 	$scope.announcement  = '';
+	$scope.isManager = $rootScope.rootUser.isManager;
 	
 	  $scope.showConfirm = function(deleteComplex) {
 
@@ -41,7 +42,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
      $http.get("/api/complex/complex/"+$stateParams.complexId).then(function(response) {
 
          $scope.complex = response.data;
-         
+       
          $http.get("/api/complex/complex/"+$stateParams.complexId+"/units").then(function(response) {
         	 
         	 $scope.complex.units = response.data;
@@ -59,18 +60,9 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
             		 }
             	 }
         	 });
-        	 
          });
-         
-         if($scope.complex === ''){
-        	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
-        	 $scope.error = true;
-         } else {
-        	 
-        	 /*var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.complex.address.split(' ').join('+')+"&destination=11730+Plaza+America+Drive,+Reston,+VA&avoid=tolls|highways";
-        	 document.getElementById('complexMap').src = parsedAddress;*/
-         }
-         
+     }, function(){
+    	 $scope.error="true";
      });
      
 	  $scope.showCreateApartmentForm = function(ev) {

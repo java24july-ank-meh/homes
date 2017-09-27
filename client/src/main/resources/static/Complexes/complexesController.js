@@ -1,8 +1,10 @@
-angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http) {
+angular.module('rhmsApp').controller('complexesController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$rootScope', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $rootScope) {
 
 	$scope.error = false;
 	
 	$scope.selected = {};
+	
+	$scope.isManager = $rootScope.rootUser.isManager;
 	
 	$http.get('/api/complex/office')
 	.success(function(data){

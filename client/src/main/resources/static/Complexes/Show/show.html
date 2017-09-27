@@ -1,4 +1,4 @@
-<md-button class="md-fab md-fab-bottom-right" aria-label="FAB" ng-click="showCreateApartmentForm()" >
+<md-button class="md-fab md-fab-bottom-right" aria-label="FAB" ng-click="showCreateApartmentForm()" ng-if="isManager">
     <ng-md-icon icon="add" class="md-icon"></ng-md-icon>
 </md-button>
 
@@ -104,7 +104,7 @@
             </md-card>
             <br>
             
-            <md-card layout="column" >
+            <md-card layout="column"  ng-if="isManager">
             	<md-card-title>
 	            	<md-card-title-text >
 	                     <span class="md-headline">Announcement</span>

@@ -1,5 +1,8 @@
-angular.module('rhmsApp').controller('createComplexController', ['$scope', '$http', '$mdDialog','$state','$mdToast', function($scope, $http, $mdDialog, $state, $mdToast) {
+angular.module('rhmsApp').controller('createComplexController', ['$scope', '$http', '$mdDialog','$state','$mdToast', '$rootScope', function($scope, $http, $mdDialog, $state, $mdToast, $rootScope) {
 
+	if(!$rootScope.rootUser.isManager)
+		$state.go('home.complexes');
+	
 	$scope.place = {};
 	$scope.complex = {};
 
@@ -11,6 +14,8 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
 		});
 	
     $scope.newComplexFormSubmit = function () {
+    	
+    	
     	
     	$scope.complex.office = {};
     	$scope.complex.office.officeId = JSON.parse($scope.selected).officeId;

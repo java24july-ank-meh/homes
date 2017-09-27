@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams','$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams','$mdToast','$rootScope', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast, $rootScope) {
 	
     $http.get("/api/complex/unit/"+$stateParams.apartmentId)
     .success(function(data) {
@@ -14,6 +14,12 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
     $scope.editApartmentFormSubmit = function () {
 
         var onSuccess = function (data, status, headers, config) {
+        	
+            $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
+            		'/' + oldUnit)
+            		.success(function(data){
+            			$scope.oldChannelName = data; 
+            		
         	$http.post('api/slack/unit/update', {oldName: $scope.oldChannelName,
         		newComplex: $scope.unit.complex,
         		newBuilding: $scope.unit.buildingNumber, 
@@ -22,7 +28,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         	$mdToast.show($mdToast.simple().textContent("Unit Updated").position('top right'));
             $state.reload();
             $scope.hide();
-            
+            		});
         };
 
         var onError = function (data, status, headers, config) {
@@ -33,11 +39,6 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         let oldUnitNumber = $scope.oldUnit.unitNumber;
         let oldComplex = $scope.oldUnit.complex.name;
         
-        $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
-        		'/' + oldUnit,{token:$rootScope.rootUser.token})
-        		.success(function(data){
-        			$scope.oldChannelName = data; 
-        		});
         		
         
         

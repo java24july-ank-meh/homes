@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', '$rootScope', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast, $rootScope) {
 
     $http.get("/api/associates/associates")
     .then(function(response) {

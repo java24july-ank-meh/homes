@@ -1,7 +1,5 @@
 angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$rootScope', '$location','$window','localStorageService', function($scope, $http, $rootScope, $location,$window, localStorageService){
-/*    $http.get("/HousingOnlineManagementSystem/api/login").then(function(response) {
-        $scope.code = response.data;
-    });*/
+
     var paramValue = $location.search().code;
     localStorageService.set("slack", paramValue);
 	$http.post("/api/slack/manager/scopes/basic",{code : paramValue}).then(function(response) {
@@ -14,8 +12,6 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
     	}else{
     		$rootScope.rootUser = response.data;
 			localStorageService.set("rootUser", response.data);
-			console.log($rootScope.rootUser.token);
-			alert($rootScope.rootUser.token);
 			$location.path("/home/dashboard");
     	}
     });

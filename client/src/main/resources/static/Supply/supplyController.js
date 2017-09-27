@@ -1,5 +1,8 @@
-angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http','$mdToast',  function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast) {
-
+angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http','$mdToast', '$rootScope', '$state', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast, $rootScope, $state) {
+	
+	if(!$rootScope.rootUser.isManager)
+		$state.go('home.dashboard');
+	
     $scope.deleteRowCallback = function(rows){
         $mdToast.show(
             $mdToast.simple()
@@ -26,12 +29,12 @@ angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSh
 	      };
 
 	      var onError = function (data, status, headers, config) {
-	    	  $mdToast.show($mdToast.simple().textContent(data));
+	    	  $mdToast.show($mdToast.simple().textContent("Error " + data.status));
 	      };
 
 	      $http.post('/api/request/supply/'+id+'/complete')
 	      	.success(onSuccess)
-	      	.error(onSuccess);
+	      	.error(onError);
 
 	  };
 	  
@@ -61,9 +64,7 @@ angular.module('rhmsApp').controller('supplyController', ['$scope', '$mdBottomSh
 	 	  $scope.isResolved = function(id){
 			
 	          return _.find($scope.supplyRequests, function(item){
-	             return item.suppliesId == id;
+	             return item.supplyId == id;
 	          });
 	      };
-	      
-
 }]);

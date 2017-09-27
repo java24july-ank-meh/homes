@@ -63,7 +63,7 @@
                           'unitId',
                           'resolved',
                           'resolveDate',
-                          'suppliesId'
+                          'supplyId'
                       ]
                       }">
 				    <mdt-header-row>
@@ -89,7 +89,7 @@
 					    <mdt-custom-cell column-key="resolvedDate">
 					          <span>{{value | date:formatted }}</span>
 					    </mdt-custom-cell>
-				    <mdt-custom-cell column-key="suppliesId"> 
+				    <mdt-custom-cell column-key="supplyId"> 
 				    	<button class="md-button md-primary" ng-click="clientScope.resolveSupply(value)" ng-disabled="clientScope.isResolved(value).resolved">DELIVERED</button>
 				    	</span>
 				    </mdt-custom-cell>

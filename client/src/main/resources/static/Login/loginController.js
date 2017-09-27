@@ -13,8 +13,8 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
     	}  else if(response.data.scope === ""){
     	}else{
     		$rootScope.rootUser = response.data;
-    		$location.path("/home/dashboard");
 			localStorageService.set("rootUser", $rootScope.rootUser);
+			$location.path("/home/dashboard");
     	}
     });
 }]);

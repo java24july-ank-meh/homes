@@ -92,10 +92,10 @@ public class ResidentController {
 		String complex = null; String unit = ""; String message = null; String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
+			message = json.getString("message");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
-			message = json.getString("message");
-			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

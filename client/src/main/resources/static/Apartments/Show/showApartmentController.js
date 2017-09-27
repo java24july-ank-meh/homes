@@ -54,7 +54,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
   $scope.deleteApartment = function () {
 
       var onSuccess = function (data, status, headers, config) {
-    	  $http.post('/api/slack/unit/delete', {channelName: $scope.channelName});
+    	  $http.post('/api/slack/unit/delete', {channelName: $scope.channelName,token:$rootScope.rootUser.token});
     	  $mdToast.show($mdToast.simple().textContent("Apartment Deleted").position('top right'));
           $state.go('home.showComplex', { complexId: $scope.unit.complex.complexId});
       };
@@ -64,7 +64,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
       };
       
       $http.get('/api/slack/unit/channelName' + $scope.unit.complex.name + '/' + 
-    		  $scope.unit.buildingNumber + '/' + $scope.unit.unitNumber)
+    		  $scope.unit.buildingNumber + '/' + $scope.unit.unitNumber,{token:$rootScope.rootUser.token})
     		  .success(function(data){
     			 $scope.channelName = data; 
     		  });

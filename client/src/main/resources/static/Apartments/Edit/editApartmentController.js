@@ -17,7 +17,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         	$http.post('api/slack/unit/update', {oldName: $scope.oldChannelName,
         		newComplex: $scope.unit.complex,
         		newBuilding: $scope.unit.buildingNumber, 
-        		newUnit: $scope.unit.unitNumber});
+        		newUnit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});
         	
         	$mdToast.show($mdToast.simple().textContent("Unit Updated").position('top right'));
             $state.reload();
@@ -34,7 +34,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         let oldComplex = $scope.oldUnit.complex.name;
         
         $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
-        		'/' + oldUnit)
+        		'/' + oldUnit,{token:$rootScope.rootUser.token})
         		.success(function(data){
         			$scope.oldChannelName = data; 
         		});

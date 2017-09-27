@@ -38,15 +38,10 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         var onError = function (data, status, headers, config) {
         	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
-        
-        
         		
-        
-        
         $http.put('/api/complex/unit/'+$stateParams.apartmentId, $scope.unit)
             .success(onSuccess)
             .error(onError);
-
     };
     
     $scope.hide = function() {
@@ -57,8 +52,6 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         $mdDialog.cancel();
       };
 
-
-    //6. create resetForm() function. This will be called on Reset button click.
     $scope.resetForm = function () {
         $scope.apartment = "";
     };

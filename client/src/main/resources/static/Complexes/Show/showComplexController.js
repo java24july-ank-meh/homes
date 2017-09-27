@@ -93,12 +93,10 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 	        	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
 	        }
 
-	      /*  $stateParams.complexId*/
 	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement, token:$rootScope.rootUser.token} )
 	            .success(onSuccess)
 	            .error(onError);
 
-		  
 	  };
 
 }]);

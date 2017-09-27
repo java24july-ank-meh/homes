@@ -15,6 +15,10 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
 
         var onSuccess = function (data, status, headers, config) {
         	
+            let oldBuildingNumber = $scope.oldUnit.buildingNumber;
+            let oldUnitNumber = $scope.oldUnit.unitNumber;
+            let oldComplex = $scope.oldUnit.complex.name;
+        	
             $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
             		'/' + oldUnit)
             		.success(function(data){
@@ -35,9 +39,6 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
         	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         }
         
-        let oldBuildingNumber = $scope.oldUnit.buildingNumber;
-        let oldUnitNumber = $scope.oldUnit.unitNumber;
-        let oldComplex = $scope.oldUnit.complex.name;
         
         		
         

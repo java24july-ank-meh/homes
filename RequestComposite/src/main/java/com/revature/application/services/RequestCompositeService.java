@@ -22,7 +22,7 @@ public class RequestCompositeService {
 	
 	public void sendMessage(int associateId, String message) {
 		RestTemplate restTemplate = new RestTemplate();
-		Associate associate = restTemplate .getForObject(baseurl + "associates/associates/"+ associateId,Associate.class);		
+		Associate associate = restTemplate .getForObject(baseurl + "associates/associates/"+ associateId, Associate.class);		
 		//Associate associate = (Associate) getObject("associates", ""+associateId, Associate.class);
 		
 		// associate.getSlackId();

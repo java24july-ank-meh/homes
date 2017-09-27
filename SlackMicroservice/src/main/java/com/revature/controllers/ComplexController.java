@@ -61,6 +61,7 @@ public class ComplexController {
 		try{
 			json = new JSONObject(complex);
 			name = json.getString("name");
+			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
 		
@@ -112,6 +113,7 @@ public class ComplexController {
 			json = new JSONObject(complex);
 			oldChannelName = json.getString("oldName");
 			newComplexName = json.getString("newName");
+			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
 		
@@ -147,6 +149,7 @@ public class ComplexController {
 		try {
 			json = new JSONObject(complex);
 			channelName = json.getString("channelName");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

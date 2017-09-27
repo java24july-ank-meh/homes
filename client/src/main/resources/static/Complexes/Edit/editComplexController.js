@@ -16,7 +16,7 @@ angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http'
 
         var onSuccess = function (data, status, headers, config) {
         	$http.post('/api/slack/complex/update', {oldName: $scope.oldChannelName, 
-        		newName: $scope.complex.name});
+        		newName: $scope.complex.name, token:$rootScope.rootUser.token});
         	
         	 $mdToast.show($mdToast.simple().textContent("Complex Updated").position('top right'));
             $state.go('home.showComplex', { complexId: data });
@@ -26,7 +26,7 @@ angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http'
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         };
         
-        $http.get('/api/slack/complex/channelName/' + $scope.oldComplex.name)
+        $http.get('/api/slack/complex/channelName/' + $scope.oldComplex.name, {token:$rootScope.rootUser.token})
         		.success(function(data){
         			$scope.oldChannelName = data; 
         		});

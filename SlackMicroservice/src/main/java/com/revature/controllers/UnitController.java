@@ -62,6 +62,7 @@ public class UnitController {
 			complex = json.getString("complex");
 			building = json.getString("building");
 			unit = json.getString("unit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -116,6 +117,7 @@ public class UnitController {
 			newComplex = json.getString("newComplex");
 			newBuilding = json.getString("newBuilding");
 			newUnit = json.getString("newUnit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -147,10 +149,12 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String channelName = null; String token = helper.getToken();
+		String channelName = null; 
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			channelName = json.getString("channelName");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

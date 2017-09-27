@@ -110,7 +110,7 @@ public class Helper {
 		}
 		return prop.getProperty("client_token");*/
 		//should be in a file at the very least, realy should be handled through spring security
-		return "xoxp-237895291120-239988622849-248458371015-f7fee108b13bfcf807d1a54a91fa07e0";
+		return "xoxp-237895291120-239988622849-247757395381-6621e1f74bb7e699c842576882b877f2";
 	}
 	
 	//get a user's slack id from their email

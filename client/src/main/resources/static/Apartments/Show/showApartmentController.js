@@ -143,7 +143,13 @@ $scope.sendAnnouncementFormSubmit = function(event){
      	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
      }
 
-     $http.post('/api/Apartments/message/'+$stateParams.apartmentId, $scope.aptannouncement )
+     let complexName = $scope.unit.complex.name;
+     let unitNumber = $scope.unit.unitNumber;
+     let buildingNumber = $scope.unit.buildingNumber;
+     let token = $rootScope.rootUser.token;
+     let message = $scope.aptannouncement;
+     
+     $http.post('/api/slack/resident/message', {complex: complexName, unit: unitNumber, building: buildingNumber, message: message, token: token})
          .success(onSuccess)
          .error(onError);
 

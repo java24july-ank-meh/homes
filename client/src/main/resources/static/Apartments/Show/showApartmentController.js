@@ -54,6 +54,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
   $scope.deleteApartment = function () {
 
       var onSuccess = function (data, status, headers, config) {
+    	  $http.post('/api/slack/unit/delete', {channelName: $scope.channelName});
     	  $mdToast.show($mdToast.simple().textContent("Apartment Deleted").position('top right'));
           $state.go('home.showComplex', { complexId: $scope.unit.complex.complexId});
       };
@@ -61,6 +62,12 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
       var onError = function (data, status, headers, config) {
     	  $mdToast.show($mdToast.simple().textContent(data));
       };
+      
+      $http.get('/api/slack/unit/channelName' + $scope.unit.complex.name + '/' + 
+    		  $scope.unit.buildingNumber + '/' + $scope.unit.unitNumber)
+    		  .success(function(data){
+    			 $scope.channelName = data; 
+    		  });
 
       $http.delete('/api/complex/unit/'+$stateParams.apartmentId)
       	.success(onSuccess)

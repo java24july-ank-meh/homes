@@ -434,5 +434,24 @@ public class Helper {
         
         return null;
     }
+    
+    public String truncate(String complexName) {
+    	String shortenedComplexName;
+    	if(complexName.length() > 10) {
+			shortenedComplexName =complexName.replaceAll("\\s","").substring(0, 10);
+		} else {
+			shortenedComplexName = complexName.replaceAll("\\s","");
+		}
+    	
+    	return shortenedComplexName;
+    }
+    
+    public String complexChannelName(String complex) {
+    	return truncate(complex);
+    }
+    
+    public String unitChannelName(String complex, String building, String unit) {
+    	return truncate(complex) + building + "-" + unit;
+    }
 	
 }

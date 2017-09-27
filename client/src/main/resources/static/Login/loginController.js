@@ -3,6 +3,7 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
         $scope.code = response.data;
     });*/
     var paramValue = $location.search().code;
+    localStorageService.set("slack", paramValue);
 	$http.post("/api/slack/manager/scopes/basic",{code : paramValue}).then(function(response) {
 
 		if(response.data.scope === "basic"){

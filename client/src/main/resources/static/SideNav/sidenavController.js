@@ -95,7 +95,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
     	$scope.isManager = $rootScope.rootUser.isManager ? "Manager" : "Resident";
     	localStorageService.set("rootUser", $rootScope.rootUser);
     	
-        if($rootScope.rootUser.isManager)
+        if(!$rootScope.rootUser.isManager)
         	$http.get("/api/associates/associates/"+$rootScope.rootUser.email+"/email").then(function(response){
         		$rootScope.rootAssociate = response.data;
         		localStorageService.set("rootAssociate", $rootScope.rootAssociate);

@@ -93,6 +93,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
     $http.post("/api/slack/resident/admin",{email : $rootScope.rootUser.email}).then(function(response){
     	$rootScope.rootUser.isManager = response.data;
     	$scope.isManager = $rootScope.rootUser.isManager ? "Manager" : "Resident";
+    	localServiceStorage.set("rootUser", $rootScope.rootUser);
     	
         if(!$rootScope.rootUser.isManager)
         	$http.get("/api/associates/associates/"+$rootScope.rootUser.email+"/email").then(function(response){

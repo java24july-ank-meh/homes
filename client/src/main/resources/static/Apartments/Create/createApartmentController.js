@@ -6,11 +6,14 @@ angular.module('rhmsApp').controller('createApartmentController', ['$scope', '$h
     
 
         var onSuccess = function (data, status, headers, config) {
-        	let unitAbrev = $scope.unit.buildingNumber + "-" + $scope.unit.unitNumber;
-        	$http.post('/api/slack/unit/create', {complex: $scope.unit.complex.name, building: $scope.unit.buildingNumber, unit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});  
-        	$mdToast.show($mdToast.simple().textContent("Apartment Created").position('top right'));
-            $state.go('home.showApartment', { apartmentId: data});
-            $scope.hide();
+        	$http.get('/api/complex/unit/'+data).then(function(response){
+        		$scope.unit = response.data;
+        		
+	        	$http.post('/api/slack/unit/create', {complex: $scope.unit.complex.name, building: $scope.unit.buildingNumber, unit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});  
+	        	$mdToast.show($mdToast.simple().textContent("Apartment Created").position('top right'));
+	            $state.go('home.showApartment', { apartmentId: data});
+	            $scope.hide();
+        	});
             
         };
 

@@ -1,10 +1,10 @@
 angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http', '$stateParams','$mdDialog','$state','$mdToast', '$rootScope', function($scope, $http, $stateParams, $mdDialog, $state, $mdToast, $rootScope ) {
 
-
+	let oldComplex;
     $http.get("/api/complex/complex/"+$stateParams.complexId)
         .success(function(data) {
             $scope.complex = data;
-            $scope.oldComplex = data;
+            oldComplex = data;
 
         })
         .error(function(){
@@ -26,7 +26,7 @@ angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http'
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         };
         
-        $http.get('/api/slack/complex/channelName/' + $scope.oldComplex.name)
+        $http.get('/api/slack/complex/channelName/' + oldComplex.name)
         		.success(function(data){
         			$scope.oldChannelName = data; 
         		});

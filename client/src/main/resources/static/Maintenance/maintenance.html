@@ -73,7 +73,7 @@
             'submittedBy',
             'unitId',
             'isResolved',
-            'resolvedDate',
+            'resolveDate',
             'maintenanceId'
             ]
             }">
@@ -101,7 +101,7 @@
                <mdt-column align-rule="right" column-sort="false">Action</mdt-column>
             </mdt-header-row>
             <mdt-custom-cell column-key="submitDate">{{value | date:formatted }}</mdt-custom-cell>
-            <mdt-custom-cell column-key="resolvedDate">{{value | date:formatted }}</mdt-custom-cell>
+            <mdt-custom-cell column-key="resolveDate">{{value | date:formatted }}</mdt-custom-cell>
             <mdt-custom-cell column-key="maintenanceId"> <button class="md-button md-primary" ng-click="clientScope.resolveMaintenance(value)" ng-disabled="clientScope.isResolved(value).isResolved">RESOLVE</button></span></mdt-custom-cell>
             <mdt-custom-cell column-key="submittedBy">
                <a class="md-button md-primary" ui-sref="home.showAssociate({associateId: value})">{{clientScope.getAssociate(value)}}</a>

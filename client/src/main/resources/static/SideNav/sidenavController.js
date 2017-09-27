@@ -1,5 +1,10 @@
-angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$rootScope', '$state', '$location', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $rootScope, $state, $location){
+angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$rootScope', '$state', '$location', 'localStorageService', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $rootScope, $state, $location, localStorageService){
 
+	$rootScope.rootUser = localStorageService.get("rootUser");
+	$rootScope.rootAssociate = localStorageService.get("rootAssociate");
+	if($rootScope.rootUser)
+		$scope.isManager = $rootScope.rootUser.isManager ? "Manager" : "Resident";
+	
 	$scope.toggleSidenav = function(menuId) {
         $mdSidenav(menuId).toggle();
     };
@@ -81,28 +86,26 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
             title: 'Logout',
             icon: 'power_settings_new'
         } ];
-  
 
-    if($rootScope.rootUser == undefined)
+   if(!$rootScope.rootUser)
     	$state.go("logout");
-
-    
+   else
     $http.post("/api/slack/resident/admin",{email : $rootScope.rootUser.email}).then(function(response){
     	$rootScope.rootUser.isManager = response.data;
     	$scope.isManager = $rootScope.rootUser.isManager ? "Manager" : "Resident";
     	
+        if(!$rootScope.rootUser.isManager)
+        	$http.get("/api/associates/associates/"+$rootScope.rootUser.email+"/email").then(function(response){
+        		$rootScope.rootAssociate = response.data;
+        		localServiceStorage.set("rootAssociate", rootAssociate);
+        	    if($rootScope.rootAssociate!= null && $rootScope.rootAsscociate.unitId != null)
+        	    	$scope.residentMenu = $scope.assignedMenu;
+        });
     });
-    
-    if(!$rootScope.rootUser.isManager)
-    	$http.get("/api/associates/associates/"+$rootScope.rootUser.email+"/email").then(function(response){
-    		$rootScope.rootAssociate = response.data;
-    		
-    	    if($rootScope.rootAssociate!= null && $rootScope.rootAsscociate.unitId != null)
-    	    	$scope.residentMenu = $scope.assignedMenu;
-    	});
-
+   
+   
+   
     $scope.logout = function() {
-    	delete $rootScope.rootUser;
-    	$state.go("login");
+    	$state.go("logout");
     }
 }]);

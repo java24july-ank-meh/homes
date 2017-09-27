@@ -93,7 +93,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 	        }
 
 	      /*  $stateParams.complexId*/
-	        $http.post('/api/complex/complex/message/'+$stateParams.complexId, $scope.announcement )
+	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement} )
 	            .success(onSuccess)
 	            .error(onError);
 

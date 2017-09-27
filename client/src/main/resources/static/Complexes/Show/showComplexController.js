@@ -19,8 +19,15 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
     $scope.deleteComplex = function () {
 
         var onSuccess = function (data, status, headers, config) {
-        	$http.post('/api/slack/complex/delete', {channelName: $scope.channelName, token:$rootScope.rootUser.token});
-        	 $mdToast.show($mdToast.simple().textContent("Complex Deleted").position('top right'));
+        	
+            $http.get('/api/slack/complex/channelName/' + $scope.complex.name)
+    		  .success(function(data){
+    			 $scope.channelName = data; 
+    		  
+    	        	$http.post('/api/slack/complex/delete', {channelName: $scope.channelName, token:$rootScope.rootUser.token});
+    			 
+    		  });
+        	$mdToast.show($mdToast.simple().textContent("Complex Deleted").position('top right'));
             $state.go('home.complexes');
         };
 
@@ -28,10 +35,6 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
         	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
         };
         
-        $http.get('/api/slack/complex/channelName/' + $scope.complex.name)
-      		  .success(function(data){
-      			 $scope.channelName = data; 
-      		  });
 
         $http.delete('/api/complex/complex/'+$stateParams.complexId)
         	.success(onSuccess)
@@ -91,7 +94,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 	        }
 
 	      /*  $stateParams.complexId*/
-	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement, token:$rootScope.user.token} )
+	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement, token:$rootScope.rootUser.token} )
 	            .success(onSuccess)
 	            .error(onError);
 

@@ -6,7 +6,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
 
 	$scope.moveInDate;
      
-	if($rootScope.rootUser.isManager)
+	if(!$rootScope.rootAssociate)
      $q.all({
     	 units: $http.get("/api/complex/unit"),
     	 associates: $http.get("/api/associates/associates")
@@ -23,6 +23,8 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
     			 }
     		 }
     	 }
+     }, function(){
+    	 $scope.error = true;
      });
      
      $scope.newAssociateFormSubmit = function(moveInDate){

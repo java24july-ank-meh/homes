@@ -28,12 +28,11 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
      });
      
      $scope.newAssociateFormSubmit = function(moveInDate){
-    	 $scope.associate.moveInDateString =  $filter('date')(moveInDate,'yyyy-MM-dd'); 
-    	 
-    	 console.log($scope.associate.moveInDate, $scope.moveInDate);
+    	 var date = $filter('date')(moveInDate,'yyyy-MM-dd'); 
     	 
     	 var onSuccess = function (data, status, headers, config) {
-    		 alert($scope.associate);
+    		  $http.post('/api/associates/'+$scope.associate.associateId+ "/moveInDate/", date);
+    		  
          	$mdToast.show($mdToast.simple().textContent("Associate Updated").position('top right'));
              $state.reload();
              

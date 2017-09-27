@@ -90,7 +90,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
    if(!$rootScope.rootUser)
     	$state.go("logout");
    else
-    $http.post("/api/slack/resident/admin",{email : $rootScope.rootUser.email}).then(function(response){
+    $http.post("/api/slack/resident/admin",{email : $rootScope.rootUser.email, token:$rootScope.rootUser.token}).then(function(response){
     	$rootScope.rootUser.isManager = response.data;
     	$scope.isManager = $rootScope.rootUser.isManager ? "Manager" : "Resident";
     	localStorageService.set("rootUser", $rootScope.rootUser);

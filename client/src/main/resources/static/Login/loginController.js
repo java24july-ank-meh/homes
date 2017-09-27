@@ -13,7 +13,9 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
     	}  else if(response.data.scope === ""){
     	}else{
     		$rootScope.rootUser = response.data;
-			localStorageService.set("rootUser", $rootScope.rootUser);
+			localStorageService.set("rootUser", response.data);
+			console.log($rootScope.rootUser.token);
+			alert($rootScope.rootUser.token);
 			$location.path("/home/dashboard");
     	}
     });

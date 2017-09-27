@@ -21,7 +21,7 @@ angular.module('rhmsApp').controller('createComplexController', ['$scope', '$htt
     	$scope.complex.office.officeId = JSON.parse($scope.selected).officeId;
        	
         var onSuccess = function (data, status, headers, config) {
-        	$http.post('/api/slack/complex/create', {name: $scope.complex.name});     	
+        	$http.post('/api/slack/complex/create', {name: $scope.complex.name, token:$rootScope.rootUser.token});     	
         	
             $scope.complex.office = {};
         	$scope.complex.office.id = $scope.selected.id;

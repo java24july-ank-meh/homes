@@ -60,6 +60,7 @@ public class ResidentController {
 			email = json.getString("email");
 			firstName = json.getString("fname");
 			lastName = json.getString("lname");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -94,6 +95,7 @@ public class ResidentController {
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			message = json.getString("message");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -134,6 +136,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			ids = json.getString("ids");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +171,8 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			group = json.getString("group");
-			ids = json.getString("ids"); 
+			ids = json.getString("ids");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -208,6 +212,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			userId = json.getString("userId");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -245,6 +250,7 @@ public class ResidentController {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -263,6 +269,7 @@ public class ResidentController {
 		String token =helper.getToken();
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -287,6 +294,7 @@ public class ResidentController {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			email = json.getString("email");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -329,6 +337,7 @@ public class ResidentController {
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -364,16 +373,18 @@ public class ResidentController {
 		String id = null;
 		String is_admin = null;
 		String token = null;
+		token  = helper.getToken();
 		
 	
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
+			token = json.getString("token");
 		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
-		token = helper.getToken();
+		//token = helper.getToken();
 
 		id = helper.getSlackId(token, email);
 		System.out.println("id :"+id);

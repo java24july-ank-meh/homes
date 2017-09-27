@@ -1,5 +1,9 @@
-angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$mdToast', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast) {
+angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$mdToast', '$rootScope', '$state', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast, $rootScope, $state) {
 
+	if(!$rootScope.rootUser.isManager)
+		$state.go("home.dashboard");
+		
+		
 	$scope.error = false;
 	
 	$scope.showTable = true;

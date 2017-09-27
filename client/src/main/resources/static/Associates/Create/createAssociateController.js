@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', '$rootScope', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast, $rootScope) {
 
 	$scope.selected = {};
     $http.get("/api/associates/associates/")

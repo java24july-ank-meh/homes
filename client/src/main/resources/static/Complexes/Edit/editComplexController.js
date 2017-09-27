@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http', '$stateParams','$mdDialog','$state','$mdToast', function($scope, $http, $stateParams, $mdDialog, $state, $mdToast ) {
+angular.module('rhmsApp').controller('editComplexController', ['$scope', '$http', '$stateParams','$mdDialog','$state','$mdToast', '$rootScope', function($scope, $http, $stateParams, $mdDialog, $state, $mdToast, $rootScope ) {
 
 
     $http.get("/api/complex/complex/"+$stateParams.complexId)

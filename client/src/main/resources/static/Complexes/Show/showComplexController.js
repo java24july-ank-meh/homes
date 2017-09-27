@@ -19,7 +19,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
     $scope.deleteComplex = function () {
 
         var onSuccess = function (data, status, headers, config) {
-        	$http.post('/api/slack/complex/delete', {channelName: $scope.channelName});
+        	$http.post('/api/slack/complex/delete', {channelName: $scope.channelName, token:$rootScope.user.token});
         	 $mdToast.show($mdToast.simple().textContent("Complex Deleted").position('top right'));
             $state.go('home.complexes');
         };
@@ -91,7 +91,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
 	        }
 
 	      /*  $stateParams.complexId*/
-	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement} )
+	        $http.post('/api/slack/resident/message',{complex:$scope.complex.name, message:$scope.announcement, token:$rootScope.user.token} )
 	            .success(onSuccess)
 	            .error(onError);
 

@@ -1,195 +1,207 @@
 <md-toolbar ng-show="!showSearch">
-    <div class="md-toolbar-tools">
-        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
-            <ng-md-icon icon="menu"></ng-md-icon>
-        </md-button>
-        <h3>Dashboard</h3>
-        <span flex></span>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-            <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-            <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
-    </div>
-    
+   <div class="md-toolbar-tools">
+      <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+         <ng-md-icon icon="menu"></ng-md-icon>
+      </md-button>
+      <h3>Dashboard</h3>
+      <span flex></span>
+      <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+         <ng-md-icon icon="search"></ng-md-icon>
+      </md-button>
+      <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+         <ng-md-icon icon="more_vert"></ng-md-icon>
+      </md-button>
+   </div>
 </md-toolbar>
-
 <md-toolbar class="md-hue-1" ng-show="showSearch">
-    <div class="md-toolbar-tools">
-        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
-            <ng-md-icon icon="arrow_back"></ng-md-icon>
-        </md-button>
-        <h3 flex="10">
-            Back
-        </h3>
-        <md-input-container md-theme="input" flex>
-            <label>&nbsp;</label>
-            <input ng-model="search.who" placeholder="enter search">
-        </md-input-container>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-            <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-            <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
-    </div>
+   <div class="md-toolbar-tools">
+      <md-button ng-click="showSearch = !showSearch" aria-label="Back">
+         <ng-md-icon icon="arrow_back"></ng-md-icon>
+      </md-button>
+      <h3 flex="10">
+         Back
+      </h3>
+      <md-input-container md-theme="input" flex>
+         <label>&nbsp;</label>
+         <input ng-model="search.who" placeholder="enter search">
+      </md-input-container>
+      <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+         <ng-md-icon icon="search"></ng-md-icon>
+      </md-button>
+      <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+         <ng-md-icon icon="more_vert"></ng-md-icon>
+      </md-button>
+   </div>
 </md-toolbar>
-
-<md-content class="md-padding" ng-if="rootUser.isManager">
-    <div layout layout-wrap layout-gt-sm="row" layout="column" >
-        <div flex="40" flex-sm="100" flex-xs="100" class="container">
-             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!units && !error">
-                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
-             <div layout="row" layout-sm="column" ng-if="error" layout="center center">
-               <h2>Error. Try again later</h2>
-            </div>
-              <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-            <md-card layout="column" >
-                <md-card-title>
-                    <md-card-title-text >
-                        <span class="md-headline">Units </span>
-                        <span class="small">Available Units</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
-                <md-list flex >
-                
-                	<span  ng-repeat="unit in units">
-                    <md-list-item class="md-3-line noright" ng-if="unit.associates.length < unit.capacity" ui-sref="home.showApartment({apartmentId: unit.unitId})">
-                     <md-icon class="md-avatar"> <ng-md-icon icon="home" ></ng-md-icon></md-icon>
-                        <div class="md-list-item-text" >
-                            <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
-                            <p> {{unit.complex.name}} </p>
-                            <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
-                        </div>
-                     </md-list-item>
-          			</span>
-                </md-list>
-            </md-card>
-       	</div>   
+<md-content class="md-padding" ng-if="rootUser.isManager" >
+   <div layout layout-wrap layout-gt-sm="row" layout="column" >
+      <div flex="40" flex-sm="100" flex-xs="100" class="container">
+         <div layout="row" layout-sm="column" ng-if="error" layout="center center">
+            <h2>Error. Try again later</h2>
          </div>
-     
-        <div flex="40" flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+         <div flex flex-sm="100" flex-xs="100" class="container" ng-if="!error">
             <md-card layout="column" >
-                <md-card-title>
-                    <md-card-title-text >
-                        <span class="md-headline">Associates </span>
-                        <span class="small">Pending Associates</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
-                	<span  ng-repeat="associate in associates">
-                    <md-list-item class="md-3-line noright" ng-if="!associate.unitId" ui-sref="home.showAssociate({associateId: associate.associateId})">
-                        <md-icon class="md-avatar"> <ng-md-icon icon="person" ></ng-md-icon></md-icon>
-                        <div class="md-list-item-text" >
-                            <h3> {{associate.firstName}} {{associate.lastName}}</h3>
-                            <p> {{associate.phone}}</p>
-                            <p> {{associate.email}}</p>
-                        </div>
-                        
-                    </md-list-item>
-                    </span>
-                </md-list>
+               <md-card-title>
+                  <md-card-title-text >
+                     <span class="md-headline">Units </span>
+                     <div class="animated-background" flex="30" ng-if="!units">&nbsp;</div>
+                     <span class="small" ng-if="units">Available Units</span>
+                  </md-card-title-text>
+               </md-card-title>
+               <md-divider></md-divider>
+               <md-list flex >
+                  <md-virtual-repeat-container id="vertical-container" style="height: 600px;">
+                     <div md-virtual-repeat="unit in units" class="repeated-item" flex>
+                        <md-list-item class="md-3-line noright" ng-if="unit.associates.length < unit.capacity" ui-sref="home.showApartment({apartmentId: unit.unitId})">
+                           <md-icon class="md-avatar">
+                              <ng-md-icon icon="home" ></ng-md-icon>
+                           </md-icon>
+                           <div class="md-list-item-text" >
+                              <h3> Unit {{unit.unitNumber}}, Building {{unit.buildingNumber}}</h3>
+                              <p> {{unit.complex.name}} </p>
+                              <p> {{unit.associates.length}} of {{unit.capacity}} associates</p>
+                           </div>
+                        </md-list-item>
+                     </div>
+                  </md-virtual-repeat-container>
+               </md-list>
             </md-card>
-        </div>
-
-    </div>
-
-
+         </div>
+      </div>
+      <div flex="40" flex-sm="100" flex-xs="100"  ng-if="!error">
+         <md-card layout="column" >
+            <md-card-title>
+               <md-card-title-text >
+                  <span class="md-headline">Associates </span>
+                  <div class="animated-background" flex="30" ng-if="!associates">&nbsp;</div>
+                  <span class="small" ng-if="associates">Pending Associates</span>
+               </md-card-title-text>
+            </md-card-title>
+            <md-divider></md-divider>
+            <md-virtual-repeat-container id="vertical-container" style="height: 600px;">
+               <div md-virtual-repeat="assciate in associates" class="repeated-item" flex>
+                  <md-list-item class="md-3-line noright" ng-if="!associate.unitId" ui-sref="home.showAssociate({associateId: associate.associateId})">
+                     <md-icon class="md-avatar">
+                        <ng-md-icon icon="person" ></ng-md-icon>
+                     </md-icon>
+                     <div class="md-list-item-text" >
+                        <h3> {{associate.firstName}} {{associate.lastName}}</h3>
+                        <p> {{associate.phone}}</p>
+                        <p> {{associate.email}}</p>
+                     </div>
+                  </md-list-item>
+               </div>
+            </md-virtual-repeat-container>
+            </md-list>
+            <br>
+         </md-card>
+      </div>
+   </div>
 </md-content>
-
 <md-content ng-if="!rootUser.isManager" class="md-padding" style="text-align: center;"  >
-    <div layout="column"><img src="imgs/reverserhms.png" style="max-width: 120px; margin: 0 auto; "></div>
-	<h3 class="md-display-1"><span style="color: #FF5722;">REVATURE</span><br> Housing Management System</h3>
-	<br>
-	<div layout layout-wrap layout-gt-sm="row" layout="column" ng-if="rootAssociate.unitId">
-		<div flex-sm="100" flex-xs="100" class="container" flex="50">
-			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref="home.showApartment({apartmentId: rootAssociate.unitId})">
-				<md-card-title-text> <span class="md-headline">Apartment
-				</span>  </md-card-title-text> </md-card-title> <md-card-content>
-				<ng-md-icon icon="home" style="width:100%;"></ng-md-icon>
-				</md-card-content> </md-card>
-			</div>
-		</div>
-		<div flex-sm="100" flex-xs="100" class="container" flex="50">
-			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref='home.showAssociate({associateId: rootAssociate.associateId})'>
-				<md-card-title-text> <span class="md-headline">Profile
-				</span>  </md-card-title-text> </md-card-title> <md-card-content>
-				<ng-md-icon icon="person" style="width:100%;"></ng-md-icon>
-				</md-card-content> </md-card>
-			</div>
-		</div>
-		<div flex-sm="100" flex-xs="100" class="container" flex="50">
-			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref="home.createMaintenance">
-				<md-card-title-text> <span class="md-headline">Maintenance
-				</span>  </md-card-title-text> </md-card-title> <md-card-content>
-				<ng-md-icon icon="build" style="width:100%;"></ng-md-icon>
-				</md-card-content> </md-card>
-			</div>
-		</div>
-		<div flex-sm="100" flex-xs="100" class="container" flex="50">
-			<div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
-				<md-card layout="column"> <md-card-title ui-sref="home.resources">
-				<md-card-title-text> <span class="md-headline">Resources
-				</span>  </md-card-title-text> </md-card-title> <md-card-content>
-				<ng-md-icon icon="bookmark" style="width:100%;"></ng-md-icon>
-				</md-card-content> </md-card>
-			</div>
-		</div>
-	</div>
-	<md-card flex-gt-md="60" ng-if="!associate.unitId && !associate.moveInDate" style="text-align: left; margin: 0 auto;">
-                <md-card-content layout-padding>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <md-title class="md-title">New Associate Registration</md-title>
-                            <md-subhead class="md-subhead">Must be submitted before Associate can be placed in Revature Housing.</md-subhead>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <form name="newAssociateForm" ng-submit="newAssociateFormSubmit(moveInDate)">
-                    
-                        <div layout-gt-sm="row" style="margin-left: 16px;">
-                            <md-input-container class="md-block" flex-gt-sm>
-	                            <md-checkbox name="hasCar" ng-model="associate.hasCar" >
-						          I will have a car with me during training period.
-						        </md-checkbox>
-                            </md-input-container>
-                        </div>
-
-                        <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Move in Date</label>
-                                <md-datepicker ng-model="moveInDate" md-placeholder="Enter date" required></md-datepicker>
-                            </md-input-container>
-                        </div>
-                       
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button type="submit" ng-disabled="!moveInDate" class="md-raised md-primary">SUBMIT</md-button>
-                        </md-card-actions>
-                    </form>
-             </md-card-content>
-        </md-card>
-        <md-card flex-gt-md="60" ng-if="!associate.unitId && associate.moveInDate" style="text-align: left; margin: 0 auto;">
-                <md-card-content layout-padding>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <md-title class="md-title">New Associate Status</md-title>
-                            <md-subhead class="md-subhead">Pending</md-subhead>
-                        </md-card-title-text>
-                    </md-card-title>
-                   
-             </md-card-content>
-        </md-card>
-	<br>
-	<br>
-	<div class="md-block md-paddding" >
-		<p class="md-body-1" style="text-align: left; font-size:18px; line-height: 28px;">Revature Housing Management System will help to maximize occupancy for Revature Housing apartments by providing features to help management produce effective housing placement for all associates in the housing program. This system will provide residents with access to apartment information regarding where they are staying and tools to communicate with management and other associates within the same apartment.</p>
-		<br>
-		
-	
-	</div>
+   <div layout="column"><img src="imgs/reverserhms.png" style="max-width: 120px; margin: 0 auto; "></div>
+   <h3 class="md-display-1"><span style="color: #FF5722;">REVATURE</span><br> Housing Online Management Enterprise System</h3>
+   <br>
+   <div layout layout-wrap layout-gt-sm="row" layout="column" ng-if="rootAssociate.unitId">
+      <div flex-sm="100" flex-xs="100" class="container" flex="50">
+         <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+            <md-card layout="column">
+               <md-card-title ui-sref="home.showApartment({apartmentId: rootAssociate.unitId})">
+                  <md-card-title-text> <span class="md-headline">Apartment
+                     </span>  
+                  </md-card-title-text>
+               </md-card-title>
+               <md-card-content>
+                  <ng-md-icon icon="home" style="width:100%;"></ng-md-icon>
+               </md-card-content>
+            </md-card>
+         </div>
+      </div>
+      <div flex-sm="100" flex-xs="100" class="container" flex="50">
+         <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+            <md-card layout="column">
+               <md-card-title ui-sref='home.showAssociate({associateId: rootAssociate.associateId})'>
+                  <md-card-title-text> <span class="md-headline">Profile
+                     </span>  
+                  </md-card-title-text>
+               </md-card-title>
+               <md-card-content>
+                  <ng-md-icon icon="person" style="width:100%;"></ng-md-icon>
+               </md-card-content>
+            </md-card>
+         </div>
+      </div>
+      <div flex-sm="100" flex-xs="100" class="container" flex="50">
+         <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+            <md-card layout="column">
+               <md-card-title ui-sref="home.createMaintenance">
+                  <md-card-title-text> <span class="md-headline">Maintenance
+                     </span>  
+                  </md-card-title-text>
+               </md-card-title>
+               <md-card-content>
+                  <ng-md-icon icon="build" style="width:100%;"></ng-md-icon>
+               </md-card-content>
+            </md-card>
+         </div>
+      </div>
+      <div flex-sm="100" flex-xs="100" class="container" flex="50">
+         <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+            <md-card layout="column">
+               <md-card-title ui-sref="home.resources">
+                  <md-card-title-text> <span class="md-headline">Resources
+                     </span>  
+                  </md-card-title-text>
+               </md-card-title>
+               <md-card-content>
+                  <ng-md-icon icon="bookmark" style="width:100%;"></ng-md-icon>
+               </md-card-content>
+            </md-card>
+         </div>
+      </div>
+   </div>
+   <md-card flex-gt-md="60" ng-if="!associate.unitId && !associate.moveInDate" style="text-align: left; margin: 0 auto;">
+      <md-card-content layout-padding>
+         <md-card-title>
+            <md-card-title-text>
+               <md-title class="md-title">New Associate Registration</md-title>
+               <md-subhead class="md-subhead">Must be submitted before Associate can be placed in Revature Housing.</md-subhead>
+            </md-card-title-text>
+         </md-card-title>
+         <form name="newAssociateForm" ng-submit="newAssociateFormSubmit(moveInDate)">
+            <div layout-gt-sm="row" style="margin-left: 16px;">
+               <md-input-container class="md-block" flex-gt-sm>
+                  <md-checkbox name="hasCar" ng-model="associate.hasCar" >
+                     I will have a car with me during training period.
+                  </md-checkbox>
+               </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+               <md-input-container class="md-block" flex-gt-sm>
+                  <label>Move in Date</label>
+                  <md-datepicker ng-model="moveInDate" md-placeholder="Enter date" required></md-datepicker>
+               </md-input-container>
+            </div>
+            <md-card-actions layout="row" layout-align="end center">
+               <md-button type="submit" ng-disabled="!moveInDate" class="md-raised md-primary">SUBMIT</md-button>
+            </md-card-actions>
+         </form>
+      </md-card-content>
+   </md-card>
+   <md-card flex-gt-md="60" ng-if="!associate.unitId && associate.moveInDate" style="text-align: left; margin: 0 auto;">
+      <md-card-content layout-padding>
+         <md-card-title>
+            <md-card-title-text>
+               <md-title class="md-title">New Associate Status</md-title>
+               <md-subhead class="md-subhead">Pending</md-subhead>
+            </md-card-title-text>
+         </md-card-title>
+      </md-card-content>
+   </md-card>
+   <br>
+   <br>
+   <div class="md-block md-paddding" >
+      <p class="md-body-1" style="text-align: left; font-size:18px; line-height: 28px;">Revature Housing Management System will help to maximize occupancy for Revature Housing apartments by providing features to help management produce effective housing placement for all associates in the housing program. This system will provide residents with access to apartment information regarding where they are staying and tools to communicate with management and other associates within the same apartment.</p>
+      <br>
+   </div>
 </md-content>

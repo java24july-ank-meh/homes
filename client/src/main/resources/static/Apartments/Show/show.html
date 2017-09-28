@@ -9,53 +9,23 @@
         </md-button>
         <h3><span ng-if="unit.buildingNumber">Building {{unit.buildingNumber}}</span> Unit {{unit.unitNumber}}</h3>
         <span flex></span>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-            <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-            <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
     </div>
 </md-toolbar>
-
-<md-toolbar class="md-hue-1" ng-show="showSearch">
-    <div class="md-toolbar-tools">
-        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
-            <ng-md-icon icon="arrow_back"></ng-md-icon>
-        </md-button>
-        <h3 flex="10">
-            Back
-        </h3>
-        <md-input-container md-theme="input" flex>
-            <label>&nbsp;</label>
-            <input ng-model="search.who" placeholder="enter search">
-        </md-input-container>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-            <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-            <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
-    </div>
-</md-toolbar>
-
 <md-content class="md-padding" >
     <div layout layout-wrap layout-gt-sm="row" layout="column" >
         <div flex="60" flex-sm="100" flex-xs="100" class="container">
-             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!unit && !error">
-                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
-             <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
+           <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
                <h2>404 - Apartment not found</h2>
             </div>
-            
-            
-            <md-card ng-if="!error">
+            <md-card ng-if="!error" >
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text ui-sref="home.editComplex({complexId: unit.complex.complexId})" >
-                            <span class="md-headline">Unit {{unit.unitNumber}} - {{unit.complex.name}}</span>
+                            <div class="md-headline" >Unit {{unit.unitNumber}} - {{unit.complex.name}} </div>
                         </md-card-title-text>
+                        <md-input-container md-theme="input" flex="20" ng-if="!unit">
+                            <div class="animated-background">&nbsp;</div>
+                        </md-input-container>
                         <md-input-container md-theme="input" flex>
                             <label>&nbsp;</label>
                         </md-input-container>
@@ -67,13 +37,15 @@
                         </md-button>
                     </div>
                 </md-toolbar>
+                	
                 <md-divider></md-divider>
-				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="{{unit.complex.name}}.img" style=" min-height:400px; background: #eee;"" >
+				<img ng-src="{{unit.complex.photoUrl}}" class="md-card-image" alt="" style=" min-height:400px; background: #eee;" >
                 <md-card-content layout-gt-md="row" layout="column" >
-                    <md-list class="md-dense" flex="50">
+                    <md-list class="md-dense" flex>
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
+		                        <div class="animated-background" ng-if="!unit" flex="50">&nbsp;</div>
                                 <h3> {{unit.complex.phone}}</h3>
                                 <p> PHONE</p>
                             </div>
@@ -81,15 +53,17 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
+                            	<div class="animated-background" ng-if="!unit" flex="30">&nbsp;</div>
                                 <h3>{{unit.complex.email}}</h3>
                                 <p> EMAIL</p>
                             </div>
                         </md-list-item>
                     </md-list>
-                    <md-list class="md-dense">
+                    <md-list class="md-dense" flex> 
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
+                            	<div class="animated-background" ng-if="!unit" flex="90">&nbsp;</div>
                                 <h3>{{unit.complex.address}}</h3>
                                 <p> ADDRESS</p>
                             </div>
@@ -97,6 +71,7 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="public"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
+                            	<div class="animated-background" ng-if="!unit" flex="50">&nbsp;</div>
                                 <h3>{{unit.complex.website}} </h3>
                                 <p> WEBSITE</p>
                             </div>
@@ -129,38 +104,44 @@
                 <md-card-title>
                     <md-card-title-text >
                         <span class="md-headline">Maintenance Requests </span>
-                        
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
                 <md-list flex >
-                    <md-list-item class="md-3-line noright" ng-repeat="maintenance in maintenanceRequests" >
-                        <md-icon class="md-avatar"> <ng-md-icon icon="build" ></ng-md-icon></md-icon>
-                        <div class="md-list-item-text"  >
-                            <h3 ><strong>{{maintenance.type}}</strong> {{maintenance.location}}</h3>
-                            <p> {{maintenance.description}}</p>
-                            <p>{{maintenance.submitDate | date}} Resolved: {{maintenance.resolveDate | date:formatted}}</p>
-                        </div>
-                    </md-list-item>
+     				<md-virtual-repeat-container id="vertical-container" style="height: 400px;">
+     					<div md-virtual-repeat="maintenance in maintenanceRequests" class="repeated-item" flex>
+		                    <md-list-item class="md-3-line noright">
+		                        <md-icon class="md-avatar"> <ng-md-icon icon="build" ></ng-md-icon></md-icon>
+		                        <div class="md-list-item-text"  >
+		                            <h3 ><strong>{{maintenance.type}}</strong> {{maintenance.location}}</h3>
+		                            <p> {{maintenance.description}}</p>
+		                            <p>{{maintenance.submitDate | date}} Resolved: {{maintenance.resolveDate | date:formatted}}</p>
+		                        </div>
+		                    </md-list-item>
+	                    </div>
+                    </md-virtual-repeat-container>
                 </md-list>
             </md-card>
             <md-card layout="column" ng-if="supplyRequests">
                 <md-card-title>
                     <md-card-title-text >
                         <span class="md-headline">Supply Requests </span>
-                        
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
                 <md-list flex >
-                    <md-list-item class="md-3-line noright" ng-repeat="supply in supplyRequests" >
-                        <md-icon class="md-avatar"> <ng-md-icon icon="shopping_cart" ></ng-md-icon></md-icon>
-                        <div class="md-list-item-text"  >
-                            <h3 ><strong>{{supply.name}}</strong> </h3>
-                            <p>Requested on: {{supply.submitDate| date}}</p>
-                            <p>Delivered: {{suppl.resolveDate | date}} </p>
-                        </div>
-                    </md-list-item>
+                	<md-virtual-repeat-container id="vertical-container" style="height: 400px;">
+     					<div md-virtual-repeat="supply in supplyRequests" class="repeated-item" flex>
+		                    <md-list-item class="md-3-line noright" >
+		                        <md-icon class="md-avatar"> <ng-md-icon icon="shopping_cart" ></ng-md-icon></md-icon>
+		                        <div class="md-list-item-text"  >
+		                            <h3 ><strong>{{supply.name}}</strong> </h3>
+		                            <p>Requested on: {{supply.submitDate| date}}</p>
+		                            <p>Delivered: {{supply.resolveDate | date}} </p>
+		                        </div>
+		                    </md-list-item>
+		                 </div>
+		       	 	</md-virtual-repeat-container>
                 </md-list>
             </md-card>
         </div>
@@ -168,12 +149,13 @@
         
         
         <br>
-        <div flex flex-sm="100" flex-xs="100" class="container" ng-cloak ng-if="!error">
+        <div flex flex-sm="100" flex-xs="100" class="container"  ng-if="!error">
             <md-card layout="column" >
                 <md-card-title>
                     <md-card-title-text >
                         <span class="md-headline">Associates </span>
-                        <span class="small">{{associates.length}} of {{unit.capacity}} associates</span>
+                         <span class="animated-background" ng-if="!associates" flex="25">&nbsp;</span>
+                        <span class="small" ng-if="associates">{{associates.length}} of {{unit.capacity}} associates</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
@@ -182,8 +164,10 @@
                         <md-icon class="md-avatar"> <ng-md-icon icon="person" ></ng-md-icon></md-icon>
                         <div class="md-list-item-text" >
                             <h3> {{associate.firstName}} {{associate.lastName}}</h3>
+                            <span ng-if="rootUser.isManager">
                             <p> {{associate.phone}}</p>
                             <p> {{associate.email}}</p>
+                            </span>
                         </div>
                         <md-button class="md-secondary ng-icon-button" ng-click="showRemoveResidentConfirm(associate.associateId)"  ng-if="rootUser.isManager">
             				<ng-md-icon icon="delete"></ng-md-icon>

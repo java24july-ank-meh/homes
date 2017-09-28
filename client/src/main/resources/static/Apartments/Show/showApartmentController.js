@@ -10,13 +10,6 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
         	 $scope.associates = response.data;
          });
          
-         if($scope.unit === ''){
-
-        	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
-        	 $scope.error = true;
-         }
-         else
-        	 {
         	 $http.get("/api/request/units/"+$scope.unit.unitId +'/maintenance').then(function(response) {
             	 $scope.maintenanceRequests = response.data;
         	 });
@@ -31,12 +24,14 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
             	 $scope.error = true;
              } else {
             	 
-            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.unit.complex.address.split(' ').join('+')+"&destination="+$scope.unit.complex.office.address+"&avoid=tolls|highways";
+            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?origin="+$scope.unit.complex.address.split(' ').join('+')+"&destination="+$scope.unit.complex.office.address+"&avoid=tolls|highways";
             	 document.getElementById('complexMap').src = parsedAddress;
              }
-        	 
          
-     }});
+     }, function(){
+    	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
+    	 $scope.error = true;
+     });
      
 	  $scope.showConfirm = function(deleteApartment) {
 

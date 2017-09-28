@@ -24,8 +24,8 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	    	  		
  	 	    		$http.get("/api/associates/associates/"+associateId).then(function(response){
  	 	    			let residentEmail = response.data.email;
- 	 	    			$http.post("/api/slack/complexInvite",{email:residentEmail,complex:complexName,token:$rootScope.rootUser.token});
- 	 	    			$http.post("/api/slack/unitInvite",{email:residentEmail,complex:complexName,unit:buildingNumber+"-"+unitNumber,token:$rootScope.rootUser.token});
+ 	 	    			$http.post("/api/slack/resident/complexInvite",{email:residentEmail,complex:complexName,token:$rootScope.rootUser.token});
+ 	 	    			$http.post("/api/slack/resident/unitInvite",{email:residentEmail,complex:complexName,unit:unitNumber,building:buildingNumber,token:$rootScope.rootUser.token});
  	 	    		});
  	 	    		
  	    	  	});

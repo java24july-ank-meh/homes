@@ -315,7 +315,9 @@ public class ResidentController {
 		System.out.println("userid = "+userId);
 		String requestUrl = "https://slack.com/api/channels.invite";
 		
-		String complexChannelId = helper.getChannelId(complex, token);
+		String channelName = helper.complexChannelName(complex);
+		
+		String complexChannelId = helper.getChannelId(channelName, token);
 		
 		/*Request Slack to invite user to complex channel*/
 		
@@ -343,12 +345,14 @@ public class ResidentController {
 		String complex = null; String unit = null;
 		String userId = null;
 		String email = null;
+		String building = null;
 		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");
+			building = json.getString("building");
 			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
@@ -357,7 +361,9 @@ public class ResidentController {
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
 		
-		String unitChannelId = helper.getChannelId(complex + unit, token);
+		String channelName = helper.unitChannelName(complex, building, unit);
+		
+		String unitChannelId = helper.getChannelId(channelName, token);
 		
 		/*Request Slack to invite user to complex channel*/
 		

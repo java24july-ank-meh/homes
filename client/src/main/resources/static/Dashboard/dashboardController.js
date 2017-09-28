@@ -42,7 +42,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
          	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
          }
 
-         $http.post('/api/associates/associates/createOrUpdate/', $scope.associate)
+         $http.post('/api/associates/associates/createOrUpdate/', $rootScope.rootAssociate)
              .success(onSuccess)
              .error(onError);
      };

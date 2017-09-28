@@ -24,14 +24,14 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
     		 }
     	 }
      }, function(){
-//    	 $scope.error = true;
+    	 $scope.error = true;
      });
      
      $scope.newAssociateFormSubmit = function(moveInDate){
     	 var date = $filter('date')(moveInDate,'yyyy-MM-dd'); 
     	 
     	 var onSuccess = function (data, status, headers, config) {
-    		  $http.post('/api/associates/'+$scope.associate.associateId+ "/moveInDate/", date);
+    		  $http.post('/api/associates/'+$rootScope.associate.associateId+ "/moveInDate/", date);
     		  
          	$mdToast.show($mdToast.simple().textContent("Associate Updated").position('top right'));
              $state.reload();

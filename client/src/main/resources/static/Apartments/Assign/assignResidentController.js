@@ -22,7 +22,7 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	    	  		let unitNumber = unit.unitNumber;
  	    	  		let buildingNumber = unit.buildingNumber;
  	    	  		
- 	 	    		$http.get("/api/associates/associates/"+$stateParams.associateId).then(function(response){
+ 	 	    		$http.get("/api/associates/associates/"+associateId).then(function(response){
  	 	    			let residentEmail = response.data.email;
  	 	    			$http.post("/api/slack/complexInvite",{email:residentEmail,complex:complexName,token:$rootScope.rootUser.token});
  	 	    			$http.post("/api/slack/unitInvite",{email:residentEmail,complex:complexName,unit:buildingNumber+"-"+unitNumber,token:$rootScope.rootUser.token});

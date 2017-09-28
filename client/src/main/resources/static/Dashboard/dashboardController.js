@@ -5,7 +5,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
 	$scope.associate = $rootScope.rootAssociate;
 
 	$scope.moveInDate;
-     
+	     
 	if(!$rootScope.rootAssociate)
      $q.all({
     	 units: $http.get("/api/complex/unit"),
@@ -24,7 +24,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
     		 }
     	 }
      }, function(){
-    	 $scope.error = true;
+//    	 $scope.error = true;
      });
      
      $scope.newAssociateFormSubmit = function(moveInDate){

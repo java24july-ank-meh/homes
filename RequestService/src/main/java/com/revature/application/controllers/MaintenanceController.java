@@ -1,5 +1,6 @@
 package com.revature.application.controllers;
 
+import java.util.Calendar;
 import java.util.List;
 
 //import org.apache.http.HttpStatus;
@@ -48,6 +49,7 @@ public class MaintenanceController
 	@RequestMapping(value="units/{unitId}/maintenance", method=RequestMethod.POST)
 	public ResponseEntity<Object> createMaintanenceRequest(@PathVariable("unitId") int unitId, @RequestBody Maintenance maintenance)
 	{
+		maintenance.setSubmitDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(maintenanceService.save(maintenance));
 	}
 	
@@ -69,10 +71,12 @@ public class MaintenanceController
 	{
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);
 		
+		
 		if(maintenance == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"Maintenance not found\"}");
 	
 		maintenance.setResolved(true);
+		maintenance.setResolveDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 		
 		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(maintenanceService.update(maintenance));
 	}

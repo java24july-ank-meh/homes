@@ -18,16 +18,17 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
             let oldBuildingNumber = $scope.oldUnit.buildingNumber;
             let oldUnitNumber = $scope.oldUnit.unitNumber;
             let oldComplex = $scope.oldUnit.complex.name;
+            let oldChannelName = "";
         	
             $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
             		'/' + oldUnit)
             		.success(function(data){
-            			$scope.oldChannelName = data; 
+            			oldChannelName = data; 
             		
-        	$http.post('api/slack/unit/update', {oldName: $scope.oldChannelName,
-        		newComplex: $scope.unit.complex,
-        		newBuilding: $scope.unit.buildingNumber, 
-        		newUnit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});
+            			$http.post('api/slack/unit/update', {oldName: oldChannelName,
+            				newComplex: $scope.unit.complex,
+            				newBuilding: $scope.unit.buildingNumber, 
+            				newUnit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});
         	
         	$mdToast.show($mdToast.simple().textContent("Unit Updated").position('top right'));
             $state.reload();

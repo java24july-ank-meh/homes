@@ -38,12 +38,61 @@
 
 <md-content class="md-padding" >
     <div layout layout-wrap layout-sm="column" layout-xs="column" >
-        <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!complexes && !error">
-        	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        </div>
         <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
              <h2>Error. Try again later.</h2>
         </div>
+        
+        <div flex="25" flex-sm="100" flex-xs="100" ng-repeat="i in [1,2,3,4, 5, 6, 7, 8]" class="container" ng-if="!error && !complexes">
+            <md-card >
+                <md-card-title>
+                    <span class="animated-background"  flex="50">&nbsp</span>
+                </md-card-title>
+                <div style="background-image: url('{{complex.photoUrl}}') !important; background-size: cover !important; min-height:200px; background: #eee;"></div>
+                <md-card-content layout-gt-lg="row" layout="column">
+                    <md-list class="md-dense" flex>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background"flex="50" >&nbsp</div>
+                                <p> PHONE</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <div class="animated-background"flex="60" >&nbsp</div>
+                                <p> EMAIL</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <div class="animated-background"flex="90" >&nbsp</div>
+                                <p> ADDRESS</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line"  >
+                            <md-icon> <ng-md-icon icon="web"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <div class="animated-background"flex="75" >&nbsp</div>
+                                <p> WEBSITE</p>
+                            </div>
+                        </md-list-item>
+                             <md-list-item class="md-2-line"  >
+                            <md-icon> <ng-md-icon icon="hotel"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                                <div class="animated-background"flex="30" >&nbsp</div>
+                                <p> Occupancy</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+        
+        
+        
+        
             
         <div flex="25" flex-sm="100" flex-xs="100" ng-repeat="complex in complexes |  filter:search " class="container">
             <md-card ui-sref="home.showComplex({complexId: complex.complexId})" >
@@ -52,8 +101,7 @@
                         <span class="md-headline">{{complex.name}}</span>
                     </md-card-title-text>
                 </md-card-title>
-<!--                 <img ng-src="{{complex.photo}}" class="md-card-image" alt="{{complex.name}} photo not found" > -->
-                <div ng-if"complex.photo != '' " style="background-image: url('{{complex.photoUrl}}') !important; background-size: cover !important; min-height:200px; background: #eee;"></div>
+                <div style="background-image: url('{{complex.photoUrl}}') !important; background-size: cover !important; min-height:200px; background: #eee;"></div>
                 <md-card-content layout-gt-lg="row" layout="column">
                     <md-list class="md-dense">
                         <md-list-item class="md-2-line" >

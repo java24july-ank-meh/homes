@@ -20,7 +20,7 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
         var onSuccess = function (data, status, headers, config) {
         	$http.post("/api/slack/resident/invite",{email:$scope.associate.email,fname:$scope.associate.firstName,lname:$scope.associate.lastName, token:$rootScope.rootUser.token});
         	$mdToast.show($mdToast.simple().textContent("Associate Created").position('top right'));
-            $state.go('home.showAssociate', { residentId: data});
+            $state.go('home.showAssociate', { residentId: data.associateId});
             $scope.hide();
             
         };

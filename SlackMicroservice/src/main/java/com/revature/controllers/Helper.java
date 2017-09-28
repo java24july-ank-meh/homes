@@ -438,9 +438,9 @@ public class Helper {
     public String truncate(String complexName) {
     	String shortenedComplexName;
     	if(complexName.length() > 10) {
-			shortenedComplexName =complexName.replaceAll("\\s","").substring(0, 10);
+			shortenedComplexName =complexName.replaceAll("\\s","").substring(0, 10).toLowerCase();
 		} else {
-			shortenedComplexName = complexName.replaceAll("\\s","");
+			shortenedComplexName = complexName.replaceAll("\\s","").toLowerCase();
 		}
     	
     	return shortenedComplexName;

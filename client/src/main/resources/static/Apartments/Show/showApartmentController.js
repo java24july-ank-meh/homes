@@ -23,8 +23,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
             	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
             	 $scope.error = true;
              } else {
-            	 
-            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?origin="+$scope.unit.complex.address.split(' ').join('+')+"&destination="+$scope.unit.complex.office.address+"&avoid=tolls|highways";
+            	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.unit.complex.address.split(' ').join('+')+"&destination="+$scope.unit.complex.office.address+"&avoid=tolls|highways";
             	 document.getElementById('complexMap').src = parsedAddress;
              }
          

@@ -65,7 +65,7 @@ angular.module('rhmsApp').controller('showComplexController', ['$scope', '$mdBot
         	 });
          });
      }, function(){
-    	 $scope.error="true";
+    	 $scope.error=true;
      });
      
 	  $scope.showCreateApartmentForm = function(ev) {

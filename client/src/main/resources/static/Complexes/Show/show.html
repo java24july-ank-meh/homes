@@ -47,7 +47,55 @@
              <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
                 <h2>404 - Complex not found.</h2> 
             </div>
-            <md-card ng-if="!error">
+            <md-card ng-if="!error && !complex" >
+                <md-toolbar class="md-hue-1" >
+                    <div class="md-toolbar-tools">
+                        <md-input-container md-theme="input" flex="20" >
+                            <div class="animated-background">&nbsp;</div>
+                        </md-input-container>
+                    </div>
+                </md-toolbar>
+                	
+                <md-divider></md-divider>
+				<img style=" min-height:400px; background: #eee;" >
+                <md-card-content layout-gt-md="row" layout="column" >
+                    <md-list class="md-dense" flex>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+		                        <div class="animated-background" flex="50">&nbsp;</div>
+                                <p> PHONE</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="30">&nbsp;</div>
+                                <p> EMAIL</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <md-list class="md-dense" flex> 
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="90">&nbsp;</div>
+                                <p> ADDRESS</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="public"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="50">&nbsp;</div>
+                                <p> WEBSITE</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    
+                </md-card-content>
+                
+            </md-card>
+            <md-card ng-if="!error && complex">
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text >
@@ -112,7 +160,7 @@
             </md-card>
             <br>
             
-            <md-card layout="column" ng-if="isManager">
+            <md-card layout="column" ng-if="isManager && !error">
             	<md-card-title>
 	            	<md-card-title-text >
 	                     <span class="md-headline">Announcement</span>

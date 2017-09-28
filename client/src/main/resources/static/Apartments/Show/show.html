@@ -17,22 +17,65 @@
            <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
                <h2>404 - Apartment not found</h2>
             </div>
-            <md-card ng-if="!error" >
+            <md-card ng-if="!error && !unit" >
+                <md-toolbar class="md-hue-1" >
+                    <div class="md-toolbar-tools">
+                        <md-input-container md-theme="input" flex="20" >
+                            <div class="animated-background">&nbsp;</div>
+                        </md-input-container>
+                    </div>
+                </md-toolbar>
+                	
+                <md-divider></md-divider>
+				<img style=" min-height:400px; background: #eee;" >
+                <md-card-content layout-gt-md="row" layout="column" >
+                    <md-list class="md-dense" flex>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+		                        <div class="animated-background" flex="50">&nbsp;</div>
+                                <p> PHONE</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="30">&nbsp;</div>
+                                <p> EMAIL</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <md-list class="md-dense" flex> 
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="90">&nbsp;</div>
+                                <p> ADDRESS</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line" >
+                            <md-icon> <ng-md-icon icon="public"></ng-md-icon></md-icon>
+                            <div class="md-list-item-text" >
+                            	<div class="animated-background" flex="50">&nbsp;</div>
+                                <p> WEBSITE</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+            <md-card ng-if="!error && unit" >
                 <md-toolbar class="md-hue-1" >
                     <div class="md-toolbar-tools">
                         <md-card-title-text ui-sref="home.editComplex({complexId: unit.complex.complexId})" >
                             <div class="md-headline" >Unit {{unit.unitNumber}} - {{unit.complex.name}} </div>
                         </md-card-title-text>
-                        <md-input-container md-theme="input" flex="20" ng-if="!unit">
-                            <div class="animated-background">&nbsp;</div>
-                        </md-input-container>
                         <md-input-container md-theme="input" flex>
                             <label>&nbsp;</label>
                         </md-input-container>
-                        <md-button class="ng-icon-button" ng-click="showEditApartmentForm()" ng-if="rootUser.isManager">
+                        <md-button class="ng-icon-button" ng-click="showEditApartmentForm()" ng-if="rootScope.rootUser.isManager">
                             <ng-md-icon icon="edit"></ng-md-icon>
                         </md-button>
-                        <md-button class="ng-icon-button" ng-click="showConfirm()" ng-if="rootUser.isManager">
+                        <md-button class="ng-icon-button" ng-click="showConfirm()" ng-if="rootScope.rootUser.isManager">
                             <ng-md-icon icon="delete"></ng-md-icon>
                         </md-button>
                     </div>
@@ -45,7 +88,6 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="phone"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-		                        <div class="animated-background" ng-if="!unit" flex="50">&nbsp;</div>
                                 <h3> {{unit.complex.phone}}</h3>
                                 <p> PHONE</p>
                             </div>
@@ -53,7 +95,6 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="mail"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-                            	<div class="animated-background" ng-if="!unit" flex="30">&nbsp;</div>
                                 <h3>{{unit.complex.email}}</h3>
                                 <p> EMAIL</p>
                             </div>
@@ -63,7 +104,6 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="place"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-                            	<div class="animated-background" ng-if="!unit" flex="90">&nbsp;</div>
                                 <h3>{{unit.complex.address}}</h3>
                                 <p> ADDRESS</p>
                             </div>
@@ -71,7 +111,6 @@
                         <md-list-item class="md-2-line" >
                             <md-icon> <ng-md-icon icon="public"></ng-md-icon></md-icon>
                             <div class="md-list-item-text" >
-                            	<div class="animated-background" ng-if="!unit" flex="50">&nbsp;</div>
                                 <h3>{{unit.complex.website}} </h3>
                                 <p> WEBSITE</p>
                             </div>
@@ -80,8 +119,8 @@
                     
                 </md-card-content>
             </md-card>
-            
-            <md-card layout="column" ng-if="rootUser.isManager">
+                       
+            <md-card layout="column" ng-if="rootUser.isManager && !error">
             	<md-card-title>
 	            	<md-card-title-text >
 	                     <span class="md-headline">Announcement</span>
@@ -154,8 +193,7 @@
                 <md-card-title>
                     <md-card-title-text >
                         <span class="md-headline">Associates </span>
-                         <span class="animated-background" ng-if="!associates" flex="25">&nbsp;</span>
-                        <span class="small" ng-if="associates">{{associates.length}} of {{unit.capacity}} associates</span>
+                        <span class="small" ng-cloak>{{associates.length}} of {{unit.capacity}} associates</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>

@@ -1,12 +1,9 @@
-angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$rootScope', '$location','$window', function($scope, $http, $rootScope, $location,$window){
-/*    $http.get("/HousingOnlineManagementSystem/api/login").then(function(response) {
-        $scope.code = response.data;
-    });*/
+angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$rootScope', '$location','$window','localStorageService', function($scope, $http, $rootScope, $location,$window, localStorageService){
+
     var paramValue = $location.search().code;
+    localStorageService.set("slack", paramValue);
 	$http.post("/api/slack/manager/scopes/basic",{code : paramValue}).then(function(response) {
-		
-		//$scope.user = resmponse.data;
-		//$location.path("/home/dashboard");
+
 		if(response.data.scope === "basic"){
 	        	$window.location.href = "https://slack.com/oauth/authorize?scope=channels:write,channels:read,chat:write,users:read,users:read.email,groups:write,im:write,mpim:write&client_id=237895291120.238685216005";	
     	}else if(response.data.scope === "client"){
@@ -14,8 +11,8 @@ angular.module('rhmsApp').controller('loginController', ['$scope', '$http', '$ro
     	}  else if(response.data.scope === ""){
     	}else{
     		$rootScope.rootUser = response.data;
-    		$location.path("/home/dashboard");
+			localStorageService.set("rootUser", response.data);
+			$location.path("/home/dashboard");
     	}
     });
-
 }]);

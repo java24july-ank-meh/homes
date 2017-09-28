@@ -39,7 +39,7 @@
 <md-content class="md-padding" >
    <div layout layout-wrap layout-sm="column" layout-xs="column" >
       <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!maintenanceRequests && !error">
-         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+         <md-progress-linear md-mode="indeterminate"></md-progress-circular>
       </div>
       <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
          <h2>No Maintenance Requests Found</h2>
@@ -73,7 +73,7 @@
             'submittedBy',
             'unitId',
             'isResolved',
-            'resolvedDate',
+            'resolveDate',
             'maintenanceId'
             ]
             }">
@@ -101,7 +101,7 @@
                <mdt-column align-rule="right" column-sort="false">Action</mdt-column>
             </mdt-header-row>
             <mdt-custom-cell column-key="submitDate">{{value | date:formatted }}</mdt-custom-cell>
-            <mdt-custom-cell column-key="resolvedDate">{{value | date:formatted }}</mdt-custom-cell>
+            <mdt-custom-cell column-key="resolveDate">{{value | date:formatted }}</mdt-custom-cell>
             <mdt-custom-cell column-key="maintenanceId"> <button class="md-button md-primary" ng-click="clientScope.resolveMaintenance(value)" ng-disabled="clientScope.isResolved(value).isResolved">RESOLVE</button></span></mdt-custom-cell>
             <mdt-custom-cell column-key="submittedBy">
                <a class="md-button md-primary" ui-sref="home.showAssociate({associateId: value})">{{clientScope.getAssociate(value)}}</a>
@@ -128,11 +128,11 @@
                      <div class="md-list-item-text" >
                         <h3>{{maintenance.location}}</h3>
                         <p> {{maintenance.submitDate | date}}</p>
-                        <p> Resolved : {{maintenance.resolved}} </p>
+                        <p> Resolved : {{maintenance.resolveDate | date}} </p>
                      </div>
                   </md-list-item>
                   <p>{{maintenance.details}}</p>
-                  <md-button class="md-primary md-flat ng-icon-button" ng-disabled="maintenance.resolved" ng-click="resolveMaintenance(maintenance)">RESOLVE </md-button>
+                  <md-button class="md-primary md-flat ng-icon-button" ng-disabled="maintenance.resolved" ng-click="resolveMaintenance(maintenance.maintenanceId)">RESOLVE </md-button>
                </md-list>
             </md-card-content>
          </md-card>

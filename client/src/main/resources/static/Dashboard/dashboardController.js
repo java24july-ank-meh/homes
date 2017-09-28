@@ -5,8 +5,8 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
 	$scope.associate = $rootScope.rootAssociate;
 
 	$scope.moveInDate;
-     
-	if($rootScope.rootUser.isManager)
+	     
+	if(!$rootScope.rootAssociate)
      $q.all({
     	 units: $http.get("/api/complex/unit"),
     	 associates: $http.get("/api/associates/associates")
@@ -23,15 +23,16 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
     			 }
     		 }
     	 }
+     }, function(){
+//    	 $scope.error = true;
      });
      
      $scope.newAssociateFormSubmit = function(moveInDate){
-    	 $scope.associate.moveInDateString =  $filter('date')(moveInDate,'yyyy-MM-dd'); 
-    	 
-    	 console.log($scope.associate.moveInDate, $scope.moveInDate);
+    	 var date = $filter('date')(moveInDate,'yyyy-MM-dd'); 
     	 
     	 var onSuccess = function (data, status, headers, config) {
-    		 alert($scope.associate);
+    		  $http.post('/api/associates/'+$scope.associate.associateId+ "/moveInDate/", date);
+    		  
          	$mdToast.show($mdToast.simple().textContent("Associate Updated").position('top right'));
              $state.reload();
              
@@ -41,7 +42,7 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
          	$mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
          }
 
-         $http.post('/api/associates/associates/createOrUpdate/', $scope.associate)
+         $http.post('/api/associates/associates/createOrUpdate/', $rootScope.rootAssociate)
              .success(onSuccess)
              .error(onError);
      };

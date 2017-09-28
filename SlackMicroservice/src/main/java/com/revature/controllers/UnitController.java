@@ -18,11 +18,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,19 +55,21 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null;
+		String complex = null; String unit = null; String building = null;
 		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
+			building = json.getString("building");
 			unit = json.getString("unit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
 		/*The url string includes the endpoint and all necessary parameters. For slack's 
 		 *channel.create method, we need the app token and complex name.*/
-		String channelName = complex + unit;
+		String channelName = helper.unitChannelName(complex, building, unit);
 		String url = null;
 		String channelId = null;
 		
@@ -104,21 +108,21 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; 
-		String newComplex = null; String newUnit = null;
+		String oldName = null;
+		String newComplex = null; String newBuilding = null; String newUnit = null;
 		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			complex = json.getString("complex");
-			unit = json.getString("unit");
+			oldName = json.getString("oldName");
 			newComplex = json.getString("newComplex");
+			newBuilding = json.getString("newBuilding");
 			newUnit = json.getString("newUnit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		String oldName = complex + unit;
-		String newName = newComplex + newUnit;
+		String newName = helper.unitChannelName(newComplex, newBuilding, newUnit);
 		
 		//needs token, channel, name
 		String url = "https://slack.com/api/channels.rename";
@@ -145,16 +149,16 @@ public class UnitController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String token = helper.getToken();
+		String channelName = null; 
+		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
-			complex = json.getString("complex");
-			unit = json.getString("unit");
+			channelName = json.getString("channelName");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		String channelName = complex + unit;
 		String channelId = helper.getChannelId(channelName, token);
 		
 		System.out.println("name: " + channelName + ", channelId: " + channelId);
@@ -176,6 +180,15 @@ public class UnitController {
 		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 		
 		return response;
+	}
+	
+	@GetMapping("channelName/{complex}/{building}/{unit}")
+	public ResponseEntity<String> channelName(@PathVariable("complex") String complex, 
+			@PathVariable("building") String building, @PathVariable("unit") String unit){
+		
+		String channelName = helper.unitChannelName(complex, building, unit);
+		
+		return new ResponseEntity<>(channelName, HttpStatus.OK);
 	}
 	
 	public void createFallback() {

@@ -21,7 +21,9 @@
 
 <md-content class="md-padding" >
     <div layout layout-wrap layout-sm="column" layout-xs="column" >
-   
+         <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!supplyRequests && !error">
+         <md-progress-linear md-mode="indeterminate"></md-progress-circular>
+      </div>
         <div layout="row" layout-sm="column" layout-align="space-around" ng-if="error">
              <h2>No Supply Requests Found</h2>
         </div>
@@ -63,7 +65,7 @@
                           'unitId',
                           'resolved',
                           'resolveDate',
-                          'suppliesId'
+                          'supplyId'
                       ]
                       }">
 				    <mdt-header-row>
@@ -89,7 +91,7 @@
 					    <mdt-custom-cell column-key="resolvedDate">
 					          <span>{{value | date:formatted }}</span>
 					    </mdt-custom-cell>
-				    <mdt-custom-cell column-key="suppliesId"> 
+				    <mdt-custom-cell column-key="supplyId"> 
 				    	<button class="md-button md-primary" ng-click="clientScope.resolveSupply(value)" ng-disabled="clientScope.isResolved(value).resolved">DELIVERED</button>
 				    	</span>
 				    </mdt-custom-cell>

@@ -1,6 +1,10 @@
 package com.revature.application.controller;
 
 import java.time.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -100,6 +104,24 @@ public class AssociateController {
 			e.printStackTrace(); //for testing purposes. Comment out later.
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
+	}
+	
+	@PostMapping("{id}/moveInDate")
+	public ResponseEntity<Object> updateMoveInDate(@RequestBody String date, @PathVariable("id") long id){
+		
+			Associate a = associateService.findByAssociateId(id);
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			
+			LocalDateTime moveInDate = LocalDateTime.parse(date + " 12:00", formatter);
+			
+			a.setMoveInDate(moveInDate);
+			
+			
+			associateService.saveOrUpdate(a);
+			
+			return ResponseEntity.ok(a);
+		
 	}
 	
 	@DeleteMapping("{id}/unit")

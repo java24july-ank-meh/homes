@@ -14,11 +14,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,13 +56,16 @@ public class ComplexController {
 		 *channel.create method, we need the app token and complex name.*/
 		
 		JSONObject json = null;
-		String channelName = null;
+		String name = null;
 		String token = helper.getToken();
 		try{
 			json = new JSONObject(complex);
-			channelName = json.getString("name");
+			name = json.getString("name");
+			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
+		
+		String channelName = helper.complexChannelName(name);
 		
 		String url = null;
 		String channelId = null;
@@ -103,13 +108,16 @@ public class ComplexController {
 		
 		System.out.println(complex);
 		JSONObject json = null;
-		String oldName = null; String newName = null;
+		String oldChannelName = null; String newComplexName = null;
 		try{
 			json = new JSONObject(complex);
-			oldName = json.getString("oldName");
-			newName = json.getString("newName");
+			oldChannelName = json.getString("oldName");
+			newComplexName = json.getString("newName");
+			token = json.getString("token");
 		}
 		catch(JSONException e) {e.printStackTrace();}
+		
+		String newChannelName = helper.complexChannelName(newComplexName);
 		
 		//needs token, channel, name
 		String url = "https://slack.com/api/channels.rename";
@@ -117,8 +125,8 @@ public class ComplexController {
 		MultiValueMap<String, String> params = 
 				new LinkedMultiValueMap<String, String>();
 		params.add("token", token);
-		params.add("channel", helper.getChannelId(oldName, token));
-		params.add("name", newName);
+		params.add("channel", helper.getChannelId(oldChannelName, token));
+		params.add("name", newChannelName);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -136,17 +144,18 @@ public class ComplexController {
 			HttpSession http) {
 		
 		JSONObject json = null;
-		String name = null;
+		String channelName = null;
 		String token = helper.getToken();
 		try {
 			json = new JSONObject(complex);
-			name = json.getString("name");
+			channelName = json.getString("channelName");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 
 		
-		String channelId = helper.getChannelId(name, token);
+		String channelId = helper.getChannelId(channelName, token);
 		
 		//needs token, channel
 		String url = "https://slack.com/api/channels.archive";
@@ -165,6 +174,14 @@ public class ComplexController {
 		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 		
 		return response;
+	}
+	
+	@GetMapping("channelName/{complex}")
+	public ResponseEntity<String> channelName(@PathVariable("complex") String complex){
+		
+		String channelName = helper.complexChannelName(complex);
+		
+		return new ResponseEntity<>(channelName, HttpStatus.OK);
 	}
 	
 	public void createFallback() {

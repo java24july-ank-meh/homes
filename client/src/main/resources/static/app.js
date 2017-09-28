@@ -1,10 +1,17 @@
-var app = angular.module('rhmsApp', ['ngMaterial', 'ngMdIcons', 'ui.router', 'ngTable', 'mdDataTable']);
+var app = angular.module('rhmsApp', ['ngMaterial', 'ngMdIcons', 'ui.router', 'ngTable', 'mdDataTable', 'LocalStorageModule']);
 
 app.run(function($rootScope) {
-    $rootScope.rootTest = 'test';
 });
 
-app.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider, localStorageServiceProvider) {
+	
+	localStorageServiceProvider
+    	.setPrefix('homes')
+    	.setStorageType('sessionStorage')
+    	.setNotify(true, true);
+   
+	
+	
     $urlRouterProvider.otherwise('/home/dashboard');
 
     $stateProvider

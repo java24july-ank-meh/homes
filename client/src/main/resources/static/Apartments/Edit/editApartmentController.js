@@ -20,7 +20,7 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
             let oldComplex = $scope.oldUnit.complex.name;
             let oldChannelName = "";
         	
-            $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuilding + 
+            $http.get('/api/slack/unit/channelName/' + oldComplex + '/' + oldBuildingNumber + 
             		'/' + oldUnit)
             		.success(function(data){
             			oldChannelName = data; 

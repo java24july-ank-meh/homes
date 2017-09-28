@@ -169,9 +169,9 @@
 	             </md-card-title>
 	             <md-divider></md-divider>
 	             	<form name="sendAnnouncementForm" ng-submit="sendAnnouncementFormSubmit()">
-						<md-input-container  class="md-block">
+						<md-input-container  ng-controller="showComplexController as scc" class="md-block">
 					          <label>Announcement</label>
-					          <textarea ng-model="$parent.announcement" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+					          <textarea ng-model="scc.announcement" md-maxlength="150" rows="3" md-select-on-focus></textarea>
 					    </md-input-container>    
 					    <md-card-actions layout="row" layout-align="end center">
 	                            <md-button type="submit" ng-disabled="!announcement" class="md-flat md-primary">SEND</md-button>

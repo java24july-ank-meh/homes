@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', '$rootScope', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast, $rootScope) {
 
     $http.get("/api/associates/associates")
     .then(function(response) {
@@ -16,6 +16,20 @@ angular.module('rhmsApp').controller('assignResidentController', ['$scope', '$ht
  	 $scope.assignAssociate = function (associateId) {
 
  	      var onSuccess = function (data, status, headers, config) {
+ 	    	  	$http.get("/api/complex/unit/" + $stateParams.apartmentId).then(function(response){
+ 	 	    	  	let unit = response.data;
+ 	    	  		let complexName = unit.complex.name;
+ 	    	  		let unitNumber = unit.unitNumber;
+ 	    	  		let buildingNumber = unit.buildingNumber;
+ 	    	  		
+ 	 	    		$http.get("/api/associates/associates/"+associateId).then(function(response){
+ 	 	    			let residentEmail = response.data.email;
+ 	 	    			$http.post("/api/slack/resident/complexInvite",{email:residentEmail,complex:complexName,token:$rootScope.rootUser.token});
+ 	 	    			$http.post("/api/slack/resident/unitInvite",{email:residentEmail,complex:complexName,unit:unitNumber,building:buildingNumber,token:$rootScope.rootUser.token});
+ 	 	    		});
+ 	 	    		
+ 	    	  	});
+ 	    	  
  	    	  $mdToast.show($mdToast.simple().textContent("Associate Assigned").position('top right'));
  	          $scope.hide();
  	         $state.reload();

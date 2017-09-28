@@ -60,6 +60,7 @@ public class ResidentController {
 			email = json.getString("email");
 			firstName = json.getString("fname");
 			lastName = json.getString("lname");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -84,21 +85,34 @@ public class ResidentController {
 		return response;
 	}
 
+	/*This is the endpoint for sending messages to both units and complexes. If the
+	 * unit and building parameters are empty, a JSONException will shortcircuit the
+	 * code in the try block, and the message will be sent to the complex channel.*/
 	@PostMapping("message")
 	public ResponseEntity<String> messageChannel(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
-		String complex = null; String unit = null; String message = null; String token = helper.getToken();
+		String complex = null; String unit = ""; String message = null; String token = helper.getToken();
+		String building = "";
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
+			message = json.getString("message");
 			complex = json.getString("complex");
 			unit = json.getString("unit");
-			message = json.getString("message");
+			building = json.getString("building");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		String channelName = complex + unit;
+		String channelName = "";
+		if(unit.length()>0 && building.length()>0) {
+			channelName = helper.unitChannelName(complex, building, unit);
+		}
+		else {
+			channelName = helper.complexChannelName(complex);
+		}
+		
 		String channelId = helper.getChannelId(channelName, token);
 		
 		String requestUrl  = "https://slack.com/api/chat.postMessage";
@@ -134,6 +148,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			ids = json.getString("ids");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +183,8 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			group = json.getString("group");
-			ids = json.getString("ids"); 
+			ids = json.getString("ids");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -208,6 +224,7 @@ public class ResidentController {
 			unit = json.getString("unit");
 			message = json.getString("message");
 			userId = json.getString("userId");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -245,6 +262,7 @@ public class ResidentController {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -263,6 +281,7 @@ public class ResidentController {
 		String token =helper.getToken();
 		try {
 			json = new JSONObject(body);
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -287,6 +306,7 @@ public class ResidentController {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			email = json.getString("email");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -295,7 +315,9 @@ public class ResidentController {
 		System.out.println("userid = "+userId);
 		String requestUrl = "https://slack.com/api/channels.invite";
 		
-		String complexChannelId = helper.getChannelId(complex, token);
+		String channelName = helper.complexChannelName(complex);
+		
+		String complexChannelId = helper.getChannelId(channelName, token);
 		
 		/*Request Slack to invite user to complex channel*/
 		
@@ -323,12 +345,15 @@ public class ResidentController {
 		String complex = null; String unit = null;
 		String userId = null;
 		String email = null;
+		String building = null;
 		String token = helper.getToken();
 		try {
 			json = new JSONObject(body);
 			complex = json.getString("complex");
 			unit = json.getString("unit");
 			email = json.getString("email");
+			building = json.getString("building");
+			token = json.getString("token");
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}
@@ -336,7 +361,9 @@ public class ResidentController {
 		
 		String requestUrl = "https://slack.com/api/channels.invite";
 		
-		String unitChannelId = helper.getChannelId(complex + unit, token);
+		String channelName = helper.unitChannelName(complex, building, unit);
+		
+		String unitChannelId = helper.getChannelId(channelName, token);
 		
 		/*Request Slack to invite user to complex channel*/
 		
@@ -364,16 +391,18 @@ public class ResidentController {
 		String id = null;
 		String is_admin = null;
 		String token = null;
+		token  = helper.getToken();
 		
 	
 		try {
 			json = new JSONObject(body);
 			email = json.getString("email");
+			token = json.getString("token");
 		
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
-		token = helper.getToken();
+		//token = helper.getToken();
 
 		id = helper.getSlackId(token, email);
 		System.out.println("id :"+id);

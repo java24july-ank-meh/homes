@@ -1,5 +1,9 @@
-angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$mdToast', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast) {
+angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$http', '$mdToast', '$rootScope', '$state', function($rootScope, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $http, $mdToast, $rootScope, $state) {
 
+	if(!$rootScope.rootUser.isManager)
+		$state.go("home.dashboard");
+		
+		
 	$scope.error = false;
 	
 	$scope.showTable = true;
@@ -30,8 +34,8 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
 
 	      var onSuccess = function (data, status, headers, config) {
 	    	  $mdToast.show($mdToast.simple().textContent("Maintenance Resolved").position('top right'));
+	    	  $state.reload();
 	          $scope.hide();
-	          $state.reload();
 	      };
 
 	      var onError = function (data, status, headers, config) {

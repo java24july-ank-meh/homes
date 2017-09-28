@@ -72,6 +72,7 @@ public class OauthController {
 		restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
 		
+		JSONObject jsonUser;
 		String token = "";
 		String email ="";
 		String user = "";
@@ -79,6 +80,7 @@ public class OauthController {
 			json = new JSONObject(response.getBody());
 			token = json.getString("access_token");
 			email = json.getJSONObject("user").getString("email");
+			json.getJSONObject("user").put("token", token);
 			user = json.getString("user");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -102,7 +104,6 @@ public class OauthController {
 			return ResponseEntity.ok(jobj.toString());
 		}
 		//send manager to application
-		session.setAttribute("token", token);
 		return ResponseEntity.ok(user);
 		
 	}

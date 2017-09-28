@@ -10,13 +10,6 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
         	 $scope.associates = response.data;
          });
          
-         if($scope.unit === ''){
-
-        	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
-        	 $scope.error = true;
-         }
-         else
-        	 {
         	 $http.get("/api/request/units/"+$scope.unit.unitId +'/maintenance').then(function(response) {
             	 $scope.maintenanceRequests = response.data;
         	 });
@@ -30,13 +23,14 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
             	 $mdToast.show($mdToast.simple().textContent("Complex Not Found").position('top right'));
             	 $scope.error = true;
              } else {
-            	 
             	 var parsedAddress = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC9rOv9rx7A2EL0oOZGXkhuvkJYIVfkqGA&origin="+$scope.unit.complex.address.split(' ').join('+')+"&destination="+$scope.unit.complex.office.address+"&avoid=tolls|highways";
             	 document.getElementById('complexMap').src = parsedAddress;
              }
-        	 
          
-     }});
+     }, function(){
+    	 $mdToast.show($mdToast.simple().textContent("Apartment not found").position('top right'));
+    	 $scope.error = true;
+     });
      
 	  $scope.showConfirm = function(deleteApartment) {
 
@@ -54,6 +48,7 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
   $scope.deleteApartment = function () {
 
       var onSuccess = function (data, status, headers, config) {
+    	  $http.post('/api/slack/unit/delete', {channelName: $scope.channelName,token:$rootScope.rootUser.token});
     	  $mdToast.show($mdToast.simple().textContent("Apartment Deleted").position('top right'));
           $state.go('home.showComplex', { complexId: $scope.unit.complex.complexId});
       };
@@ -61,6 +56,12 @@ angular.module('rhmsApp').controller('showApartmentController', ['$scope', '$mdB
       var onError = function (data, status, headers, config) {
     	  $mdToast.show($mdToast.simple().textContent(data));
       };
+      
+      $http.get('/api/slack/unit/channelName' + $scope.unit.complex.name + '/' + 
+    		  $scope.unit.buildingNumber + '/' + $scope.unit.unitNumber,{token:$rootScope.rootUser.token})
+    		  .success(function(data){
+    			 $scope.channelName = data; 
+    		  });
 
       $http.delete('/api/complex/unit/'+$stateParams.apartmentId)
       	.success(onSuccess)
@@ -136,7 +137,13 @@ $scope.sendAnnouncementFormSubmit = function(event){
      	 $mdToast.show($mdToast.simple().textContent("An Error Occured").position('top right'));
      }
 
-     $http.post('/api/Apartments/message/'+$stateParams.apartmentId, $scope.aptannouncement )
+     let complexName = $scope.unit.complex.name;
+     let unitNumber = $scope.unit.unitNumber;
+     let buildingNumber = $scope.unit.buildingNumber;
+     let token = $rootScope.rootUser.token;
+     let message = $scope.aptannouncement;
+     
+     $http.post('/api/slack/resident/message', {complex: complexName, unit: unitNumber, building: buildingNumber, message: message, token: token})
          .success(onSuccess)
          .error(onError);
 

@@ -1,4 +1,4 @@
-angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast) {
+angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$http', '$mdDialog','$state', '$stateParams', '$mdToast', '$rootScope', function($scope, $http, $mdDialog, $state, $stateParams, $mdToast, $rootScope) {
 
 	$scope.selected = {};
     $http.get("/api/associates/associates/")
@@ -18,7 +18,7 @@ angular.module('rhmsApp').controller('createAssociateController', ['$scope', '$h
     	$scope.associate.officeId = JSON.parse($scope.selected).officeId;
     	
         var onSuccess = function (data, status, headers, config) {
-        	$http.post("/api/slack/resident/invite",{email:$scope.associate.email,fname:$scope.associate.firstName,lname:$scope.associate.lastName});
+        	$http.post("/api/slack/resident/invite",{email:$scope.associate.email,fname:$scope.associate.firstName,lname:$scope.associate.lastName, token:$rootScope.rootUser.token});
         	$mdToast.show($mdToast.simple().textContent("Associate Created").position('top right'));
             $state.go('home.showAssociate', { residentId: data});
             $scope.hide();

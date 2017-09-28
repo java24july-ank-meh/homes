@@ -71,11 +71,12 @@ public class SupplyController {
 		Supply supply = supplyService.findById(supplyId);
 		
 		if(supply == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Supply not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Supply not found");
 		}
 		
 		supply.setResolved(true);
+		supply.setResolveDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 		
-		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body(supplyService.update(supply));
+		return ResponseEntity.status(HttpStatus.CREATED).body(supplyService.update(supply));
 	}
 }

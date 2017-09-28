@@ -107,7 +107,7 @@ public class ProfileCompositeController {
 
 	private static URI getRestServiceURI() {
 
-		String loc = service_url + ":80";
+		String loc = service_url + ":8085";
 		String site = "/api";//idk if this is right..?
 
 		return UriBuilder.fromUri(loc+site).build();
@@ -265,7 +265,7 @@ public class ProfileCompositeController {
 						
 						Recipients r = CallUriPersonally(BaseUrl + e.getRecipientsUri(), Recipients.class);
 						String email = r.getSigners().get(0).getEmail();
-						Associate a = CallUriPersonally(service_url + ":80/api/associates/" + email + "/email", Associate.class);
+						Associate a = CallUriPersonally(service_url + ":8085/api/associates/" + email + "/email", Associate.class);
 						a.setHousingAgreed(time);//TODO: change to changedDate once up to date with dev
 						updateAssociate(a);
 					}
@@ -287,12 +287,12 @@ public class ProfileCompositeController {
 		
 		private void updateAssociate(Associate a) {
 			Client client = Client.create();
-			WebResource webResource =client.resource(service_url + ":80/api/associates/createOrUpdate");
+			WebResource webResource =client.resource(service_url + ":8085/api/associates/createOrUpdate");
 
 
 			try {
 				// Turn a into a JSON object
-				HttpPost post = new HttpPost(service_url + ":80/api/associates/createOrUpdate");
+				HttpPost post = new HttpPost(service_url + ":8085/api/associates/createOrUpdate");
 				post.setHeader("Content-Type", "application/json");
 				Gson gson = new Gson();
 				StringEntity entity = new StringEntity(gson.toJson(a));

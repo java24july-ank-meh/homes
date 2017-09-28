@@ -18,7 +18,7 @@ import com.revature.application.models.Unit;
 
 @Service
 public class RequestCompositeService {
-	String baseurl = "http://107.22.129.162:80/api/";
+	String baseurl = "http://107.22.129.162:8085/api/";
 	
 	public void sendMessage(int associateId, String message) {
 		RestTemplate restTemplate = new RestTemplate();

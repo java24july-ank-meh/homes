@@ -103,6 +103,8 @@ public class ResidentController {
 			building = json.getString("building");
 		}catch(JSONException e) {
 			e.printStackTrace();
+		}catch(NullPointerException e) {
+			e.printStackTrace();
 		}
 		
 		String channelName = "";

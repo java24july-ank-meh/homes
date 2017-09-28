@@ -99,7 +99,7 @@ angular.module('rhmsApp').controller('sidenavController', ['$scope', '$mdBottomS
         	$http.get("/api/associates/associates/"+$rootScope.rootUser.email+"/email").then(function(response){
         		$rootScope.rootAssociate = response.data;
         		localStorageService.set("rootAssociate", $rootScope.rootAssociate);
-        	    if($rootScope.rootAssociate!= null && $rootScope.rootAsscociate.unitId != null)
+        	    if($rootScope.rootAssociate!= null && $rootScope.rootAsscociate.unitId)
         	    	$scope.residentMenu = $scope.assignedMenu;
         });
     });

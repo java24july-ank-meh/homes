@@ -34,8 +34,8 @@ angular.module('rhmsApp').controller('maintenanceController', ['$rootScope', '$s
 
 	      var onSuccess = function (data, status, headers, config) {
 	    	  $mdToast.show($mdToast.simple().textContent("Maintenance Resolved").position('top right'));
+	    	  $state.reload();
 	          $scope.hide();
-	          $state.reload();
 	      };
 
 	      var onError = function (data, status, headers, config) {

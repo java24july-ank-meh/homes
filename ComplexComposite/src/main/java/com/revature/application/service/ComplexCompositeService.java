@@ -29,7 +29,7 @@ import com.sun.jersey.api.client.WebResource;
 @Service
 public class ComplexCompositeService {
 
-	private String baseurl = "http://107.22.129.162:8085/api/";
+	private String baseurl = "http://107.22.129.162:80/api/";
 	
 	/*public JsonArray allComplexes(){
 		return getJsonArrayFromService("http://107.22.129.162:8093/complex");

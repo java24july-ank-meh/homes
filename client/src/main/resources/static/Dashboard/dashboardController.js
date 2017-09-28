@@ -5,6 +5,8 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
 	$scope.associate = $rootScope.rootAssociate;
 
 	$scope.moveInDate;
+	
+	$scope.hasCar;
 	     
 	if(!$rootScope.rootAssociate)
      $q.all({
@@ -29,6 +31,9 @@ angular.module('rhmsApp').controller('dashboardController', ['$scope', '$mdBotto
      
      $scope.newAssociateFormSubmit = function(moveInDate){
     	 var date = $filter('date')(moveInDate,'yyyy-MM-dd'); 
+    	 
+    	 if($scope.hasCar)
+    		 $rootScope.rootAssociate.hasCar = 1;
     	 
     	 var onSuccess = function (data, status, headers, config) {
     		  $http.post('/api/associates/'+$rootScope.associate.associateId+ "/moveInDate/", date);

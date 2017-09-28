@@ -153,7 +153,7 @@
          </div>
       </div>
    </div>
-   <md-card flex-gt-md="60" ng-if="!associate.unitId && !associate.moveInDate" style="text-align: left; margin: 0 auto;">
+   <md-card flex-gt-md="60" ng-if="false" style="text-align: left; margin: 0 auto;">
       <md-card-content layout-padding>
          <md-card-title>
             <md-card-title-text>
@@ -164,7 +164,7 @@
          <form name="newAssociateForm" ng-submit="newAssociateFormSubmit(moveInDate)">
             <div layout-gt-sm="row" style="margin-left: 16px;">
                <md-input-container class="md-block" flex-gt-sm>
-                  <md-checkbox name="hasCar" ng-model="associate.hasCar" >
+                  <md-checkbox name="hasCar" ng-model="hasCar" >
                      I will have a car with me during training period.
                   </md-checkbox>
                </md-input-container>
@@ -181,7 +181,7 @@
          </form>
       </md-card-content>
    </md-card>
-   <md-card flex-gt-md="60" ng-if="!associate.unitId && associate.moveInDate" style="text-align: left; margin: 0 auto;">
+   <md-card flex-gt-md="60" ng-if="!associate.unitId" style="text-align: left; margin: 0 auto;">
       <md-card-content layout-padding>
          <md-card-title>
             <md-card-title-text>

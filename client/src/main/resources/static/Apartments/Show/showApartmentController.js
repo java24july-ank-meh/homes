@@ -143,7 +143,7 @@ $scope.sendAnnouncementFormSubmit = function(event){
      let token = $rootScope.rootUser.token;
      let message = $scope.aptannouncement;
      
-     $http.post('/api/slack/resident/message', {complex: complexName, unit: unitNumber, building: buildingNumber, message: message, token: token})
+     $http.post('/api/slack/resident/messageUnit', {complex: complexName, unit: unitNumber, building: buildingNumber, message: message, token: token})
          .success(onSuccess)
          .error(onError);
 

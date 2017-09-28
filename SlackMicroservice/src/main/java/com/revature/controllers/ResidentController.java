@@ -88,8 +88,8 @@ public class ResidentController {
 	/*This is the endpoint for sending messages to both units and complexes. If the
 	 * unit and building parameters are empty, a JSONException will shortcircuit the
 	 * code in the try block, and the message will be sent to the complex channel.*/
-	@PostMapping("message")
-	public ResponseEntity<String> messageChannel(@RequestBody String body, HttpSession http){
+	@PostMapping("messageUnit")
+	public ResponseEntity<String> messageUnit(@RequestBody String body, HttpSession http){
 		
 		JSONObject json = null;
 		String complex = null; String unit = ""; String message = null; String token = helper.getToken();
@@ -103,17 +103,47 @@ public class ResidentController {
 			building = json.getString("building");
 		}catch(JSONException e) {
 			e.printStackTrace();
-		}catch(NullPointerException e) {
+		}
+		
+		String channelName = helper.unitChannelName(complex, building, unit);
+		
+		String channelId = helper.getChannelId(channelName, token);
+		
+		String requestUrl  = "https://slack.com/api/chat.postMessage";
+		
+		MultiValueMap<String, String> params = 
+				new LinkedMultiValueMap<String, String>();
+		params.add("token", token);
+		params.add("channel", channelId);
+		params.add("text", message);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		HttpEntity<MultiValueMap<String, String>> request = 
+				new HttpEntity<MultiValueMap<String, String>>(params, headers);
+	 
+		ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
+		
+		return response;
+		
+	}
+	
+	@PostMapping("messageComplex")
+	public ResponseEntity<String> messageComplex(@RequestBody String body, HttpSession http){
+		
+		JSONObject json = null;
+		String complex = null; String message = null; String token = helper.getToken();
+		try {
+			json = new JSONObject(body);
+			token = json.getString("token");
+			message = json.getString("message");
+			complex = json.getString("complex");
+		}catch(JSONException e) {
 			e.printStackTrace();
 		}
 		
-		String channelName = "";
-		if(unit.length()>0 && building.length()>0) {
-			channelName = helper.unitChannelName(complex, building, unit);
-		}
-		else {
-			channelName = helper.complexChannelName(complex);
-		}
+		String channelName = helper.complexChannelName(complex);
 		
 		String channelId = helper.getChannelId(channelName, token);
 		

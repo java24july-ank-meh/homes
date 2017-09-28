@@ -79,7 +79,7 @@
             </md-card-title>
             <md-divider></md-divider>
             <md-virtual-repeat-container id="vertical-container" style="height: 600px;">
-               <div md-virtual-repeat="assciate in associates" class="repeated-item" flex>
+               <div md-virtual-repeat="associate in associates" class="repeated-item" flex>
                   <md-list-item class="md-3-line noright" ng-if="!associate.unitId" ui-sref="home.showAssociate({associateId: associate.associateId})">
                      <md-icon class="md-avatar">
                         <ng-md-icon icon="person" ></ng-md-icon>

@@ -39,7 +39,7 @@ public class MaintenanceController
 		List<Maintenance>maintenanceRequests = maintenanceService.findByUnitId(unitId);
 		
 		if(maintenanceRequests.isEmpty())
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("No Maintenance Requests found for unit");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"No Maintenance Requests found for unit\"}");
 		
 		return ResponseEntity.ok(maintenanceRequests);
 	}
@@ -58,7 +58,7 @@ public class MaintenanceController
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);
 		
 		if(maintenance == null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Maintenance not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"Maintenance not found\"}");
 	
 		return ResponseEntity.ok(maintenance);
 	}
@@ -70,7 +70,7 @@ public class MaintenanceController
 		Maintenance maintenance = maintenanceService.findById(maintenanceId);
 		
 		if(maintenance == null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Maintenance not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"Maintenance not found\"}");
 	
 		maintenance.setResolved(true);
 		

@@ -1,6 +1,7 @@
 package com.revature.application.controller;
 
 import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.Date;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -140,5 +142,20 @@ public class AssociateController {
 		associateService.delete(id);
 		return ResponseEntity.ok().build();
 
+	}
+	
+	@PostMapping("docusign")
+	public ResponseEntity<Object> updateResidentDocusign(@RequestBody MultiValueMap<String, String> map) {
+		List<String> emails = map.get("email");
+		for (String email : emails) {
+			System.out.println(email);
+			Associate associate = associateService.findByEmail(email);
+			if (associate!= null && associate.getHousingAgreed() != null) {
+				associate.setHousingAgreed(LocalDateTime.now());
+				associateService.saveOrUpdate(associate);
+			}
+			
+		}
+		return ResponseEntity.ok().build();
 	}
 }

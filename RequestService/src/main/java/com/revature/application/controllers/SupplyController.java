@@ -37,7 +37,7 @@ public class SupplyController {
 		List<Supply> supplyRequests = supplyService.findByUnitId(unitId);
 		
 		if(supplyRequests.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("No maintenance requests found for unit");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"No maintenance requests found for unit\"}");
 		}
 		
 		return ResponseEntity.ok(supplyRequests);
@@ -52,7 +52,7 @@ public class SupplyController {
 			supplyService.save(supply);
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body("created");
+		return ResponseEntity.status(HttpStatus.CREATED/*HttpStatus.SC_CREATED*/).body("{\"message\":\"created\"}");
 	}
 	
 	@GetMapping(value ="supply/{supplyId}")
@@ -60,7 +60,7 @@ public class SupplyController {
 		Supply supply = supplyService.findById(supplyId);
 		
 		if(supply == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("Supply not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND/*HttpStatus.SC_NOT_FOUND*/).body("{\"message\":\"Supply not found\"}");
 		}
 		
 		return ResponseEntity.ok(supply);

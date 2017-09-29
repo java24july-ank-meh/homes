@@ -31,8 +31,6 @@ angular.module('rhmsApp').controller('editApartmentController', ['$scope', '$htt
             				newUnit: $scope.unit.unitNumber,token:$rootScope.rootUser.token});
         	
         	$mdToast.show($mdToast.simple().textContent("Unit Updated").position('top right'));
-            $state.reload();
-            $scope.hide();
             $state.go('home.showApartment', { apartmentId: $stateParams.apartmentId});
             		});
         };

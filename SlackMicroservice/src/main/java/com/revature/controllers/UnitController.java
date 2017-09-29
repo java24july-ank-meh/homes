@@ -183,12 +183,21 @@ public class UnitController {
 	}
 	
 	@GetMapping("channelName/{complex}/{building}/{unit}")
-	public ResponseEntity<String> channelName(@PathVariable("complex") String complex, 
+	public ResponseEntity<Object> channelName(@PathVariable("complex") String complex, 
 			@PathVariable("building") String building, @PathVariable("unit") String unit){
 		
 		String channelName = helper.unitChannelName(complex, building, unit);
 		
-		return new ResponseEntity<>(channelName, HttpStatus.OK);
+		List<JSONObject> result = new ArrayList<>();
+		JSONObject json = new JSONObject();
+		try{json.put("channelName", channelName);}
+		catch(JSONException e) {
+			return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+		}
+		
+		result.add(json);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	public void createFallback() {

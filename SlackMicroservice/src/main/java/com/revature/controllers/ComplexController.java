@@ -184,16 +184,7 @@ public class ComplexController {
 		
 		String channelName = helper.complexChannelName(complex);
 		
-		List<JSONObject> result = new ArrayList<>();
-		JSONObject json = new JSONObject();
-		try{json.put("channelName", channelName);}
-		catch(JSONException e) {
-			return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
-		}
-		
-		result.add(json);
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body("{\"channelName\": \"" + channelName + "\"}");
 	}
 	
 	public void createFallback() {

@@ -1,9 +1,12 @@
 package com.revature.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -177,11 +180,20 @@ public class ComplexController {
 	}
 	
 	@GetMapping("channelName/{complex}")
-	public ResponseEntity<String> channelName(@PathVariable("complex") String complex){
+	public ResponseEntity<Object> channelName(@PathVariable("complex") String complex){
 		
 		String channelName = helper.complexChannelName(complex);
 		
-		return new ResponseEntity<>(channelName, HttpStatus.OK);
+		List<JSONObject> result = new ArrayList<>();
+		JSONObject json = new JSONObject();
+		try{json.put("channelName", channelName);}
+		catch(JSONException e) {
+			return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+		}
+		
+		result.add(json);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	public void createFallback() {

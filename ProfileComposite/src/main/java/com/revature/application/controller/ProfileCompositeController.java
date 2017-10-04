@@ -58,6 +58,39 @@ public class ProfileCompositeController {
 	
 	public static final String service_url = "http://107.22.129.162";
 
+	/* IMPORTANT INFORMATION FOR FUTURE ITERATIONS!
+	 *
+	 * There are a few things that you will need to know about how things work that are not covered in below notes.
+	 * For starters, there currently is not a connection to this API from the front end. This endpoint is ready to
+	 * use in a testing environment but is not ready for use on an enterprise application scale. There are numerous
+	 * things that will prevent this from working on an enterprise scale.
+	 * - One of the main things that you will notice when trying to develop this for enterprise level launching is that
+	 * the integration key is for sandbox only. This means that it will only work for us when using test data that we set up.
+	 * This will not work with real data from the Revature HR team yet.
+	 * - Another thing is that you need to go get your own Integrator key. Using my key will be hard without the information
+	 * for getting into the account. You may find that in here, but it will be far better for you to make your own sandbox.
+	 * - Now, during the process for getting your own integrationkey you will go by a lot of things that I have left out of
+	 * the notes below because the information needed to understand how things work was gained through the process of setting up
+	 * my personal integration key. Because of this, I urge you to set up your own integrator key for your iteration of this
+	 * Revature Housing project.
+	 * - Lastly, I already know of a bug that you will face when gtrying to set up for enterprise level launch so I will make
+	 * sure you are aware to look out for this right away. Revature uses DocuSign to manage numerous different contracts with
+	 * Associates. There is the housing agreements, Revature hiring contracts, and other things. The call to this endpoint
+	 * currently does not differentiate between completed housing agreements and other DocuSign 'Envelopes' (Documents as we
+	 * would call them but Document is another type of DocuSign object so the actual object we know these as is called an
+	 * Envelope). This means that a person may have accepted the Revature contract through DocuSign but not the housing agreement.
+	 * In that instance, a completed Envelope of ANY type, even if not the housing agreement, will cause the database to say that
+	 * the housing agreement has been signed. A check to make sure the database is only being updated when the completed document
+	 * is a housing agreement needs to be put in place. That will be how simple it is but you need to talk to HR in order to get
+	 * some sample data to know how to differentiate between the different completed forms.
+	 *
+	 * That wraps up the important things you need to know about this that isn't covered below so I hope you enjoy your time
+	 * continuing the integration of DocuSign into the application and that it is nice and easy for you.
+	 * Good luck (You will need it)
+	 *
+	 * Signed,
+	 * Nora Duckett*/
+	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getProfileInfo(@PathVariable("id") String id) {
 	/*	JsonObject compositeObj = getJsonFromService(service_url + ":8090/associates/" +id);		

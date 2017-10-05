@@ -56,7 +56,7 @@ public class ProfileCompositeController {
 	@Autowired
 	ProfileCompositeService profileCService;
 	
-	public static final String service_url = "http://107.22.129.162";
+	public static final String service_url = "http://ec2-107-23-6-219.compute-1.amazonaws.com";
 
 	/* IMPORTANT INFORMATION FOR FUTURE ITERATIONS!
 	 *

@@ -31,7 +31,7 @@ import com.revature.application.model.Unit;
 @RequestMapping("residentcomposite")
 public class ResidentCompositeController {
 	
-	private String baseurl = "http://ec2-107-23-6-219.compute-1.amazonaws.com:8085//";
+	private String baseurl = "http://ec2-107-23-6-219.compute-1.amazonaws.com:8085/api/";
 
 	@GetMapping(value = "residentinfo")
 	public ResponseEntity<Object> getResidentInfo() {

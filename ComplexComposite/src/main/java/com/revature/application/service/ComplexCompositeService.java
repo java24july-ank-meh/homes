@@ -30,6 +30,7 @@ import com.sun.jersey.api.client.WebResource;
 public class ComplexCompositeService {
 
 	private String baseurl = "http://ec2-107-23-6-219.compute-1.amazonaws.com:8085/api/";
+
 	
 	/*public JsonArray allComplexes(){
 		return getJsonArrayFromService("http://107.22.129.162:8093/complex");
